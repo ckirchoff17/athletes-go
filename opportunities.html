@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recruiting Opportunities Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #141410; --ink-mid: #4a4a44; --ink-soft: #8a8a80; --ink-faint: #d0d0c4;
+  --paper: #f7f6f1; --paper-warm: #efede5; --paper-card: #ffffff;
+  --border: rgba(20,20,16,0.1); --border-mid: rgba(20,20,16,0.2);
+  --accent: #1a5c3a; --accent-light: #e8f2ec; --accent-mid: #2d7a52;
+  --gold: #b8860b; --gold-light: #f5f0dc;
+  --blue: #1a3a5c; --blue-light: #e8eff8;
+  --rust: #8b3a1a; --rust-light: #f8ede8;
+  --purple: #3d2a7a; --purple-light: #eeedfe;
+  --teal: #0f6e56; --teal-light: #e1f5ee;
+  --success: #1D9E75;
+  --radius: 6px; --radius-lg: 10px;
+  --type-camp: #1a5c3a; --type-camp-bg: #e8f2ec;
+  --type-showcase: #1a3a5c; --type-showcase-bg: #e8eff8;
+  --type-visit: #8b3a1a; --type-visit-bg: #f8ede8;
+  --type-id: #3d2a7a; --type-id-bg: #eeedfe;
+  --type-combine: #0f6e56; --type-combine-bg: #e1f5ee;
+  --type-custom: #888780; --type-custom-bg: #f1efe8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #f0efe8; --ink-mid: #b0b0a8; --ink-soft: #686860; --ink-faint: #383830;
+    --paper: #141410; --paper-warm: #1a1a14; --paper-card: #1e1e18;
+    --border: rgba(240,239,232,0.1); --border-mid: rgba(240,239,232,0.2);
+    --accent: #4aaa72; --accent-light: #0d2318; --accent-mid: #4aaa72;
+    --gold: #d4a020; --gold-light: #1e1a08;
+    --blue: #6a9fd4; --blue-light: #0a1828;
+    --rust: #d4724a; --rust-light: #1e0e08;
+    --purple: #9f8de0; --purple-light: #1a1230;
+    --teal: #4aaa90; --teal-light: #04201a;
+    --type-camp: #4aaa72; --type-camp-bg: #0d2318;
+    --type-showcase: #6a9fd4; --type-showcase-bg: #0a1828;
+    --type-visit: #d4724a; --type-visit-bg: #1e0e08;
+    --type-id: #9f8de0; --type-id-bg: #1a1230;
+    --type-combine: #4aaa90; --type-combine-bg: #04201a;
+    --type-custom: #888780; --type-custom-bg: #2a2a24;
+  }
+}
+body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; min-height: 100vh; }
+
+/* ── Masthead ── */
+.masthead { border-bottom: 1px solid var(--border); padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 54px; background: var(--paper); position: sticky; top: 0; z-index: 200; }
+.masthead-logo { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--ink); text-decoration: none; letter-spacing: -0.02em; }
+.masthead-logo span { color: var(--accent); font-style: italic; }
+.back-link { font-size: 13px; color: var(--ink-soft); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color .15s; }
+.back-link:hover { color: var(--ink); }
+
+/* ── Page title bar ── */
+.page-bar { background: var(--paper-card); border-bottom: 1px solid var(--border); padding: 1rem 1.5rem; }
+.page-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.page-title { font-family: 'DM Serif Display', serif; font-size: 22px; letter-spacing: -0.02em; }
+.page-sub { font-size: 13px; color: var(--ink-soft); font-weight: 300; margin-top: 2px; }
+.save-indicator { font-size: 12px; color: var(--ink-soft); display: flex; align-items: center; gap: 5px; opacity: 0; transition: opacity .3s; }
+.save-indicator.visible { opacity: 1; }
+.save-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); }
+
+/* ── Filters ── */
+.filters { background: var(--paper-warm); border-bottom: 1px solid var(--border); padding: .75rem 1.5rem; position: sticky; top: 54px; z-index: 100; }
+.filters-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.filter-label { font-size: 11px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-soft); white-space: nowrap; }
+.pill-row { display: flex; gap: 5px; flex-wrap: wrap; }
+.pill { font-size: 12px; padding: 4px 11px; border-radius: 99px; border: 1px solid var(--border-mid); background: var(--paper-card); cursor: pointer; color: var(--ink-mid); transition: all .15s; white-space: nowrap; font-family: 'DM Sans', sans-serif; }
+.pill:hover { border-color: var(--ink); color: var(--ink); }
+.pill.active { background: var(--ink); border-color: var(--ink); color: var(--paper); font-weight: 500; }
+.search-input { font-size: 13px; padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border-mid); background: var(--paper-card); color: var(--ink); font-family: 'DM Sans', sans-serif; width: 180px; outline: none; }
+.search-input:focus { border-color: var(--accent); }
+.search-input::placeholder { color: var(--ink-soft); }
+
+/* ── Two-panel layout ── */
+.two-panel { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 380px; gap: 0; min-height: calc(100vh - 160px); }
+
+/* ── Directory panel ── */
+.dir-panel { padding: 1.5rem; border-right: 1px solid var(--border); }
+.panel-section-label { font-size: 11px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+.opp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; margin-bottom: 2rem; }
+.opp-card { background: var(--paper-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.1rem; transition: all .2s; position: relative; }
+.opp-card:hover { border-color: var(--border-mid); transform: translateY(-1px); }
+.opp-card.in-plan { border-color: var(--accent); background: var(--accent-light); }
+.opp-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.opp-type-tag { font-size: 10px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; white-space: nowrap; flex-shrink: 0; }
+.opp-name { font-size: 14px; font-weight: 500; line-height: 1.3; margin-bottom: 4px; }
+.opp-meta { font-size: 12px; color: var(--ink-soft); margin-bottom: 6px; display: flex; gap: 10px; flex-wrap: wrap; }
+.opp-meta-item { display: flex; align-items: center; gap: 3px; }
+.opp-desc { font-size: 12px; color: var(--ink-mid); line-height: 1.55; margin-bottom: 10px; font-weight: 300; }
+.opp-sports { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px; }
+.sport-tag { font-size: 10px; padding: 1px 7px; border-radius: 99px; background: var(--paper-warm); color: var(--ink-soft); border: 1px solid var(--border); }
+.add-btn { font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 99px; border: 1px solid var(--accent); color: var(--accent); background: transparent; cursor: pointer; transition: all .15s; font-family: 'DM Sans', sans-serif; width: 100%; }
+.add-btn:hover { background: var(--accent); color: #fff; }
+.add-btn.added { background: var(--accent); color: #fff; border-color: var(--accent); cursor: default; }
+.add-btn.added:hover { background: var(--accent); }
+
+/* ── Plan panel ── */
+.plan-panel { padding: 1.5rem; background: var(--paper-warm); position: sticky; top: 107px; height: calc(100vh - 107px); overflow-y: auto; }
+.plan-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.plan-title { font-family: 'DM Serif Display', serif; font-size: 17px; letter-spacing: -0.01em; }
+.plan-count { font-size: 12px; color: var(--ink-soft); }
+.plan-empty { text-align: center; padding: 2.5rem 1rem; color: var(--ink-soft); font-size: 13px; font-weight: 300; line-height: 1.7; }
+.plan-empty-icon { font-size: 28px; margin-bottom: 10px; opacity: .4; }
+
+/* Season sections in plan */
+.plan-season { margin-bottom: 1.5rem; }
+.plan-season-label { font-size: 11px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.plan-item { background: var(--paper-card); border: 1px solid var(--border); border-radius: var(--radius); padding: .875rem 1rem; margin-bottom: 6px; position: relative; }
+.plan-item-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.plan-item-name { font-size: 13px; font-weight: 500; line-height: 1.3; flex: 1; }
+.plan-item-remove { background: none; border: none; color: var(--ink-faint); cursor: pointer; font-size: 16px; line-height: 1; padding: 0 2px; transition: color .15s; flex-shrink: 0; }
+.plan-item-remove:hover { color: #E24B4A; }
+.plan-item-meta { font-size: 11px; color: var(--ink-soft); margin-top: 3px; }
+.plan-item-note { margin-top: 6px; width: 100%; font-size: 12px; color: var(--ink-mid); background: var(--paper-warm); border: 1px solid var(--border); border-radius: 4px; padding: 5px 8px; font-family: 'DM Sans', sans-serif; resize: none; min-height: 32px; outline: none; transition: border-color .15s; }
+.plan-item-note:focus { border-color: var(--accent); }
+.plan-item-note::placeholder { color: var(--ink-faint); }
+
+/* Plan actions */
+.plan-actions { margin-top: 1rem; display: flex; flex-direction: column; gap: 6px; }
+.plan-action-btn { font-size: 12px; padding: 7px 14px; border-radius: var(--radius); border: 1px solid var(--border-mid); background: var(--paper-card); color: var(--ink-mid); cursor: pointer; transition: all .15s; font-family: 'DM Sans', sans-serif; text-align: left; }
+.plan-action-btn:hover { background: var(--paper-card); border-color: var(--ink); color: var(--ink); }
+.plan-action-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.plan-action-btn.primary:hover { background: var(--accent-mid); }
+
+/* Add custom */
+.add-custom-form { background: var(--paper-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem; margin-top: 1.5rem; }
+.custom-form-title { font-size: 13px; font-weight: 500; margin-bottom: 10px; }
+.form-row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+.form-label { font-size: 11px; color: var(--ink-soft); font-weight: 500; }
+.form-input { font-size: 13px; padding: 6px 10px; border-radius: var(--radius); border: 1px solid var(--border-mid); background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; outline: none; width: 100%; }
+.form-input:focus { border-color: var(--accent); }
+.form-select { font-size: 13px; padding: 6px 10px; border-radius: var(--radius); border: 1px solid var(--border-mid); background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; outline: none; width: 100%; cursor: pointer; }
+.form-add-btn { font-size: 13px; font-weight: 500; padding: 7px 16px; border-radius: var(--radius); border: none; background: var(--accent); color: #fff; cursor: pointer; font-family: 'DM Sans', sans-serif; width: 100%; margin-top: 4px; }
+.form-add-btn:hover { background: var(--accent-mid); }
+
+/* Empty + no results */
+.no-results { text-align: center; padding: 2rem; color: var(--ink-soft); font-size: 13px; grid-column: 1 / -1; }
+
+/* Mobile */
+@media (max-width: 860px) {
+  .two-panel { grid-template-columns: 1fr; }
+  .plan-panel { position: static; height: auto; border-top: 1px solid var(--border); }
+  .dir-panel { border-right: none; }
+}
+
+/* Print */
+@media print {
+  .masthead, .filters, .dir-panel, .add-custom-form, .plan-actions, .plan-item-note, .plan-item-remove { display: none !important; }
+  .two-panel { grid-template-columns: 1fr; }
+  .plan-panel { position: static; height: auto; background: #fff; }
+  @page { margin: 0.6in; }
+}
+
+.footer { border-top: 1px solid var(--border); padding: 1.5rem; text-align: center; font-size: 12px; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a class="masthead-logo" href="index.html">Recruiting<span>Hub</span></a>
+  <a class="back-link" href="index.html">&larr; Back to hub</a>
+</header>
+
+<div class="page-bar">
+  <div class="page-bar-inner">
+    <div>
+      <div class="page-title">Recruiting opportunities planner</div>
+      <div class="page-sub">Browse camps, showcases, and visits — then build your personal schedule</div>
+    </div>
+    <div class="save-indicator" id="save-indicator"><div class="save-dot"></div> Saved</div>
+  </div>
+</div>
+
+<div class="filters">
+  <div class="filters-inner">
+    <div class="filter-label">Type</div>
+    <div class="pill-row" id="type-pills">
+      <div class="pill active" data-type="all">All</div>
+      <div class="pill" data-type="camp">College camp</div>
+      <div class="pill" data-type="showcase">Showcase</div>
+      <div class="pill" data-type="visit">Campus visit</div>
+      <div class="pill" data-type="id">ID clinic</div>
+      <div class="pill" data-type="combine">Combine</div>
+    </div>
+    <div class="filter-label" style="margin-left:8px;">Sport</div>
+    <div class="pill-row" id="sport-pills">
+      <div class="pill active" data-sport="all">All sports</div>
+      <div class="pill" data-sport="Football">Football</div>
+      <div class="pill" data-sport="Basketball">Basketball</div>
+      <div class="pill" data-sport="Soccer">Soccer</div>
+      <div class="pill" data-sport="Baseball">Baseball</div>
+      <div class="pill" data-sport="Softball">Softball</div>
+      <div class="pill" data-sport="Volleyball">Volleyball</div>
+      <div class="pill" data-sport="Swimming">Swimming</div>
+      <div class="pill" data-sport="Track">Track &amp; Field</div>
+      <div class="pill" data-sport="Lacrosse">Lacrosse</div>
+    </div>
+    <input type="text" class="search-input" id="search-input" placeholder="Search opportunities...">
+  </div>
+</div>
+
+<div class="two-panel">
+  <!-- DIRECTORY -->
+  <div class="dir-panel">
+    <div class="panel-section-label">
+      <span id="dir-count">Opportunities</span>
+    </div>
+    <div class="opp-grid" id="opp-grid"></div>
+  </div>
+
+  <!-- PLAN -->
+  <div class="plan-panel">
+    <div class="plan-header">
+      <div class="plan-title">My schedule</div>
+      <div class="plan-count" id="plan-count">0 added</div>
+    </div>
+    <div id="plan-body"></div>
+
+    <div class="add-custom-form">
+      <div class="custom-form-title">Add your own opportunity</div>
+      <div class="form-row">
+        <div class="form-label">Name</div>
+        <input class="form-input" id="custom-name" placeholder="e.g. State All-Star Showcase">
+      </div>
+      <div class="form-row">
+        <div class="form-label">Type</div>
+        <select class="form-select" id="custom-type">
+          <option value="camp">College camp</option>
+          <option value="showcase">Showcase</option>
+          <option value="visit">Campus visit</option>
+          <option value="id">ID clinic</option>
+          <option value="combine">Combine</option>
+          <option value="custom">Other</option>
+        </select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div class="form-row">
+          <div class="form-label">Month</div>
+          <select class="form-select" id="custom-month">
+            <option value="Jun">June</option>
+            <option value="Jul">July</option>
+            <option value="Aug">August</option>
+            <option value="Sep">September</option>
+            <option value="Oct">October</option>
+            <option value="Nov">November</option>
+            <option value="Dec">December</option>
+            <option value="Jan">January</option>
+            <option value="Feb">February</option>
+            <option value="Mar">March</option>
+            <option value="Apr">April</option>
+            <option value="May">May</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-label">Sport</div>
+          <input class="form-input" id="custom-sport" placeholder="e.g. Soccer">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-label">Notes (optional)</div>
+        <input class="form-input" id="custom-notes" placeholder="Cost, location, coach contact...">
+      </div>
+      <button class="form-add-btn" onclick="addCustom()">Add to my schedule</button>
+    </div>
+
+    <div class="plan-actions" id="plan-actions" style="display:none;">
+      <button class="plan-action-btn" onclick="exportPlan()">Copy plan as text</button>
+      <button class="plan-action-btn" onclick="window.print()">Save as PDF / Print</button>
+      <button class="plan-action-btn" style="color:#E24B4A;" onclick="confirmClearPlan()">Clear my schedule</button>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Recruiting Opportunities Planner &mdash; part of the <a href="index.html" style="color:var(--accent);text-decoration:none;">College Athletic Recruiting Hub</a> &mdash; free to use and share</div>
+
+<script>
+/* ══════════════════════════════════════════
+   OPPORTUNITY DIRECTORY
+══════════════════════════════════════════ */
+const OPPORTUNITIES = [
+  // ── COLLEGE CAMPS ──
+  {id:'c1', type:'camp', name:'Nike Football Camps', sports:['Football'], months:'Jun–Aug', cost:'$100–$400', audience:'9th–12th grade', desc:'Held at college campuses nationwide. Coaches evaluate technique and athleticism directly. One of the best ways to get on a staff\'s radar.', link:'https://www.footballcamps.com'},
+  {id:'c2', type:'camp', name:'Under Armour Basketball All-America Camp', sports:['Basketball'], months:'Jun', cost:'Invitation only', audience:'Elite prospects', desc:'Premier evaluation camp for top basketball recruits. Invitation required. Heavily attended by D1 coaching staffs.', link:'https://www.underarmour.com'},
+  {id:'c3', type:'camp', name:'IMG Academy College Camps', sports:['Football','Basketball','Soccer','Baseball','Softball','Volleyball','Lacrosse'], months:'Jun–Aug', cost:'$200–$600', audience:'9th–12th grade', desc:'Multi-sport college ID camps hosted by IMG Academy. College coaches attend specifically to evaluate recruits in a controlled setting.', link:'https://www.imgacademy.com/camps'},
+  {id:'c4', type:'camp', name:'Nike Volleyball Camps', sports:['Volleyball'], months:'Jun–Aug', cost:'$150–$350', audience:'8th–12th grade', desc:'College-hosted overnight and day camps. Coaches observe your skills and coachability. Many D1 and D2 programs run their own Nike-affiliated camp.', link:'https://www.volleyballcamps.com'},
+  {id:'c5', type:'camp', name:'NCSA College Soccer Camps', sports:['Soccer'], months:'Jun–Aug', cost:'$200–$500', audience:'10th–12th grade', desc:'College ID camps where players are evaluated directly by college coaching staffs. Often held on college campuses.', link:'https://www.ncsasports.org/soccer'},
+  {id:'c6', type:'camp', name:'College Swimming Prospect Camps', sports:['Swimming'], months:'Jun–Jul', cost:'$100–$300', audience:'9th–12th grade', desc:'Hosted by college programs. Coaches time your events and evaluate stroke technique. Often the fastest path to a D1 or D2 offer in swimming.', link:'https://www.swimmingworld.com'},
+  {id:'c7', type:'camp', name:'Baseball Factory College Camps', sports:['Baseball'], months:'Jun–Aug', cost:'$150–$350', audience:'9th–12th grade', desc:'ID-style camps attended by dozens of college coaches. Players are evaluated on hitting, fielding, pitching velocity, and exit velocity.', link:'https://www.baseballfactory.com'},
+  {id:'c8', type:'camp', name:'Softball Factory Prospect Camps', sports:['Softball'], months:'Jun–Aug', cost:'$150–$350', audience:'9th–12th grade', desc:'College coach attendance is high. Hitting, pitching speed, and fielding are tracked and shared with coaches after the event.', link:'https://www.softballfactory.com'},
+  {id:'c9', type:'camp', name:'NAIA College Camps', sports:['Football','Basketball','Soccer','Volleyball','Baseball','Softball','Lacrosse'], months:'Jun–Aug', cost:'$75–$250', audience:'9th–12th grade', desc:'NAIA programs often run lower-cost ID camps with more personal attention from coaching staffs. Excellent for athletes targeting NAIA programs.', link:'https://www.naia.org'},
+  {id:'c10', type:'camp', name:'Lacrosse Camps at College Programs', sports:['Lacrosse'], months:'Jun–Jul', cost:'$200–$500', audience:'9th–12th grade', desc:'Attending a college\'s own camp is the single best way to get directly evaluated by their staff. Many offers come from athletes coaches first saw at their own camp.', link:'https://www.laxpower.com'},
+
+  // ── SHOWCASES ──
+  {id:'s1', type:'showcase', name:'Nike Football The Opening', sports:['Football'], months:'Jun–Jul', cost:'Invitation only', audience:'Elite D1 prospects', desc:'The most prestigious high school football event in the country. Invitation required. Top D1 coaches attend in large numbers.', link:'https://www.nike.com/us/en_us/c/football'},
+  {id:'s2', type:'showcase', name:'Perfect Game National Showcase', sports:['Baseball'], months:'Jun–Jul', cost:'$150–$400', audience:'9th–12th grade', desc:'The gold standard of baseball showcases. Over 1,500 college coaches attend across events annually. Exit velocity, pitch velocity, and 60-yard dash are recorded.', link:'https://www.perfectgame.org'},
+  {id:'s3', type:'showcase', name:'Prep Baseball Report Showcases', sports:['Baseball'], months:'Year-round', cost:'$50–$200', audience:'8th–12th grade', desc:'Regional showcases with detailed analytics reports shared with college coaches. Good for athletes building a recruiting profile.', link:'https://www.prepbaseballreport.com'},
+  {id:'s4', type:'showcase', name:'ECNL Girls Showcase Events', sports:['Soccer'], months:'Jun–Jul', cost:'Club fees', audience:'Club team players', desc:'Elite Club National League showcase events are among the most-attended by college coaches for women\'s soccer. Requires club membership.', link:'https://www.ecnlgirls.com'},
+  {id:'s5', type:'showcase', name:'US Club Soccer ID2 Program', sports:['Soccer'], months:'Jun–Aug', cost:'Varies', audience:'High school age', desc:'Nationally-organized identification program. Regional events lead to national exposure. College coaches invited to attend final showcases.', link:'https://www.usclubsoccer.org'},
+  {id:'s6', type:'showcase', name:'National Volleyball Invitational (NVI)', sports:['Volleyball'], months:'Jun', cost:'Club fees', audience:'Club team players', desc:'Major college recruiting exposure event for volleyball. High D1 coach attendance. Competing on a strong club team here is key for D1 exposure.', link:'https://www.avca.org'},
+  {id:'s7', type:'showcase', name:'USA Swimming Futures', sports:['Swimming'], months:'Jul–Aug', cost:'Entry fees', audience:'Qualifying times required', desc:'National-level meet that draws college coaches. Must swim qualifying times. Strong performance here puts athletes on D1 coaches\' radar immediately.', link:'https://www.usaswimming.org'},
+  {id:'s8', type:'showcase', name:'New Balance Track & Field Nationals', sports:['Track'], months:'Jun', cost:'$50–$150', audience:'HS qualifiers', desc:'Top high school track showcase. College coaches attend to see potential recruits in person. Qualifying standards required.', link:'https://www.newbalanceindoors.com'},
+  {id:'s9', type:'showcase', name:'NHSCA Wrestling National Duals', sports:['Wrestling'], months:'Mar', cost:'Team fees', audience:'HS wrestlers', desc:'National high school wrestling event with significant college coach attendance. Strong finish here leads to immediate recruiting attention.', link:'https://www.nhsca.com'},
+  {id:'s10', type:'showcase', name:'Lacrosse Showcase Events (LaxCon)', sports:['Lacrosse'], months:'Jun–Jul', cost:'$200–$500', audience:'9th–12th grade', desc:'Summer lacrosse showcases draw hundreds of college coaches across D1, D2, D3, and NAIA. Competing with a strong club program here is essential.', link:'https://www.laxcon.com'},
+  {id:'s11', type:'showcase', name:'Softball Showcase Events (USSSA)', sports:['Softball'], months:'Jun–Aug', cost:'Tournament fees', audience:'Club team players', desc:'USSSA tournaments and showcases attract college coaches at all levels. Competing for a strong travel organization here is the primary exposure path for softball.', link:'https://www.usssa.com'},
+
+  // ── UNOFFICIAL VISITS ──
+  {id:'v1', type:'visit', name:'Unofficial campus visit', sports:['Football','Basketball','Soccer','Baseball','Softball','Volleyball','Swimming','Track','Lacrosse'], months:'Year-round', cost:'Self-funded', audience:'Any grade', desc:'You pay for travel, meals, and lodging. No limit on the number of unofficial visits. The best way to evaluate fit before committing to official visits.', link:'https://www.ncaa.org'},
+  {id:'v2', type:'visit', name:'Official visit (D1/D2)', sports:['Football','Basketball','Soccer','Baseball','Softball','Volleyball','Swimming','Track','Lacrosse'], months:'Sep–Apr (senior yr)', cost:'Covered by school', audience:'12th grade (mostly)', desc:'The school covers your travel, meals, lodging, and tickets. Up to 5 official visits allowed at D1. Must be senior year for most sports. Save these for your top choices.', link:'https://www.ncaa.org'},
+  {id:'v3', type:'visit', name:'Game day visit', sports:['Football','Basketball','Soccer','Baseball','Softball','Volleyball','Swimming','Track','Lacrosse'], months:'Aug–May', cost:'Ticket cost (unofficial)', audience:'Any grade', desc:'Attending a home game is one of the best ways to experience team culture, fan environment, and facilities. Often combined with a meeting with the coaching staff.', link:''},
+  {id:'v4', type:'visit', name:'Junior day / Prospect day', sports:['Football','Basketball','Soccer','Lacrosse'], months:'Jan–Mar', cost:'Self-funded', audience:'10th–11th grade', desc:'Coaches invite prospects to campus for a day of tours, presentations, and informal evaluations. Not an official visit — you pay your own way. High-value opportunity.', link:''},
+
+  // ── ID CLINICS ──
+  {id:'i1', type:'id', name:'NCSA Identification Clinics', sports:['Football','Basketball','Soccer','Baseball','Softball','Volleyball','Swimming','Track','Lacrosse'], months:'Jun–Aug', cost:'$100–$300', audience:'9th–12th grade', desc:'Small-group clinics hosted by NCSA where athletes are evaluated and footage is shared with college coaches in their network.', link:'https://www.ncsasports.org'},
+  {id:'i2', type:'id', name:'PrepStar ID Camps', sports:['Football','Basketball','Soccer','Baseball','Softball'], months:'Jun–Aug', cost:'$100–$250', audience:'9th–12th grade', desc:'Regional ID camps that generate recruiting profiles shared with college coaches. Best used as supplementary exposure alongside direct coach outreach.', link:'https://www.prepstaramerica.com'},
+  {id:'i3', type:'id', name:'College coach on-site clinic', sports:['Football','Basketball','Soccer','Baseball','Softball','Volleyball','Swimming','Track','Lacrosse'], months:'Year-round', cost:'Free–$100', audience:'Any grade', desc:'Some college coaches run local clinics or visit club programs to evaluate athletes in their own environment. Ask your club coach to invite college coaches to practice.', link:''},
+  {id:'i4', type:'id', name:'NAIA ID Days', sports:['Football','Basketball','Soccer','Baseball','Softball','Volleyball'], months:'Jun–Aug', cost:'Often free', audience:'10th–12th grade', desc:'Many NAIA programs host informal ID days where prospects spend time with the coaching staff and current players. Lower-key than D1 camps but highly effective for NAIA recruiting.', link:'https://www.naia.org'},
+
+  // ── COMBINES ──
+  {id:'b1', type:'combine', name:'Nike Football Regional Combines', sports:['Football'], months:'Jan–Apr', cost:'$75–$150', audience:'10th–12th grade', desc:'Regional events measuring 40-yard dash, vertical jump, broad jump, shuttle, and position-specific drills. Results shared with college coaches through the Nike system.', link:'https://www.footballcamps.com/combines'},
+  {id:'b2', type:'combine', name:'NFL Regional Combines (HS division)', sports:['Football'], months:'Mar–May', cost:'$100–$200', audience:'10th–12th grade', desc:'High school division of the NFL-affiliated regional combine circuit. Measurables tracked and shared nationally.', link:'https://www.nflcombineresults.com'},
+  {id:'b3', type:'combine', name:'Perfect Game Combine Series', sports:['Baseball'], months:'Jan–May', cost:'$100–$200', audience:'9th–12th grade', desc:'Measures exit velocity, pitch velocity, 60-yard dash, and infield/outfield arm strength. One of the most widely referenced combine platforms in baseball.', link:'https://www.perfectgame.org/combines'},
+  {id:'b4', type:'combine', name:'Under Armour Football Combine', sports:['Football'], months:'Dec–Jan', cost:'Regional: $100 / National: invite only', audience:'11th–12th grade', desc:'One of the most prestigious HS football evaluation events. Top regional performers earn invitations to the national combine, which draws D1 coaching staffs.', link:'https://www.underarmour.com/football'},
+];
+
+const TYPE_META = {
+  camp:     {label:'College camp',   color:'var(--type-camp)',     bg:'var(--type-camp-bg)'},
+  showcase: {label:'Showcase',       color:'var(--type-showcase)', bg:'var(--type-showcase-bg)'},
+  visit:    {label:'Campus visit',   color:'var(--type-visit)',    bg:'var(--type-visit-bg)'},
+  id:       {label:'ID clinic',      color:'var(--type-id)',       bg:'var(--type-id-bg)'},
+  combine:  {label:'Combine',        color:'var(--type-combine)',  bg:'var(--type-combine-bg)'},
+  custom:   {label:'Custom',         color:'var(--type-custom)',   bg:'var(--type-custom-bg)'},
+};
+
+const SEASON_ORDER = ['Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Year-round','Invitation only','Varies','Club fees','Tournament fees','Entry fees','Team fees','Self-funded','Covered by school','Ticket cost (unofficial)'];
+
+/* ══════════════════════════════════════════
+   STATE
+══════════════════════════════════════════ */
+const STORAGE_KEY = 'recruiting_opportunities_v1';
+let activeType = 'all';
+let activeSport = 'all';
+let searchQuery = '';
+let plan = []; // array of {id, name, type, sports, month, note, custom}
+
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  loadPlan();
+
+  document.querySelectorAll('#type-pills .pill').forEach(p => {
+    p.addEventListener('click', () => {
+      document.querySelectorAll('#type-pills .pill').forEach(x => x.classList.remove('active'));
+      p.classList.add('active');
+      activeType = p.dataset.type;
+      renderDirectory();
+    });
+  });
+
+  document.querySelectorAll('#sport-pills .pill').forEach(p => {
+    p.addEventListener('click', () => {
+      document.querySelectorAll('#sport-pills .pill').forEach(x => x.classList.remove('active'));
+      p.classList.add('active');
+      activeSport = p.dataset.sport;
+      renderDirectory();
+    });
+  });
+
+  document.getElementById('search-input').addEventListener('input', e => {
+    searchQuery = e.target.value.toLowerCase();
+    renderDirectory();
+  });
+
+  renderDirectory();
+  renderPlan();
+});
+
+/* ══════════════════════════════════════════
+   DIRECTORY
+══════════════════════════════════════════ */
+function renderDirectory() {
+  const grid = document.getElementById('opp-grid');
+  const filtered = OPPORTUNITIES.filter(opp => {
+    const typeMatch = activeType === 'all' || opp.type === activeType;
+    const sportMatch = activeSport === 'all' || opp.sports.includes(activeSport);
+    const searchMatch = !searchQuery ||
+      opp.name.toLowerCase().includes(searchQuery) ||
+      opp.desc.toLowerCase().includes(searchQuery) ||
+      opp.sports.some(s => s.toLowerCase().includes(searchQuery));
+    return typeMatch && sportMatch && searchMatch;
+  });
+
+  document.getElementById('dir-count').textContent = filtered.length + ' opportunit' + (filtered.length === 1 ? 'y' : 'ies');
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="no-results">No opportunities match your filters.<br>Try adjusting sport or type, or add your own below.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(opp => {
+    const meta = TYPE_META[opp.type];
+    const inPlan = plan.some(p => p.id === opp.id);
+    return `
+    <div class="opp-card ${inPlan ? 'in-plan' : ''}" id="card-${opp.id}">
+      <div class="opp-card-top">
+        <span class="opp-type-tag" style="color:${meta.color};background:${meta.bg};">${meta.label}</span>
+      </div>
+      <div class="opp-name">${opp.name}</div>
+      <div class="opp-meta">
+        <span class="opp-meta-item">&#128197; ${opp.months}</span>
+        <span class="opp-meta-item">&#128181; ${opp.cost}</span>
+        <span class="opp-meta-item">&#127891; ${opp.audience}</span>
+      </div>
+      <div class="opp-desc">${opp.desc}</div>
+      <div class="opp-sports">${opp.sports.map(s => `<span class="sport-tag">${s}</span>`).join('')}</div>
+      ${opp.link ? `<div style="margin-bottom:8px;"><a href="${opp.link}" target="_blank" rel="noopener" style="font-size:11px;color:var(--accent);text-decoration:none;">Learn more &rarr;</a></div>` : ''}
+      <button class="add-btn ${inPlan ? 'added' : ''}" onclick="togglePlan('${opp.id}')" id="btn-${opp.id}">
+        ${inPlan ? '&#10003; Added to my schedule' : '+ Add to my schedule'}
+      </button>
+    </div>`;
+  }).join('');
+}
+
+/* ══════════════════════════════════════════
+   PLAN
+══════════════════════════════════════════ */
+function togglePlan(id) {
+  const existing = plan.findIndex(p => p.id === id);
+  if (existing >= 0) {
+    plan.splice(existing, 1);
+  } else {
+    const opp = OPPORTUNITIES.find(o => o.id === id);
+    if (!opp) return;
+    const month = opp.months.split('–')[0].replace('Year-round','Jun').replace('Invitation only','Jun').replace('Varies','Jun').replace('Club fees','Jun').replace('Tournament fees','Jun').replace('Entry fees','Jul').replace('Team fees','Mar').replace('Self-funded','Jun').replace('Covered by school','Sep');
+    plan.push({ id, name: opp.name, type: opp.type, sports: opp.sports, month: month.substring(0,3), note: '' });
+  }
+  savePlan();
+  renderPlan();
+  renderDirectory();
+}
+
+function renderPlan() {
+  const body = document.getElementById('plan-body');
+  document.getElementById('plan-count').textContent = plan.length + ' added';
+  document.getElementById('plan-actions').style.display = plan.length > 0 ? 'flex' : 'none';
+
+  if (plan.length === 0) {
+    body.innerHTML = `<div class="plan-empty">
+      <div class="plan-empty-icon">&#128197;</div>
+      Browse opportunities on the left and tap<br><strong>Add to my schedule</strong> to build your plan.<br><br>You can also add your own camps, visits, or showcases using the form below.
+    </div>`;
+    return;
+  }
+
+  // Group by season
+  const summer = plan.filter(p => ['Jun','Jul','Aug'].includes(p.month));
+  const fall   = plan.filter(p => ['Sep','Oct','Nov'].includes(p.month));
+  const winter = plan.filter(p => ['Dec','Jan','Feb'].includes(p.month));
+  const spring = plan.filter(p => ['Mar','Apr','May'].includes(p.month));
+  const other  = plan.filter(p => !['Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May'].includes(p.month));
+
+  const sections = [
+    {label:'Summer (Jun – Aug)', items: summer},
+    {label:'Fall (Sep – Nov)',   items: fall},
+    {label:'Winter (Dec – Feb)', items: winter},
+    {label:'Spring (Mar – May)', items: spring},
+    {label:'Other',              items: other},
+  ].filter(s => s.items.length > 0);
+
+  body.innerHTML = sections.map(section => `
+    <div class="plan-season">
+      <div class="plan-season-label">${section.label}</div>
+      ${section.items.map(item => {
+        const meta = TYPE_META[item.type] || TYPE_META.custom;
+        return `<div class="plan-item" id="plan-item-${item.id}">
+          <div class="plan-item-top">
+            <div>
+              <div class="plan-item-name">${item.name}</div>
+              <div class="plan-item-meta">
+                <span style="font-size:10px;font-weight:500;padding:1px 7px;border-radius:99px;background:${meta.bg};color:${meta.color};">${meta.label}</span>
+                &nbsp;${item.month}${item.sports && item.sports.length ? ' &middot; ' + item.sports.slice(0,2).join(', ') : ''}
+              </div>
+            </div>
+            <button class="plan-item-remove" onclick="removeFromPlan('${item.id}')" title="Remove">&times;</button>
+          </div>
+          <textarea class="plan-item-note" placeholder="Add notes — cost, location, coach name..." rows="1"
+            onchange="updateNote('${item.id}', this.value)"
+            oninput="autoResize(this)">${item.note || ''}</textarea>
+        </div>`;
+      }).join('')}
+    </div>`).join('');
+}
+
+function removeFromPlan(id) {
+  plan = plan.filter(p => p.id !== id);
+  savePlan();
+  renderPlan();
+  renderDirectory();
+}
+
+function updateNote(id, value) {
+  const item = plan.find(p => p.id === id);
+  if (item) { item.note = value; savePlan(); }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+
+/* ══════════════════════════════════════════
+   ADD CUSTOM
+══════════════════════════════════════════ */
+function addCustom() {
+  const name = document.getElementById('custom-name').value.trim();
+  if (!name) { document.getElementById('custom-name').focus(); return; }
+  const type  = document.getElementById('custom-type').value;
+  const month = document.getElementById('custom-month').value;
+  const sport = document.getElementById('custom-sport').value.trim();
+  const notes = document.getElementById('custom-notes').value.trim();
+  const id = 'custom-' + Date.now();
+  plan.push({ id, name, type, sports: sport ? [sport] : [], month, note: notes, custom: true });
+  document.getElementById('custom-name').value = '';
+  document.getElementById('custom-sport').value = '';
+  document.getElementById('custom-notes').value = '';
+  savePlan();
+  renderPlan();
+  flashSave();
+}
+
+/* ══════════════════════════════════════════
+   EXPORT
+══════════════════════════════════════════ */
+function exportPlan() {
+  if (plan.length === 0) return;
+  const lines = ['MY RECRUITING OPPORTUNITIES SCHEDULE', ''];
+  const sections = [
+    {label:'Summer (Jun – Aug)', months:['Jun','Jul','Aug']},
+    {label:'Fall (Sep – Nov)',   months:['Sep','Oct','Nov']},
+    {label:'Winter (Dec – Feb)', months:['Dec','Jan','Feb']},
+    {label:'Spring (Mar – May)', months:['Mar','Apr','May']},
+  ];
+  sections.forEach(s => {
+    const items = plan.filter(p => s.months.includes(p.month));
+    if (items.length === 0) return;
+    lines.push('== ' + s.label.toUpperCase() + ' ==');
+    items.forEach(item => {
+      lines.push('[ ] ' + item.name + (item.month ? ' (' + item.month + ')' : ''));
+      if (item.note) lines.push('    Notes: ' + item.note);
+    });
+    lines.push('');
+  });
+  lines.push('Generated with the College Athletic Recruiting Hub');
+  try { navigator.clipboard.writeText(lines.join('\n')); }
+  catch(e) { const ta = document.createElement('textarea'); ta.value = lines.join('\n'); document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }
+  const btn = event.target;
+  btn.textContent = 'Copied!';
+  setTimeout(() => btn.textContent = 'Copy plan as text', 2000);
+}
+
+function confirmClearPlan() {
+  if (confirm('Clear your entire schedule? This cannot be undone.')) {
+    plan = [];
+    savePlan();
+    renderPlan();
+    renderDirectory();
+  }
+}
+
+/* ══════════════════════════════════════════
+   LOCALSTORAGE
+══════════════════════════════════════════ */
+function savePlan() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(plan)); } catch(e) {}
+  flashSave();
+}
+
+function loadPlan() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) plan = JSON.parse(raw);
+  } catch(e) { plan = []; }
+}
+
+function flashSave() {
+  const ind = document.getElementById('save-indicator');
+  ind.classList.add('visible');
+  clearTimeout(window._saveTimer);
+  window._saveTimer = setTimeout(() => ind.classList.remove('visible'), 1800);
+}
+</script>
+</body>
+</html>
