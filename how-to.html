@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recruiting Skills Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #141410; --ink-mid: #4a4a44; --ink-soft: #8a8a80; --ink-faint: #d0d0c4;
+  --paper: #f7f6f1; --paper-warm: #efede5; --paper-card: #ffffff;
+  --border: rgba(20,20,16,0.1); --border-mid: rgba(20,20,16,0.2);
+  --accent: #1a5c3a; --accent-light: #e8f2ec; --accent-mid: #2d7a52;
+  --gold: #b8860b; --gold-light: #f5f0dc;
+  --blue: #1a3a5c; --blue-light: #e8eff8;
+  --rust: #8b3a1a; --rust-light: #f8ede8;
+  --purple: #3d2a7a; --purple-light: #eeedfe;
+  --teal: #0f6e56; --teal-light: #e1f5ee;
+  --radius: 6px; --radius-lg: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #f0efe8; --ink-mid: #b0b0a8; --ink-soft: #686860; --ink-faint: #383830;
+    --paper: #141410; --paper-warm: #1a1a14; --paper-card: #1e1e18;
+    --border: rgba(240,239,232,0.1); --border-mid: rgba(240,239,232,0.2);
+    --accent: #4aaa72; --accent-light: #0d2318; --accent-mid: #4aaa72;
+    --gold: #d4a020; --gold-light: #1e1a08;
+    --blue: #6a9fd4; --blue-light: #0a1828;
+    --rust: #d4724a; --rust-light: #1e0e08;
+    --purple: #9f8de0; --purple-light: #1a1230;
+    --teal: #4aaa90; --teal-light: #04201a;
+  }
+}
+
+body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; min-height: 100vh; }
+
+/* ── Masthead ── */
+.masthead { border-bottom: 1px solid var(--border); padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 54px; background: var(--paper); position: sticky; top: 0; z-index: 200; }
+.masthead-logo { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--ink); text-decoration: none; letter-spacing: -0.02em; }
+.masthead-logo span { color: var(--accent); font-style: italic; }
+.back-link { font-size: 13px; color: var(--ink-soft); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color .15s; }
+.back-link:hover { color: var(--ink); }
+
+/* ── Hero ── */
+.hero { max-width: 820px; margin: 0 auto; padding: 3.5rem 1.5rem 2.5rem; }
+.hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.hero-eyebrow::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
+.hero-title { font-family: 'DM Serif Display', serif; font-size: 36px; line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 14px; }
+.hero-title em { font-style: italic; color: var(--accent); }
+.hero-body { font-size: 15px; color: var(--ink-mid); line-height: 1.75; font-weight: 300; max-width: 560px; }
+
+/* ── Topic grid ── */
+.topic-section { max-width: 820px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+.topic-label { font-size: 11px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 1rem; }
+.topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; margin-bottom: 3rem; }
+.topic-card { background: var(--paper-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; cursor: pointer; transition: all .2s; position: relative; overflow: hidden; text-decoration: none; display: block; }
+.topic-card:hover { border-color: var(--border-mid); transform: translateY(-1px); }
+.topic-card.active { border-color: var(--accent); background: var(--accent-light); }
+.topic-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--accent); opacity: 0; transition: opacity .2s; }
+.topic-card.active::after, .topic-card:hover::after { opacity: 1; }
+.topic-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+.topic-icon svg { width: 17px; height: 17px; }
+.topic-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; color: var(--ink); }
+.topic-teaser { font-size: 12px; color: var(--ink-soft); line-height: 1.5; font-weight: 300; }
+.topic-arrow { font-size: 12px; color: var(--ink-faint); margin-top: 10px; transition: color .15s; }
+.topic-card:hover .topic-arrow, .topic-card.active .topic-arrow { color: var(--accent); }
+
+/* ── Deep dive ── */
+.deep-dive { background: var(--paper-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem 2.25rem; margin-bottom: 2rem; display: none; animation: slideDown .25s ease; }
+.deep-dive.open { display: block; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+.dive-close { float: right; background: none; border: 1px solid var(--border); border-radius: var(--radius); padding: 4px 12px; font-size: 12px; color: var(--ink-soft); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; margin-top: -4px; }
+.dive-close:hover { border-color: var(--ink); color: var(--ink); }
+.dive-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; }
+.dive-title { font-family: 'DM Serif Display', serif; font-size: 24px; letter-spacing: -0.02em; margin-bottom: 1rem; line-height: 1.2; }
+.dive-intro { font-size: 14px; color: var(--ink-mid); line-height: 1.8; margin-bottom: 1.75rem; font-weight: 300; }
+
+/* ── Deep dive content blocks ── */
+.dive-section { margin-bottom: 1.75rem; }
+.dive-section-title { font-size: 15px; font-weight: 500; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.dive-section-title::before { content: ''; display: inline-block; width: 3px; height: 16px; background: var(--accent); border-radius: 2px; flex-shrink: 0; }
+.dive-body { font-size: 13px; color: var(--ink-mid); line-height: 1.75; font-weight: 300; }
+.dive-body p { margin-bottom: 10px; }
+.dive-body p:last-child { margin-bottom: 0; }
+
+/* Principle cards */
+.principle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.principle-card { background: var(--paper-warm); border-radius: var(--radius); padding: 12px 14px; }
+.principle-num { font-size: 11px; font-weight: 500; color: var(--ink-soft); margin-bottom: 4px; }
+.principle-text { font-size: 13px; color: var(--ink-mid); line-height: 1.55; font-weight: 300; }
+
+/* Template blocks */
+.template-block { background: var(--paper-warm); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 1.25rem 1.5rem; margin-top: 10px; position: relative; }
+.template-label { font-size: 10px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.template-text { font-size: 13px; color: var(--ink-mid); line-height: 1.8; white-space: pre-wrap; font-family: 'DM Sans', sans-serif; }
+.template-text strong { color: var(--ink); font-weight: 500; }
+.copy-template-btn { position: absolute; top: 10px; right: 12px; background: none; border: 1px solid var(--border-mid); border-radius: var(--radius); padding: 3px 10px; font-size: 11px; color: var(--ink-soft); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; }
+.copy-template-btn:hover { border-color: var(--accent); color: var(--accent); }
+.copy-template-btn.copied { color: var(--accent); border-color: var(--accent); }
+
+/* Do / don't */
+.do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.do-block { background: var(--accent-light); border: 1px solid rgba(26,92,58,0.25); border-radius: var(--radius); padding: 1rem; }
+.dont-block { background: var(--rust-light); border: 1px solid rgba(139,58,26,0.2); border-radius: var(--radius); padding: 1rem; }
+.do-label { font-size: 10px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.dont-label { font-size: 10px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--rust); margin-bottom: 8px; }
+.do-item { font-size: 13px; color: var(--accent); line-height: 1.6; padding: 4px 0; border-bottom: 1px solid rgba(26,92,58,0.1); display: flex; gap: 7px; }
+.dont-item { font-size: 13px; color: var(--rust); line-height: 1.6; padding: 4px 0; border-bottom: 1px solid rgba(139,58,26,0.1); display: flex; gap: 7px; }
+.do-item:last-child, .dont-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+/* Steps */
+.steps { display: flex; flex-direction: column; gap: 0; margin-top: 10px; }
+.step-item { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.step-item:last-child { border-bottom: none; }
+.step-num { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; background: var(--accent-light); color: var(--accent); font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+.step-content { flex: 1; }
+.step-title { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+.step-body { font-size: 13px; color: var(--ink-mid); line-height: 1.6; font-weight: 300; }
+
+/* Callout */
+.callout { border-radius: var(--radius); padding: 1rem 1.25rem; margin: 14px 0; }
+.callout-blue { background: var(--blue-light); border: 1px solid rgba(26,58,92,0.2); }
+.callout-amber { background: var(--gold-light); border: 1px solid rgba(184,134,11,0.2); }
+.callout-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+.callout-blue .callout-title { color: var(--blue); }
+.callout-amber .callout-title { color: var(--gold); }
+.callout-body { font-size: 13px; line-height: 1.65; font-weight: 300; }
+.callout-blue .callout-body { color: var(--blue); }
+.callout-amber .callout-body { color: var(--gold); }
+
+/* Checklist */
+.checklist { list-style: none; margin-top: 10px; }
+.checklist li { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; color: var(--ink-mid); padding: 6px 0; border-bottom: 1px solid var(--border); line-height: 1.55; font-weight: 300; }
+.checklist li:last-child { border-bottom: none; }
+.check-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-top: 6px; flex-shrink: 0; }
+
+/* Progress pill */
+.progress-pill { display: inline-flex; align-items: center; gap: 6px; background: var(--accent-light); border: 1px solid rgba(26,92,58,0.2); border-radius: 99px; padding: 4px 12px; font-size: 12px; color: var(--accent); margin-top: 1.5rem; cursor: pointer; transition: all .15s; font-family: 'DM Sans', sans-serif; }
+.progress-pill:hover { background: var(--accent); color: #fff; }
+
+/* Mobile */
+@media (max-width: 600px) {
+  .hero { padding: 2.5rem 1.25rem 2rem; }
+  .hero-title { font-size: 26px; }
+  .topic-section { padding: 0 1.25rem 3rem; }
+  .deep-dive { padding: 1.5rem; }
+  .principle-grid, .do-dont { grid-template-columns: 1fr; }
+  .dive-title { font-size: 20px; }
+}
+
+/* Print */
+@media print {
+  .masthead { position: static !important; }
+  .deep-dive { display: block !important; break-inside: avoid; }
+  .topic-card { break-inside: avoid; }
+  @page { margin: 0.65in; }
+}
+
+.footer { border-top: 1px solid var(--border); padding: 1.5rem; text-align: center; font-size: 12px; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a class="masthead-logo" href="index.html">Recruiting<span>Hub</span></a>
+  <a class="back-link" href="index.html">&larr; Back to hub</a>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">Recruiting skills guide</div>
+  <h1 class="hero-title">How to do the <em>hard parts</em> well</h1>
+  <p class="hero-body">Knowing what to do is only half the battle. This guide covers the moments that matter most in recruiting — and gives you the actual words, scripts, and strategies to handle them with confidence.</p>
+</div>
+
+<div class="topic-section">
+  <div class="topic-label">Pick a topic</div>
+  <div class="topic-grid" id="topic-grid">
+
+    <div class="topic-card" data-topic="email" onclick="toggleTopic('email', this)">
+      <div class="topic-icon" style="background:#e8f2ec;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1a5c3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div class="topic-name">Emailing coaches</div>
+      <div class="topic-teaser">How to write a first contact email that gets a response — and how to follow up without being annoying.</div>
+      <div class="topic-arrow">Read guide &rarr;</div>
+    </div>
+
+    <div class="topic-card" data-topic="visit" onclick="toggleTopic('visit', this)">
+      <div class="topic-icon" style="background:#e8eff8;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1a3a5c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 00-8 8c0 5 8 12 8 12s8-7 8-12a8 8 0 00-8-8z"/></svg>
+      </div>
+      <div class="topic-name">Sponsored visits</div>
+      <div class="topic-teaser">What to expect on an official visit, how to prepare, and the questions you should absolutely ask.</div>
+      <div class="topic-arrow">Read guide &rarr;</div>
+    </div>
+
+    <div class="topic-card" data-topic="showcase" onclick="toggleTopic('showcase', this)">
+      <div class="topic-icon" style="background:#f5f0dc;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <div class="topic-name">Showcasing your skills</div>
+      <div class="topic-teaser">How to stand out at camps, showcases, and ID clinics — on the field and off it.</div>
+      <div class="topic-arrow">Read guide &rarr;</div>
+    </div>
+
+    <div class="topic-card" data-topic="video" onclick="toggleTopic('video', this)">
+      <div class="topic-icon" style="background:#f8ede8;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#8b3a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+      </div>
+      <div class="topic-name">Highlight videos</div>
+      <div class="topic-teaser">What coaches actually want to see, how to structure your video, and the mistakes that kill an otherwise good tape.</div>
+      <div class="topic-arrow">Read guide &rarr;</div>
+    </div>
+
+    <div class="topic-card" data-topic="verbal" onclick="toggleTopic('verbal', this)">
+      <div class="topic-icon" style="background:#eeedfe;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3d2a7a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+      <div class="topic-name">Verbal commitments</div>
+      <div class="topic-teaser">What a verbal commitment means, when to make one, and how to handle it if you change your mind.</div>
+      <div class="topic-arrow">Read guide &rarr;</div>
+    </div>
+
+    <div class="topic-card" data-topic="negotiate" onclick="toggleTopic('negotiate', this)">
+      <div class="topic-icon" style="background:#e1f5ee;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0f6e56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      </div>
+      <div class="topic-name">Negotiating offers</div>
+      <div class="topic-teaser">How to have the scholarship conversation with coaches — including what to say when you have competing offers.</div>
+      <div class="topic-arrow">Read guide &rarr;</div>
+    </div>
+
+    <div class="topic-card" data-topic="social" onclick="toggleTopic('social', this)">
+      <div class="topic-icon" style="background:#f5f0dc;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+      </div>
+      <div class="topic-name">Social media</div>
+      <div class="topic-teaser">How coaches use social media to evaluate recruits — and the profile mistakes that end recruiting conversations before they start.</div>
+      <div class="topic-arrow">Read guide &rarr;</div>
+    </div>
+
+    <div class="topic-card" data-topic="followup" onclick="toggleTopic('followup', this)">
+      <div class="topic-icon" style="background:#e8f2ec;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1a5c3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
+      </div>
+      <div class="topic-name">Following up</div>
+      <div class="topic-teaser">The art of staying on a coach's radar without becoming a pest — timing, frequency, and what to actually say.</div>
+      <div class="topic-arrow">Read guide &rarr;</div>
+    </div>
+
+    <div class="topic-card" data-topic="rejection" onclick="toggleTopic('rejection', this)">
+      <div class="topic-icon" style="background:#f8ede8;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#8b3a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+      </div>
+      <div class="topic-name">Handling rejection</div>
+      <div class="topic-teaser">What to do when a coach stops responding, pulls an offer, or says no — and how to keep moving forward.</div>
+      <div class="topic-arrow">Read guide &rarr;</div>
+    </div>
+
+  </div>
+
+  <!-- ══════════ DEEP DIVES ══════════ -->
+
+  <!-- EMAIL -->
+  <div class="deep-dive" id="dive-email">
+    <button class="dive-close" onclick="closeTopic('email')">Close &times;</button>
+    <div class="dive-eyebrow">Skill guide</div>
+    <h2 class="dive-title">Emailing coaches</h2>
+    <div class="dive-intro">A cold email to a college coach is one of the most powerful recruiting tools you have — and one of the most misused. Coaches receive dozens of emails a week. Most are ignored because they're generic, too long, or clearly written by a parent. The ones that get responses are short, personal, and written by the athlete.</div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">Why most emails fail</div>
+      <div class="dive-body"><p>The biggest mistake is treating the email like a résumé blast — copying the same message to 30 coaches and hoping something sticks. Coaches can tell instantly. The second mistake is length. If your email is more than 4 short paragraphs, it's too long. Coaches read on phones between practice sessions. They're not reading a wall of text.</p><p>The third mistake — and coaches notice this immediately — is when the email is clearly written by a parent. The vocabulary is too formal, the tone is too salesy, the grammar is suspiciously perfect. Coaches are recruiting you, not your parents. Write it yourself.</p></div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">The four principles of a good first email</div>
+      <div class="principle-grid">
+        <div class="principle-card"><div class="principle-num">01 — Be specific</div><div class="principle-text">Mention something real about their program — a game you watched, a player you admire, the school's academic strength in your intended major. Generic praise is a red flag.</div></div>
+        <div class="principle-card"><div class="principle-num">02 — Lead with who you are</div><div class="principle-text">Name, graduation year, position, and club team in the first sentence. Coaches should know exactly who they're reading about within three seconds.</div></div>
+        <div class="principle-card"><div class="principle-num">03 — Make it easy to evaluate you</div><div class="principle-text">One link to your highlight video. One line of key stats. Don't make them work to find out if you're worth a response.</div></div>
+        <div class="principle-card"><div class="principle-num">04 — End with a question</div><div class="principle-text">Ask something specific — about their upcoming camp, recruiting timeline, or what they look for at your position. Give them a reason to reply.</div></div>
+      </div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">First contact email template</div>
+      <div class="template-block" id="tpl-email-first">
+        <div class="template-label">Copy and personalize</div>
+        <button class="copy-template-btn" onclick="copyTemplate('tpl-email-first')">Copy</button>
+        <div class="template-text">Subject: <strong>[Your Name] | Class of [Year] | [Position] | [Club Team]</strong>
+
+Coach [Last Name],
+
+My name is [Your Name], a class of [Year] [position] from [City, State] currently playing for [Club Team]. I've been following [School Name]'s program closely and was impressed by [specific detail — a recent result, their coaching staff, a specific player's development].
+
+Here are my current stats and a link to my highlight video:
+– [Key stat 1, e.g. "3.4 GPA / 1250 SAT"]
+– [Key stat 2, e.g. "GK, 12 shutouts this season"]
+– Highlight video: [link]
+– [Club team] schedule: [link if available]
+
+I'll be competing at [upcoming tournament or showcase] on [dates] if you're able to attend. Are you hosting any camps or visits this summer where I could come see your program?
+
+Thank you for your time.
+
+[Your Name]
+[Phone number]
+[Grad year | Position | Club team]</div>
+      </div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">Subject line matters more than you think</div>
+      <div class="dive-body"><p>The subject line determines whether the email gets opened. The formula that works: <strong>[Your Name] | Class of [Year] | [Position] | [Club Team]</strong>. This gives the coach all the context they need before opening. Do not write "Prospective Student Athlete" or "Interested in Your Program." Those get deleted.</p></div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">What to do and what to avoid</div>
+      <div class="do-dont">
+        <div class="do-block">
+          <div class="do-label">Do this</div>
+          <div class="do-item"><span>+</span>Write it yourself in your own voice</div>
+          <div class="do-item"><span>+</span>Personalize every email to the specific program</div>
+          <div class="do-item"><span>+</span>Keep it under 250 words</div>
+          <div class="do-item"><span>+</span>Include one clear link to your video</div>
+          <div class="do-item"><span>+</span>End with a specific question</div>
+          <div class="do-item"><span>+</span>Proofread it — spelling errors kill credibility</div>
+        </div>
+        <div class="dont-block">
+          <div class="dont-label">Avoid this</div>
+          <div class="dont-item"><span>&minus;</span>Copy-pasting the same email to everyone</div>
+          <div class="dont-item"><span>&minus;</span>Listing every award you've ever received</div>
+          <div class="dont-item"><span>&minus;</span>Having a parent write or heavily edit it</div>
+          <div class="dont-item"><span>&minus;</span>Attaching a résumé to a first email</div>
+          <div class="dont-item"><span>&minus;</span>Emailing the same coach multiple times in one week</div>
+          <div class="dont-item"><span>&minus;</span>Writing a subject line like "Hi Coach"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VISIT -->
+  <div class="deep-dive" id="dive-visit">
+    <button class="dive-close" onclick="closeTopic('visit')">Close &times;</button>
+    <div class="dive-eyebrow">Skill guide</div>
+    <h2 class="dive-title">Making the most of sponsored visits</h2>
+    <div class="dive-intro">An official visit is one of the most important 48 hours of the recruiting process. The school is investing real money to show you their program at its best. Coaches are also evaluating you — your maturity, your curiosity, how you interact with current players. Come prepared.</div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">Before you go</div>
+      <div class="steps">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content"><div class="step-title">Research the program deeply</div><div class="step-body">Know their recent record, key players, coaching staff names, and the school's academic reputation in your intended major. Coaches notice when recruits have done their homework — and when they haven't.</div></div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content"><div class="step-title">Prepare your questions</div><div class="step-body">Write down 8–10 genuine questions before you go. You won't ask all of them, but having them ready means you're never standing there in silence. See the question list below.</div></div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content"><div class="step-title">Talk to current players beforehand</div><div class="step-body">If possible, reach out to a player on the team on social media before the visit. Ask what they wish they'd known before committing. Players are more honest away from coaches than during the formal visit.</div></div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-content"><div class="step-title">Plan your evaluation criteria</div><div class="step-body">Decide in advance what matters most to you — team culture, facilities, coaching staff relationships, academics, distance from home. Write it down. It's easy to get swept up by the show and forget what you're actually evaluating.</div></div></div>
+      </div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">Questions to ask coaches</div>
+      <ul class="checklist">
+        <li><span class="check-dot"></span>"What does a typical week look like for athletes in season — and in the off-season?"</li>
+        <li><span class="check-dot"></span>"What do you see as my role on the team in year one? Year two?"</li>
+        <li><span class="check-dot"></span>"How do you handle scholarship renewals? What circumstances would lead to a reduction?"</li>
+        <li><span class="check-dot"></span>"What happens to my scholarship if I get injured?"</li>
+        <li><span class="check-dot"></span>"How do you support athletes who are struggling academically?"</li>
+        <li><span class="check-dot"></span>"What do most of your athletes do after their playing career ends here?"</li>
+        <li><span class="check-dot"></span>"How would you describe your coaching style? How do you handle conflict with players?"</li>
+        <li><span class="check-dot"></span>"What's the culture like when things aren't going well — after a losing streak?"</li>
+      </ul>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">Questions to ask current players (away from coaches)</div>
+      <ul class="checklist">
+        <li><span class="check-dot"></span>"What do you wish you'd known before you committed here?"</li>
+        <li><span class="check-dot"></span>"How does the coaching staff actually treat players day-to-day?"</li>
+        <li><span class="check-dot"></span>"Is it realistic to keep up academically with the practice schedule?"</li>
+        <li><span class="check-dot"></span>"What's the social life like? Do athletes mix with the general student body?"</li>
+        <li><span class="check-dot"></span>"Would you make the same choice again?"</li>
+      </ul>
+    </div>
+
+    <div class="callout callout-amber">
+      <div class="callout-title">The visit is also an audition</div>
+      <div class="callout-body">Coaches are watching how you carry yourself the entire time — not just in formal meetings. How you interact with players, whether you ask thoughtful questions, whether you're on your phone during dinner. Be present, be curious, and treat everyone well. The recruit who impresses the players often impresses the coach.</div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">After the visit</div>
+      <div class="dive-body"><p>Send a thank-you email to the head coach within 24 hours. Keep it brief — two or three sentences. Mention one specific thing from the visit that stood out to you. It doesn't need to be elaborate. It just needs to be genuine and timely.</p></div>
+      <div class="template-block" id="tpl-thankyou">
+        <div class="template-label">Thank-you email template</div>
+        <button class="copy-template-btn" onclick="copyTemplate('tpl-thankyou')">Copy</button>
+        <div class="template-text">Coach [Last Name],
+
+Thank you for the incredible visit this weekend. Getting to see [specific detail — the facilities, meeting the players, watching practice] gave me a much clearer picture of what your program is about.
+
+I left even more excited about the possibility of being part of [School Name]. I'll be in touch soon.
+
+[Your Name]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHOWCASE -->
+  <div class="deep-dive" id="dive-showcase">
+    <button class="dive-close" onclick="closeTopic('showcase')">Close &times;</button>
+    <div class="dive-eyebrow">Skill guide</div>
+    <h2 class="dive-title">Showcasing your skills</h2>
+    <div class="dive-intro">Showcases, camps, and ID clinics are auditions — but they're not just about being the most talented player in the room. Coaches at these events are evaluating your coachability, your competitiveness, how you handle mistakes, and whether you'd be a good teammate. Talent gets you noticed. Everything else gets you recruited.</div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">Before the event</div>
+      <div class="steps">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content"><div class="step-title">Email coaches who will be attending</div><div class="step-body">If you know which college coaches will be at an event, email them beforehand. Let them know you'll be there, your jersey number or team, and what to look for. This takes 5 minutes and dramatically increases your chances of being noticed.</div></div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content"><div class="step-title">Know your jersey number and make it visible</div><div class="step-body">This sounds obvious but recruits fail at this constantly. Coaches are writing down numbers on clipboards. If your number is hard to read or you don't know it confidently, you're invisible.</div></div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content"><div class="step-title">Prepare mentally, not just physically</div><div class="step-body">Nerves cause athletes to play conservatively — avoiding mistakes rather than making plays. Decide in advance that you're going to be aggressive and expressive. Coaches don't recruit athletes who look like they're trying not to fail.</div></div></div>
+      </div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">During the event</div>
+      <div class="do-dont">
+        <div class="do-block">
+          <div class="do-label">Stand out by doing this</div>
+          <div class="do-item"><span>+</span>Hustle on every single play — coaches watch effort first</div>
+          <div class="do-item"><span>+</span>Be visibly coachable — nod, implement feedback immediately</div>
+          <div class="do-item"><span>+</span>Communicate loudly and positively with teammates</div>
+          <div class="do-item"><span>+</span>Recover from mistakes quickly — next play mentality</div>
+          <div class="do-item"><span>+</span>Introduce yourself to coaches after sessions if possible</div>
+        </div>
+        <div class="dont-block">
+          <div class="dont-label">These get you crossed off the list</div>
+          <div class="dont-item"><span>&minus;</span>Jogging when you should be sprinting</div>
+          <div class="dont-item"><span>&minus;</span>Arguing with coaches or officials</div>
+          <div class="dont-item"><span>&minus;</span>Visibly sulking after a mistake</div>
+          <div class="dont-item"><span>&minus;</span>Looking into the stands for your parents</div>
+          <div class="dont-item"><span>&minus;</span>Being on your phone between sessions</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">After the event — the step most athletes skip</div>
+      <div class="dive-body"><p>Within 24 hours of a showcase, email every coach who was present — especially any who spoke to you or watched your sessions closely. Reference something specific: "I appreciated the feedback on my footwork during the afternoon session." Most athletes don't do this. It immediately separates you.</p></div>
+      <div class="template-block" id="tpl-showcase">
+        <div class="template-label">Post-showcase follow-up email</div>
+        <button class="copy-template-btn" onclick="copyTemplate('tpl-showcase')">Copy</button>
+        <div class="template-text">Coach [Last Name],
+
+I wanted to follow up after this weekend's [Event Name]. I'm [Your Name], class of [Year], [position] — I was wearing [jersey/team] and had the chance to [brief detail if you interacted].
+
+I really enjoyed competing there and hope you had a chance to see me play. I'm very interested in [School Name]'s program and would love to stay in touch as you evaluate your [year] class.
+
+My highlight video is at [link] and I'm happy to provide any additional footage. What does your recruiting calendar look like for the coming months?
+
+[Your Name]
+[Contact info]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIDEO -->
+  <div class="deep-dive" id="dive-video">
+    <button class="dive-close" onclick="closeTopic('video')">Close &times;</button>
+    <div class="dive-eyebrow">Skill guide</div>
+    <h2 class="dive-title">Highlight videos that actually work</h2>
+    <div class="dive-intro">Most highlight videos are too long, start too slow, and bury the best clips. Coaches make up their minds in the first 60 seconds. Everything after that either confirms what they already think — or they've already stopped watching.</div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">What coaches are actually looking for</div>
+      <div class="dive-body"><p>It depends on the sport, but universally coaches want to see athleticism, decision-making under pressure, and competitiveness. They're not looking for a clip where everything went right in a blowout game. They want to see how you perform in close games, against good competition, in difficult situations.</p><p>They're also looking for coachability signals in the footage — do you celebrate teammates? Do you recover quickly from mistakes? Do you clearly understand your role in the system?</p></div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">Video structure that works</div>
+      <div class="steps">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content"><div class="step-title">Title card (5 seconds)</div><div class="step-body">Name, graduation year, position, height/weight, school, club team, contact info. This is metadata coaches need. Put it first.</div></div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content"><div class="step-title">Your absolute best 3–4 clips (first 60 seconds)</div><div class="step-body">Lead with your most impressive plays. Not warmup clips. Not clips where you're standing around waiting. The best thing you have, immediately.</div></div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content"><div class="step-title">Variety in the middle (next 2–3 minutes)</div><div class="step-body">Show different aspects of your game. If you're a point guard, show finishing, passing, and defense — not just scoring. If you're a center back, show defending, distribution, and aerial ability.</div></div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-content"><div class="step-title">Competition level context</div><div class="step-body">Mix in clips against quality opponents. Coaches discount footage from blowouts against weak competition. If the scoreboard or opponent is visible, leave it in.</div></div></div>
+        <div class="step-item"><div class="step-num">5</div><div class="step-content"><div class="step-title">Keep the total length under 5 minutes</div><div class="step-body">3–4 minutes is ideal. If you have more than that worth of great clips, you have the luxury of a problem — but most coaches will stop before 5 minutes regardless.</div></div></div>
+      </div>
+    </div>
+
+    <div class="callout callout-blue">
+      <div class="callout-title">Make it easy to find you in the footage</div>
+      <div class="callout-body">Your jersey number should be clearly visible in every clip. If the camera angle makes it hard to see you, add a circle or arrow to highlight you. Coaches shouldn't have to guess which player they're watching. Also include your jersey number in the title card.</div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">Common mistakes that hurt good athletes</div>
+      <div class="dive-body">
+        <p><strong>Long intros and music builds.</strong> Starting with 20 seconds of your name fading in over dramatic music means you've lost 30% of coaches before the first clip plays.</p>
+        <p><strong>Clips in slow motion.</strong> Slow-motion hides athleticism, it doesn't enhance it. Use regular speed unless you're highlighting a specific technical detail.</p>
+        <p><strong>No titles on the video.</strong> Coaches watch dozens of videos. If your name and contact info aren't in the video itself, you might get lost.</p>
+        <p><strong>Using YouTube and setting it to private.</strong> If a coach has to request access, most won't. Use Hudl, or set YouTube to unlisted at minimum.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- VERBAL -->
+  <div class="deep-dive" id="dive-verbal">
+    <button class="dive-close" onclick="closeTopic('verbal')">Close &times;</button>
+    <div class="dive-eyebrow">Skill guide</div>
+    <h2 class="dive-title">Verbal commitments</h2>
+    <div class="dive-intro">A verbal commitment is not legally binding — but it is a serious promise. Understanding what you're agreeing to, and how to handle it if circumstances change, is one of the most important things to get right in recruiting.</div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">What a verbal commitment actually means</div>
+      <div class="dive-body"><p>A verbal commitment is an informal agreement between you and a program that you intend to sign with them when the signing period opens. Neither side is legally bound — you can back out, and so can the coach. However, both sides treat it as a serious commitment, and backing out (from either side) has reputational consequences.</p><p>Verbally committing too early — before you've visited, before you've done your research — is a common mistake. The excitement of a D1 offer can make an athlete rush a decision they later regret. Take the time you need.</p></div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">Before you commit verbally, ask yourself</div>
+      <ul class="checklist">
+        <li><span class="check-dot"></span>Have I visited campus and spent real time with the coaching staff and players?</li>
+        <li><span class="check-dot"></span>Do I genuinely want to go to this school — not just play for this program?</li>
+        <li><span class="check-dot"></span>Have I compared the financial offer to other options?</li>
+        <li><span class="check-dot"></span>Do I understand what happens if the coach leaves or the staff changes?</li>
+        <li><span class="check-dot"></span>Am I committing because I'm excited, or because I've thought it through?</li>
+      </ul>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">If you need to back out of a verbal commitment</div>
+      <div class="dive-body"><p>It happens. Coaches leave. Family circumstances change. You visit another school and realize it's a better fit. Here's how to handle it with integrity:</p><p>Call the coach — don't email. Be honest and direct. Thank them for the offer and their time. You don't owe them a detailed explanation, but you do owe them a personal conversation. Do this as early as possible. The longer you wait, the more it hurts the program and the worse it reflects on you.</p></div>
+      <div class="template-block" id="tpl-decommit">
+        <div class="template-label">Decommit call script (key points)</div>
+        <button class="copy-template-btn" onclick="copyTemplate('tpl-decommit')">Copy</button>
+        <div class="template-text">Coach [Last Name],
+
+I want to call you personally because I owe you that. I've given this a lot of thought and I've made the difficult decision to reopen my recruiting. This was not an easy decision and it doesn't reflect on you or your program — I have tremendous respect for what you've built there.
+
+I wanted to tell you directly and as soon as possible so you can move forward with your class. Thank you for everything you invested in recruiting me.
+
+[Be prepared for them to ask why. You can be honest without being unkind.]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEGOTIATE -->
+  <div class="deep-dive" id="dive-negotiate">
+    <button class="dive-close" onclick="closeTopic('negotiate')">Close &times;</button>
+    <div class="dive-eyebrow">Skill guide</div>
+    <h2 class="dive-title">Negotiating scholarship offers</h2>
+    <div class="dive-intro">Scholarship offers are not always take-it-or-leave-it. In many cases — especially at D2, NAIA, and D3 programs with merit aid — there's room to have a conversation. The key is doing it professionally, without burning the relationship.</div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">When negotiation is and isn't appropriate</div>
+      <div class="dive-body"><p><strong>D1 headcount sports</strong> (football, basketball, gymnastics, volleyball, tennis) offer full scholarships — there's nothing to negotiate on the athletic side, though you can still ask about academic merit aid stacking.</p><p><strong>D1 equivalency sports, D2, and NAIA</strong> are where negotiation is most common. Coaches split scholarships among many players, and an offer of 30% or 50% can sometimes be improved — particularly if you have a competing offer at a similar level.</p><p><strong>D3</strong> has no athletic scholarships, but institutional merit aid is negotiable the same way it is for any applicant. The financial aid office — not the coaching staff — is your contact here.</p></div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">How to have the conversation</div>
+      <div class="dive-body"><p>The athlete should make this call, not the parent. Frame it as transparency, not a demand. Express genuine interest in the program first — then raise the financial question. Coaches respect recruits who are direct and honest about their situation. They do not respond well to ultimatums.</p></div>
+      <div class="template-block" id="tpl-negotiate">
+        <div class="template-label">Scholarship conversation script</div>
+        <button class="copy-template-btn" onclick="copyTemplate('tpl-negotiate')">Copy</button>
+        <div class="template-text">Coach [Last Name],
+
+I want to be transparent with you because I genuinely respect your program. [School Name] is my top choice, but I want to be honest that I have another offer from [School] at [level / amount].
+
+I'm not trying to play programs against each other — I just want to make sure I'm giving [School Name] a real chance, and I wanted to ask whether there's any flexibility in the scholarship package before I make my final decision.
+
+[Wait for their response. Be prepared for yes, no, or "let me talk to my staff." All are fine answers.]</div>
+      </div>
+    </div>
+
+    <div class="callout callout-amber">
+      <div class="callout-title">Never misrepresent a competing offer</div>
+      <div class="callout-body">Coaches talk to each other. If you inflate a competing offer or claim one that doesn't exist, it will get back to the coach you're trying to negotiate with — and you'll lose both programs. Be accurate about what you've actually been offered.</div>
+    </div>
+  </div>
+
+  <!-- SOCIAL -->
+  <div class="deep-dive" id="dive-social">
+    <button class="dive-close" onclick="closeTopic('social')">Close &times;</button>
+    <div class="dive-eyebrow">Skill guide</div>
+    <h2 class="dive-title">Social media during recruiting</h2>
+    <div class="dive-intro">Coaches check social media. This is not speculation — it's standard practice at every level of college athletics. Your profiles are part of your recruiting profile whether you treat them that way or not.</div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">What coaches are looking for</div>
+      <div class="dive-body"><p>Coaches aren't expecting perfection. They're looking for red flags — evidence of poor judgment, bad character, or behavior that would reflect poorly on the program. A single post can end a recruitment that took years to build. On the positive side, athletes who use social media to highlight their work ethic, teamwork, and character can reinforce what coaches see on the field.</p></div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">The rules</div>
+      <div class="do-dont">
+        <div class="do-block">
+          <div class="do-label">Work in your favor</div>
+          <div class="do-item"><span>+</span>Post game highlights and training clips</div>
+          <div class="do-item"><span>+</span>Celebrate teammates publicly</div>
+          <div class="do-item"><span>+</span>Show academic achievements</div>
+          <div class="do-item"><span>+</span>Follow programs you're interested in</div>
+          <div class="do-item"><span>+</span>Keep your profiles easy to find</div>
+        </div>
+        <div class="dont-block">
+          <div class="dont-label">These end recruitments</div>
+          <div class="dont-item"><span>&minus;</span>Anything involving alcohol or drugs</div>
+          <div class="dont-item"><span>&minus;</span>Profanity, especially directed at others</div>
+          <div class="dont-item"><span>&minus;</span>Complaining about coaches or teammates</div>
+          <div class="dont-item"><span>&minus;</span>Controversial political or social posts</div>
+          <div class="dont-item"><span>&minus;</span>Posts that show poor sportsmanship</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-blue">
+      <div class="callout-title">Private doesn't mean invisible</div>
+      <div class="callout-body">Setting your account to private doesn't protect you. Screenshots travel. Coaches have eyes in your school and your club program. Behave online the same way you would in front of a coaching staff — because at some point, you probably are.</div>
+    </div>
+  </div>
+
+  <!-- FOLLOW UP -->
+  <div class="deep-dive" id="dive-followup">
+    <button class="dive-close" onclick="closeTopic('followup')">Close &times;</button>
+    <div class="dive-eyebrow">Skill guide</div>
+    <h2 class="dive-title">The art of following up</h2>
+    <div class="dive-intro">Staying on a coach's radar is one of the most important — and most awkward — parts of recruiting. Too little contact and you get forgotten. Too much and you become a nuisance. The difference is giving coaches a real reason to hear from you each time.</div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">The golden rule of follow-up</div>
+      <div class="dive-body"><p>Every follow-up email should contain new information. A new stat line. A new highlight clip. An upcoming tournament they might attend. An update on your GPA. If you have nothing new to say, wait until you do. "Just checking in" emails accomplish nothing and signal that you have nothing to offer.</p></div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">What counts as a good reason to follow up</div>
+      <ul class="checklist">
+        <li><span class="check-dot"></span>A strong performance in a recent game or tournament</li>
+        <li><span class="check-dot"></span>A new or updated highlight video</li>
+        <li><span class="check-dot"></span>An upcoming showcase or camp they might attend</li>
+        <li><span class="check-dot"></span>An academic achievement (GPA update, SAT/ACT score)</li>
+        <li><span class="check-dot"></span>A question about their program or recruiting timeline</li>
+        <li><span class="check-dot"></span>After attending one of their games or camps</li>
+      </ul>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">Follow-up email template</div>
+      <div class="template-block" id="tpl-followup">
+        <div class="template-label">Update email — copy and personalize</div>
+        <button class="copy-template-btn" onclick="copyTemplate('tpl-followup')">Copy</button>
+        <div class="template-text">Coach [Last Name],
+
+I wanted to give you a quick update. We competed at [tournament/event] this past weekend and [brief result — "went 4-0 and I had X goals / X shutouts / recorded X stats"]. I've added a few new clips to my highlight video if you'd like to take a look: [link]
+
+I remain very interested in [School Name]'s program and would love to visit campus when your schedule allows. Are you attending any events in [region] this season?
+
+[Your Name] | Class of [Year] | [Position]</div>
+      </div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">If a coach goes quiet</div>
+      <div class="dive-body"><p>Coaches going quiet doesn't always mean no. They get busy, they're evaluating other players, their recruiting timeline shifted. Send one more substantive email. If there's still no response after two attempts with real news, move that school lower on your priority list and focus your energy elsewhere. Don't send a third unprompted email to a coach who hasn't responded to the first two.</p></div>
+    </div>
+  </div>
+
+  <!-- REJECTION -->
+  <div class="deep-dive" id="dive-rejection">
+    <button class="dive-close" onclick="closeTopic('rejection')">Close &times;</button>
+    <div class="dive-eyebrow">Skill guide</div>
+    <h2 class="dive-title">Handling rejection</h2>
+    <div class="dive-intro">Rejection is part of every athlete's recruiting experience — even elite prospects get turned down. How you handle it says a lot about your character, and how you respond can actually open doors you didn't know were there.</div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">Types of rejection and how to read them</div>
+      <div class="steps">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content"><div class="step-title">The silent coach</div><div class="step-body">A coach who stops responding is not necessarily saying no. They might be waiting on other recruits, mid-season, or their class filled. After two unanswered follow-ups, move on. Don't burn the bridge — just redirect your energy.</div></div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content"><div class="step-title">The "not the right fit" response</div><div class="step-body">This is a real no, but a respectful one. Reply with a short thank-you. Coaches remember athletes who respond graciously — and sometimes they refer recruits to other programs or reconsider down the road.</div></div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content"><div class="step-title">The pulled offer</div><div class="step-body">This is rare and painful. It can happen due to academic eligibility issues, a behavioral incident, or the program's needs changing. If it happens, address the underlying issue if there is one, and accelerate your outreach to other programs immediately.</div></div></div>
+      </div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">How to respond to a "no"</div>
+      <div class="template-block" id="tpl-reject">
+        <div class="template-label">Response to a rejection email — short and professional</div>
+        <button class="copy-template-btn" onclick="copyTemplate('tpl-reject')">Copy</button>
+        <div class="template-text">Coach [Last Name],
+
+Thank you for letting me know and for the time you invested in evaluating me. I have a great deal of respect for your program and I wish you and your team a successful season.
+
+[Your Name]</div>
+      </div>
+    </div>
+
+    <div class="dive-section">
+      <div class="dive-section-title">What to do next</div>
+      <div class="dive-body"><p>Don't let a rejection slow your outreach. The best response to a no is to get back to work immediately — update your highlight video, send three new emails to programs you haven't contacted yet, sign up for an upcoming showcase. Momentum matters in recruiting. Recruits who keep competing and keep improving often land somewhere better than where they originally hoped.</p></div>
+    </div>
+
+    <div class="callout callout-blue">
+      <div class="callout-title">Fit matters as much as talent</div>
+      <div class="callout-body">A rejection from one program is often just a signal that you're not the right fit for their specific system, roster needs, or culture — not a judgment on your ability. Many athletes who get turned down by their top program end up thriving somewhere that was a better fit. Stay open to the full range of options.</div>
+    </div>
+  </div>
+
+  <div class="footer" style="max-width:820px;margin:0 auto;">Recruiting Skills Guide &mdash; part of the <a href="index.html" style="color:var(--accent);text-decoration:none;">College Athletic Recruiting Hub</a> &mdash; free to use and share</div>
+
+</div><!-- /topic-section -->
+
+<script>
+let openTopic = null;
+
+function toggleTopic(id, card) {
+  if (openTopic === id) {
+    closeTopic(id);
+    return;
+  }
+  if (openTopic) closeTopic(openTopic, false);
+
+  openTopic = id;
+  document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+
+  const dive = document.getElementById('dive-' + id);
+  const grid = document.getElementById('topic-grid');
+
+  // Insert dive after the grid
+  grid.parentNode.insertBefore(dive, grid.nextSibling);
+  dive.classList.add('open');
+  dive.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeTopic(id, scroll) {
+  const dive = document.getElementById('dive-' + id);
+  dive.classList.remove('open');
+  document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('active'));
+  openTopic = null;
+}
+
+function copyTemplate(blockId) {
+  const block = document.getElementById(blockId);
+  const text = block.querySelector('.template-text').innerText;
+  const btn = block.querySelector('.copy-template-btn');
+  try { navigator.clipboard.writeText(text); }
+  catch(e) { const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }
+  btn.textContent = 'Copied!';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+}
+</script>
+</body>
+</html>
