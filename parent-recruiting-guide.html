@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parent's Guide to College Athletic Recruiting</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg-primary: #ffffff; --bg-secondary: #f5f5f3; --bg-tertiary: #eeede8;
+  --text-primary: #1a1a18; --text-secondary: #5f5e5a; --text-tertiary: #888780;
+  --border-light: rgba(0,0,0,0.1); --border-mid: rgba(0,0,0,0.18);
+  --blue-bg: #E6F1FB; --blue-border: #378ADD; --blue-text: #0C447C;
+  --green-bg: #EAF3DE; --green-border: #639922; --green-text: #27500A;
+  --amber-bg: #FAEEDA; --amber-border: #BA7517; --amber-text: #633806;
+  --pink-bg: #FBEAF0; --pink-border: #D4537E; --pink-text: #72243E;
+  --red-bg: #FCEBEB; --red-border: #E24B4A; --red-text: #A32D2D;
+  --teal-bg: #E1F5EE; --teal-border: #1D9E75; --teal-text: #085041;
+  --success: #1D9E75; --danger: #E24B4A;
+  --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #1e1e1c; --bg-secondary: #2a2a28; --bg-tertiary: #242422;
+    --text-primary: #f0efe8; --text-secondary: #b4b2a9; --text-tertiary: #888780;
+    --border-light: rgba(255,255,255,0.1); --border-mid: rgba(255,255,255,0.18);
+    --blue-bg: #0c2d4a; --blue-border: #378ADD; --blue-text: #85B7EB;
+    --green-bg: #1a2e0a; --green-border: #639922; --green-text: #C0DD97;
+    --amber-bg: #2e1f00; --amber-border: #BA7517; --amber-text: #FAC775;
+    --pink-bg: #2e0f1e; --pink-border: #D4537E; --pink-text: #F4C0D1;
+    --red-bg: #2e0a0a; --red-border: #E24B4A; --red-text: #F09595;
+    --teal-bg: #042e20; --teal-border: #1D9E75; --teal-text: #9FE1CB;
+  }
+}
+
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg-tertiary); color: var(--text-primary); line-height: 1.7; min-height: 100vh; }
+
+/* ── Header ── */
+.page-header { background: var(--bg-primary); border-bottom: 0.5px solid var(--border-light); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.page-header-title { font-size: 15px; font-weight: 500; }
+.page-header-sub { font-size: 12px; color: var(--text-tertiary); margin-top: 1px; }
+.companion-link { font-size: 12px; color: var(--blue-text); text-decoration: none; border: 0.5px solid var(--blue-border); border-radius: 99px; padding: 4px 12px; transition: all .15s; background: var(--blue-bg); }
+.companion-link:hover { background: var(--blue-border); color: #fff; }
+
+/* ── Layout ── */
+.container { max-width: 680px; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
+
+/* ── Nav ── */
+.section-nav { background: var(--bg-primary); border: 0.5px solid var(--border-light); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin-bottom: 2rem; }
+.nav-label { font-size: 11px; font-weight: 500; letter-spacing: .07em; color: var(--text-tertiary); text-transform: uppercase; margin-bottom: 10px; }
+.nav-links { display: flex; flex-direction: column; gap: 4px; }
+.nav-link { font-size: 13px; color: var(--blue-text); text-decoration: none; padding: 3px 0; display: flex; align-items: center; gap: 6px; }
+.nav-link:hover { text-decoration: underline; }
+.nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── Hero ── */
+.hero { margin-bottom: 2.5rem; }
+.hero-eyebrow { font-size: 12px; font-weight: 500; letter-spacing: .07em; color: var(--text-tertiary); text-transform: uppercase; margin-bottom: 10px; }
+.hero-title { font-size: 28px; font-weight: 500; line-height: 1.3; margin-bottom: 12px; }
+.hero-body { font-size: 15px; color: var(--text-secondary); line-height: 1.75; }
+
+/* ── Sections ── */
+.guide-section { margin-bottom: 2.5rem; scroll-margin-top: 80px; }
+.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+.section-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.section-title { font-size: 18px; font-weight: 500; }
+.section-intro { font-size: 14px; color: var(--text-secondary); margin-bottom: 1.25rem; line-height: 1.7; }
+
+/* ── Cards ── */
+.card { background: var(--bg-primary); border: 0.5px solid var(--border-light); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin-bottom: 10px; }
+.card-title { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+.card-body { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+/* ── Do / Don't ── */
+.do-dont-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem; }
+.do-card { background: var(--teal-bg); border: 0.5px solid var(--teal-border); border-radius: var(--radius-md); padding: 1.25rem; }
+.dont-card { background: var(--red-bg); border: 0.5px solid var(--red-border); border-radius: var(--radius-md); padding: 1.25rem; }
+.do-label { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--teal-text); margin-bottom: 10px; }
+.dont-label { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--red-text); margin-bottom: 10px; }
+.do-item, .dont-item { font-size: 13px; line-height: 1.6; padding: 6px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); display: flex; gap: 8px; align-items: flex-start; }
+.do-item:last-child, .dont-item:last-child { border-bottom: none; padding-bottom: 0; }
+.do-item { color: var(--teal-text); }
+.dont-item { color: var(--red-text); }
+.do-icon, .dont-icon { flex-shrink: 0; font-size: 13px; margin-top: 1px; }
+
+/* ── Timeline ── */
+.timeline { position: relative; padding-left: 1.5rem; }
+.timeline::before { content: ''; position: absolute; left: 6px; top: 6px; bottom: 0; width: 1px; background: var(--border-mid); }
+.timeline-item { position: relative; margin-bottom: 1.5rem; }
+.timeline-dot { position: absolute; left: -1.5rem; top: 4px; width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--bg-primary); flex-shrink: 0; }
+.timeline-grade { font-size: 12px; font-weight: 500; color: var(--text-tertiary); margin-bottom: 4px; letter-spacing: .04em; text-transform: uppercase; }
+.timeline-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.timeline-body { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+
+/* ── Checklist ── */
+.checklist { list-style: none; }
+.checklist li { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--text-secondary); padding: 7px 0; border-bottom: 0.5px solid var(--border-light); line-height: 1.6; }
+.checklist li:last-child { border-bottom: none; }
+.check-icon { flex-shrink: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--teal-bg); border: 0.5px solid var(--teal-border); display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+.check-icon::after { content: ''; display: block; width: 8px; height: 5px; border-left: 1.5px solid var(--teal-text); border-bottom: 1.5px solid var(--teal-text); transform: rotate(-45deg) translate(1px,-1px); }
+
+/* ── Callout boxes ── */
+.callout { border-radius: var(--radius-md); padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.callout-blue { background: var(--blue-bg); border: 0.5px solid var(--blue-border); }
+.callout-amber { background: var(--amber-bg); border: 0.5px solid var(--amber-border); }
+.callout-green { background: var(--green-bg); border: 0.5px solid var(--green-border); }
+.callout-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+.callout-blue .callout-title { color: var(--blue-text); }
+.callout-amber .callout-title { color: var(--amber-text); }
+.callout-green .callout-title { color: var(--green-text); }
+.callout-body { font-size: 13px; line-height: 1.65; }
+.callout-blue .callout-body { color: var(--blue-text); }
+.callout-amber .callout-body { color: var(--amber-text); }
+.callout-green .callout-body { color: var(--green-text); }
+
+/* ── FAQ ── */
+.faq-item { border-bottom: 0.5px solid var(--border-light); }
+.faq-item:last-child { border-bottom: none; }
+.faq-q { font-size: 14px; font-weight: 500; padding: 14px 0 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; user-select: none; }
+.faq-q:hover { color: var(--blue-text); }
+.faq-chevron { font-size: 11px; color: var(--text-tertiary); transition: transform .2s; flex-shrink: 0; }
+.faq-chevron.open { transform: rotate(180deg); }
+.faq-a { font-size: 13px; color: var(--text-secondary); line-height: 1.7; padding-bottom: 14px; display: none; }
+.faq-a.open { display: block; }
+
+/* ── Division table ── */
+.div-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.div-table th { font-size: 11px; font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .05em; padding: 8px 10px; text-align: left; border-bottom: 0.5px solid var(--border-mid); }
+.div-table td { padding: 10px 10px; border-bottom: 0.5px solid var(--border-light); color: var(--text-secondary); vertical-align: top; line-height: 1.5; }
+.div-table tr:last-child td { border-bottom: none; }
+.div-table tr:hover td { background: var(--bg-secondary); }
+.div-badge { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+
+/* ── Print button ── */
+.print-btn { background: var(--bg-primary); border: 0.5px solid var(--border-mid); border-radius: var(--radius-sm); padding: 8px 16px; font-size: 13px; color: var(--text-secondary); cursor: pointer; transition: all .15s; }
+.print-btn:hover { background: var(--bg-secondary); color: var(--text-primary); }
+
+/* ── Footer ── */
+.footer { text-align: center; font-size: 12px; color: var(--text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--border-light); }
+
+/* ── Mobile ── */
+@media (max-width: 540px) {
+  .do-dont-grid { grid-template-columns: 1fr; }
+  .container { padding: 1.5rem 1rem 4rem; }
+  .hero-title { font-size: 22px; }
+}
+
+/* ── Print ── */
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  :root {
+    --bg-primary: #fff !important; --bg-secondary: #f5f5f3 !important;
+    --text-primary: #1a1a18 !important; --text-secondary: #5f5e5a !important;
+    --border-light: rgba(0,0,0,0.12) !important;
+    --teal-bg: #E1F5EE !important; --teal-text: #085041 !important;
+    --red-bg: #FCEBEB !important; --red-text: #A32D2D !important;
+    --blue-bg: #E6F1FB !important; --blue-text: #0C447C !important;
+    --amber-bg: #FAEEDA !important; --amber-text: #633806 !important;
+    --green-bg: #EAF3DE !important; --green-text: #27500A !important;
+  }
+  body { background: #fff !important; font-size: 11px; }
+  .page-header { position: static !important; }
+  .companion-link, .print-btn, .section-nav { display: none !important; }
+  .guide-section { break-inside: avoid; }
+  .do-dont-grid { grid-template-columns: 1fr 1fr; }
+  .faq-a { display: block !important; }
+  @page { margin: 0.75in; size: letter; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <div class="page-header-title">Parent's Guide to College Athletic Recruiting</div>
+    <div class="page-header-sub">A companion to the student athlete recruiting planner</div>
+  </div>
+  <a class="companion-link" href="athlete-recruiting-planner.html">Student planner &rarr;</a>
+</div>
+
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-eyebrow">For parents and guardians</div>
+    <div class="hero-title">How to support your student athlete through recruiting — without taking over</div>
+    <div class="hero-body">College athletic recruiting is one of the most exciting and stressful experiences a family can go through together. This guide explains how the process works, what your role should be, and — just as importantly — where well-meaning parents can accidentally make things harder for their student.</div>
+  </div>
+
+  <!-- Section nav -->
+  <div class="section-nav">
+    <div class="nav-label">In this guide</div>
+    <div class="nav-links">
+      <a class="nav-link" href="#how-it-works"><span class="nav-dot" style="background:#378ADD;"></span>How the recruiting process works</a>
+      <a class="nav-link" href="#divisions"><span class="nav-dot" style="background:#639922;"></span>Understanding divisions</a>
+      <a class="nav-link" href="#your-role"><span class="nav-dot" style="background:#1D9E75;"></span>Your role by grade</a>
+      <a class="nav-link" href="#do-dont"><span class="nav-dot" style="background:#BA7517;"></span>What to do — and what not to do</a>
+      <a class="nav-link" href="#money"><span class="nav-dot" style="background:#D4537E;"></span>Scholarships and money</a>
+      <a class="nav-link" href="#coaches"><span class="nav-dot" style="background:#7F77DD;"></span>Communicating with coaches</a>
+      <a class="nav-link" href="#faq"><span class="nav-dot" style="background:#888780;"></span>Frequently asked questions</a>
+    </div>
+  </div>
+
+  <!-- ── SECTION 1: How it works ── -->
+  <div class="guide-section" id="how-it-works">
+    <div class="section-header">
+      <div class="section-dot" style="background:#378ADD;"></div>
+      <div class="section-title">How the recruiting process works</div>
+    </div>
+    <div class="section-intro">College athletic recruiting is a multi-year process where college coaches identify, evaluate, and ultimately offer roster spots to prospective student athletes. It is not a single event — it unfolds over years, and the timing, rules, and stakes are different at every stage.</div>
+
+    <div class="callout callout-blue">
+      <div class="callout-title">The single most important thing to understand</div>
+      <div class="callout-body">Recruiting is driven by the athlete, not the parent. Coaches are recruiting your son or daughter — their personality, their coachability, their character. How your student presents themselves matters far more than how you advocate for them. Your job is to make it easier for your student to do their job.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">The basic sequence</div>
+      <div class="card-body">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:#9FE1CB;"></div>
+            <div class="timeline-grade">9th &ndash; 10th grade</div>
+            <div class="timeline-title">Build and be seen</div>
+            <div class="timeline-body">Athletes develop athletically and academically, join club or travel teams, begin building a highlight video, and start researching schools. Coaches at most levels cannot contact students directly yet, but athletes can reach out to coaches.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:#FAC775;"></div>
+            <div class="timeline-grade">11th grade</div>
+            <div class="timeline-title">Active recruiting begins</div>
+            <div class="timeline-body">This is when most recruiting conversations intensify. Athletes take official and unofficial campus visits, compete at showcases, communicate regularly with coaches, and take their SAT or ACT. Academic eligibility certification becomes urgent.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:#F5C4B3;"></div>
+            <div class="timeline-grade">12th grade</div>
+            <div class="timeline-title">Decisions and signing</div>
+            <div class="timeline-body">Athletes make verbal commitments, take official visits, weigh scholarship offers, and sign a National Letter of Intent (NLI) or written commitment. This is where careful comparison of financial aid packages and academic fit becomes critical.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-amber">
+      <div class="callout-title">Recruiting timelines vary significantly by sport and division</div>
+      <div class="callout-body">D1 football and basketball recruiting often begins in 9th or even 8th grade for elite prospects. Swimming, golf, and tennis can have commitments as early as 9th grade. Most other sports see the bulk of activity in 11th and 12th grade. D3 and NAIA recruiting often happens later than D1. Do not assume your student is "behind" — check the norms for their specific sport and division level.</div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2: Divisions ── -->
+  <div class="guide-section" id="divisions">
+    <div class="section-header">
+      <div class="section-dot" style="background:#639922;"></div>
+      <div class="section-title">Understanding divisions</div>
+    </div>
+    <div class="section-intro">One of the most common mistakes families make is fixating on NCAA Division I when D2, D3, NAIA, or JUCO might be a significantly better fit — academically, athletically, and financially. Here is a plain-English breakdown.</div>
+
+    <div style="background:var(--bg-primary);border:0.5px solid var(--border-light);border-radius:var(--radius-md);overflow:hidden;margin-bottom:1rem;">
+      <table class="div-table">
+        <thead>
+          <tr>
+            <th>Division</th>
+            <th>Athletic scholarships</th>
+            <th>Competition level</th>
+            <th>Key consideration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="div-badge" style="background:var(--blue-bg);color:var(--blue-text);">NCAA D1</span></td>
+            <td>Yes — full or partial</td>
+            <td>Highest</td>
+            <td>Most demanding time commitment. Recruiting rules are strictest.</td>
+          </tr>
+          <tr>
+            <td><span class="div-badge" style="background:var(--green-bg);color:var(--green-text);">NCAA D2</span></td>
+            <td>Yes — partial (equivalency)</td>
+            <td>Very high</td>
+            <td>Strong athletic scholarships, often paired with academic merit aid.</td>
+          </tr>
+          <tr>
+            <td><span class="div-badge" style="background:var(--amber-bg);color:var(--amber-text);">NCAA D3</span></td>
+            <td>No athletic scholarships</td>
+            <td>High</td>
+            <td>Strong academic merit aid. Smaller schools, more academic flexibility.</td>
+          </tr>
+          <tr>
+            <td><span class="div-badge" style="background:var(--pink-bg);color:var(--pink-text);">NAIA</span></td>
+            <td>Yes — flexible</td>
+            <td>High</td>
+            <td>More relaxed recruiting rules. Often overlooked and undervalued by families.</td>
+          </tr>
+          <tr>
+            <td><span class="div-badge" style="background:var(--bg-secondary);color:var(--gray-text);border:0.5px solid var(--border-mid);">JUCO</span></td>
+            <td>Yes — varies</td>
+            <td>Variable</td>
+            <td>2-year path. Can be a strategic stepping stone to a 4-year D1 or D2 program.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-green">
+      <div class="callout-title">D3 is not a consolation prize</div>
+      <div class="callout-body">Many families dismiss D3 early because there are no athletic scholarships. But D3 schools are often academically excellent (think Amherst, Emory, Williams, NYU) and frequently offer generous merit aid that rivals or exceeds D1 athletic scholarships. A student who earns a $30,000 merit scholarship at a D3 school may end up paying less than one on a partial D1 athletic scholarship.</div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 3: Your role by grade ── -->
+  <div class="guide-section" id="your-role">
+    <div class="section-header">
+      <div class="section-dot" style="background:#1D9E75;"></div>
+      <div class="section-title">Your role, year by year</div>
+    </div>
+    <div class="section-intro">Your involvement should look different depending on where your student is in the process. In the early years, you are a logistics partner. By senior year, you are a financial advisor and sounding board. The student is always the lead.</div>
+
+    <div class="card">
+      <div class="card-title" style="color:var(--teal-text);">9th &ndash; 10th grade: Be the infrastructure</div>
+      <div class="card-body">
+        <ul class="checklist">
+          <li><span class="check-icon"></span>Help your student understand the academic requirements — know what core courses are and check that they are enrolled in the right classes.</li>
+          <li><span class="check-icon"></span>Budget for club or travel team fees, showcase entry fees, and camp costs — these add up quickly.</li>
+          <li><span class="check-icon"></span>Help with logistics: driving to tournaments, booking hotels, organizing game footage.</li>
+          <li><span class="check-icon"></span>Encourage your student to research schools themselves — resist the urge to hand them a list you built.</li>
+          <li><span class="check-icon"></span>Let your student write their own coach emails. Offer to proofread, not ghostwrite.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:var(--amber-text);">11th grade: Be the sounding board</div>
+      <div class="card-body">
+        <ul class="checklist">
+          <li><span class="check-icon"></span>Accompany your student on unofficial campus visits — but let them lead the conversations with coaches.</li>
+          <li><span class="check-icon"></span>Help them build a school comparison spreadsheet: academics, cost, distance from home, team culture.</li>
+          <li><span class="check-icon"></span>Register for the NCAA Eligibility Center together and make sure all paperwork is completed on time.</li>
+          <li><span class="check-icon"></span>Start understanding financial aid — learn the difference between athletic scholarships, merit aid, and need-based aid.</li>
+          <li><span class="check-icon"></span>Help your student prepare thoughtful questions to ask coaches on visits.</li>
+          <li><span class="check-icon"></span>If coaches reach out to you directly, be warm but redirect them to your student: "That's a great question for [name] to answer."</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:var(--pink-text);">12th grade: Be the financial partner</div>
+      <div class="card-body">
+        <ul class="checklist">
+          <li><span class="check-icon"></span>Attend official visits with your student and ask financial questions coaches expect from parents.</li>
+          <li><span class="check-icon"></span>Complete the FAFSA as early as possible (it opens October 1 of senior year).</li>
+          <li><span class="check-icon"></span>Help your student compare financial aid award letters — total cost of attendance, not just the scholarship number.</li>
+          <li><span class="check-icon"></span>Understand what an NLI means before it is signed — it is binding for one academic year.</li>
+          <li><span class="check-icon"></span>Support whatever decision your student makes, even if it is not the school you would have chosen.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 4: Do / Don't ── -->
+  <div class="guide-section" id="do-dont">
+    <div class="section-header">
+      <div class="section-dot" style="background:#BA7517;"></div>
+      <div class="section-title">What to do — and what not to do</div>
+    </div>
+    <div class="section-intro">College coaches have seen thousands of families go through this process. The ones who remember parents — and not in a good way — are almost always the ones who overstepped. Here is the clearest version of this we can give you.</div>
+
+    <div class="do-dont-grid">
+      <div class="do-card">
+        <div class="do-label">Do this</div>
+        <div class="do-item"><span class="do-icon">+</span>Let your student make first contact with coaches</div>
+        <div class="do-item"><span class="do-icon">+</span>Ask financial and logistical questions on visits</div>
+        <div class="do-item"><span class="do-icon">+</span>Help proofread emails your student has written</div>
+        <div class="do-item"><span class="do-icon">+</span>Encourage visits to schools at multiple division levels</div>
+        <div class="do-item"><span class="do-icon">+</span>Help compare the full cost of attendance across schools</div>
+        <div class="do-item"><span class="do-icon">+</span>Ask coaches about team culture, academics, and graduation rates</div>
+        <div class="do-item"><span class="do-icon">+</span>Support your student's decision, even if you disagree</div>
+        <div class="do-item"><span class="do-icon">+</span>Stay calm when things move slowly — they usually do</div>
+      </div>
+      <div class="dont-card">
+        <div class="dont-label">Avoid this</div>
+        <div class="dont-item"><span class="dont-icon">&minus;</span>Emailing or calling coaches directly to pitch your student</div>
+        <div class="dont-item"><span class="dont-icon">&minus;</span>Sitting in on coach meetings uninvited</div>
+        <div class="dont-item"><span class="dont-icon">&minus;</span>Writing or heavily editing your student's emails</div>
+        <div class="dont-item"><span class="dont-icon">&minus;</span>Dismissing schools because of division level or reputation</div>
+        <div class="dont-item"><span class="dont-icon">&minus;</span>Pressuring your student toward a school you prefer</div>
+        <div class="dont-item"><span class="dont-icon">&minus;</span>Negotiating scholarship offers directly with coaches</div>
+        <div class="dont-item"><span class="dont-icon">&minus;</span>Speaking negatively about other programs to coaches</div>
+        <div class="dont-item"><span class="dont-icon">&minus;</span>Making commitments on your student's behalf</div>
+      </div>
+    </div>
+
+    <div class="callout callout-amber">
+      <div class="callout-title">The "helicopter parent" effect is real</div>
+      <div class="callout-body">Coaches talk. An overly involved parent can cause a coach to quietly move on to another recruit — even if the student is talented. Coaches are not just evaluating your student's athletic ability; they are evaluating what it will be like to work with your family for four years. Give them a reason to feel confident about that.</div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 5: Money ── -->
+  <div class="guide-section" id="money">
+    <div class="section-header">
+      <div class="section-dot" style="background:#D4537E;"></div>
+      <div class="section-title">Scholarships and money</div>
+    </div>
+    <div class="section-intro">Financial aid in college athletics is more nuanced than most families expect. Here is what you need to know before your student starts receiving offers.</div>
+
+    <div class="card">
+      <div class="card-title">Athletic scholarships are usually partial, not full</div>
+      <div class="card-body">Outside of a handful of D1 headcount sports (football, men's and women's basketball, women's gymnastics, tennis, and volleyball), athletic scholarships are split among roster players. A coach might offer your student 25%, 50%, or 75% of a scholarship — not a full ride. Always ask for the total cost of attendance alongside the scholarship amount so you can compare apples to apples.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Athletic aid can be combined with academic and need-based aid</div>
+      <div class="card-body">At D1 and D2 schools, athletic scholarships are often stacked with other forms of financial aid. A student might receive a 40% athletic scholarship plus merit aid plus need-based aid, resulting in a very affordable total package. Always ask the financial aid office — not just the coaching staff — for a complete picture.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Scholarships are renewed annually, not guaranteed for four years</div>
+      <div class="card-body">NCAA athletic scholarships are one-year agreements renewed each year. Coaches can reduce or not renew a scholarship, though the NCAA has protections for athletes who follow team rules and meet academic requirements. Ask coaches directly about their program's scholarship renewal history and what circumstances might lead to non-renewal.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">What to compare when offers come in</div>
+      <div class="card-body">
+        <ul class="checklist">
+          <li><span class="check-icon"></span>Total cost of attendance (not just tuition — include room, board, books, travel home)</li>
+          <li><span class="check-icon"></span>Net cost after all aid (athletic + merit + need-based)</li>
+          <li><span class="check-icon"></span>Whether the scholarship is renewable and under what conditions</li>
+          <li><span class="check-icon"></span>What happens to the scholarship if your student is injured</li>
+          <li><span class="check-icon"></span>Academic support resources available to athletes</li>
+          <li><span class="check-icon"></span>Graduation rates for athletes in your student's program</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout-blue">
+      <div class="callout-title">Complete the FAFSA even if you think you earn too much</div>
+      <div class="callout-body">Many families skip the FAFSA assuming they will not qualify for need-based aid. But the FAFSA also unlocks federal loans, work-study eligibility, and some merit-based awards that require the form. Complete it every year starting October 1 of your student's senior year. It takes about an hour.</div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 6: Coaches ── -->
+  <div class="guide-section" id="coaches">
+    <div class="section-header">
+      <div class="section-dot" style="background:#7F77DD;"></div>
+      <div class="section-title">Communicating with coaches</div>
+    </div>
+    <div class="section-intro">Understanding when and how coaches can contact your student — and what your role is in those conversations — will save you a lot of anxiety and help your student navigate relationships with coaches professionally.</div>
+
+    <div class="card">
+      <div class="card-title">NCAA contact rules by period</div>
+      <div class="card-body" style="margin-bottom:0;">
+        <div style="display:grid;gap:8px;margin-top:8px;">
+          <div style="padding:10px;background:var(--bg-secondary);border-radius:var(--radius-sm);">
+            <div style="font-size:12px;font-weight:500;margin-bottom:3px;">Dead period</div>
+            <div style="font-size:12px;color:var(--text-secondary);">No in-person contact. Coaches can still call, text, and email your student.</div>
+          </div>
+          <div style="padding:10px;background:var(--bg-secondary);border-radius:var(--radius-sm);">
+            <div style="font-size:12px;font-weight:500;margin-bottom:3px;">Quiet period</div>
+            <div style="font-size:12px;color:var(--text-secondary);">In-person contact only on the college campus. Coaches cannot attend your student's games or visit their school.</div>
+          </div>
+          <div style="padding:10px;background:var(--bg-secondary);border-radius:var(--radius-sm);">
+            <div style="font-size:12px;font-weight:500;margin-bottom:3px;">Contact period</div>
+            <div style="font-size:12px;color:var(--text-secondary);">Coaches can meet your student in person on or off campus, and can watch them compete.</div>
+          </div>
+          <div style="padding:10px;background:var(--bg-secondary);border-radius:var(--radius-sm);">
+            <div style="font-size:12px;font-weight:500;margin-bottom:3px;">Evaluation period</div>
+            <div style="font-size:12px;color:var(--text-secondary);">Coaches can attend your student's competitions but cannot have off-campus in-person contact.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Good questions for parents to ask coaches on visits</div>
+      <div class="card-body">
+        <ul class="checklist">
+          <li><span class="check-icon"></span>"What does a typical week look like for athletes during the season — and the off-season?"</li>
+          <li><span class="check-icon"></span>"How does the program support athletes academically if they're struggling?"</li>
+          <li><span class="check-icon"></span>"What is the process for scholarship renewal each year?"</li>
+          <li><span class="check-icon"></span>"What happens to a player's scholarship if they sustain a serious injury?"</li>
+          <li><span class="check-icon"></span>"How many athletes in recent classes graduated in four years?"</li>
+          <li><span class="check-icon"></span>"What do most athletes do after their playing career ends here?"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout-green">
+      <div class="callout-title">Let your student lead the athletic conversation</div>
+      <div class="callout-body">On campus visits, coaches expect parents to ask the questions above. They do not expect parents to explain why their student is a good fit, discuss playing time, or negotiate roster position. Those conversations — if they happen at all — belong to the athlete. Coaches are actively watching how your student handles themselves.</div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 7: FAQ ── -->
+  <div class="guide-section" id="faq">
+    <div class="section-header">
+      <div class="section-dot" style="background:#888780;"></div>
+      <div class="section-title">Frequently asked questions</div>
+    </div>
+    <div class="section-intro">The questions parents ask most often — answered plainly.</div>
+
+    <div class="card" style="padding:0 1.5rem;">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Do we need to hire a recruiting service?
+          <span class="faq-chevron">&#9660;</span>
+        </div>
+        <div class="faq-a">Probably not. Paid recruiting services (like NCSA) provide profiles and visibility tools, but the most important recruiting work — emailing coaches, attending camps, building relationships — is done by the athlete. Many athletes recruit themselves successfully with no paid service. If you do use one, understand exactly what you are paying for and what they will and will not do on your behalf.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          My student has not heard from any coaches. Should I be worried?
+          <span class="faq-chevron">&#9660;</span>
+        </div>
+        <div class="faq-a">Not necessarily. Coaches are often constrained by NCAA contact rules that prevent them from reaching out until specific dates. More often, the issue is visibility — coaches do not know your student exists. The solution is outreach: your student should be emailing coaches directly, attending college camps, and competing at showcases where coaches attend. Waiting to be discovered rarely works at any level.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          A coach offered my student a "verbal commitment." Is that binding?
+          <span class="faq-chevron">&#9660;</span>
+        </div>
+        <div class="faq-a">No. Verbal commitments are not legally binding for either side. The only binding commitment is the signed National Letter of Intent (NLI). That said, verbal commitments are taken seriously — backing out of one is considered poor form and can affect your student's reputation in the recruiting community. Treat a verbal commitment as a serious commitment, but know it is not final until the NLI is signed.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Can I negotiate the scholarship offer?
+          <span class="faq-chevron">&#9660;</span>
+        </div>
+        <div class="faq-a">Sometimes. D1 scholarship offers are often firm, but D2, NAIA, and some D3 merit aid packages can have flexibility — especially if your student has a competing offer from a similar school. The student (not the parent) should be the one to have this conversation with the coach, framed professionally: "I'm very interested in your program, but I want to be transparent that I have another offer at X level. Is there any flexibility?" Avoid ultimatums and never misrepresent competing offers.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What if my student commits and then wants to transfer?
+          <span class="faq-chevron">&#9660;</span>
+        </div>
+        <div class="faq-a">The NCAA transfer portal has made transferring significantly easier in recent years. Athletes can now transfer once without sitting out a year. However, transferring affects eligibility, scholarship, and relationships — it is not a decision to take lightly. Encourage your student to be thoughtful about their initial commitment rather than treating it as reversible.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          My student is being recruited by a school I don't like. What should I do?
+          <span class="faq-chevron">&#9660;</span>
+        </div>
+        <div class="faq-a">Share your concerns once, clearly, and then step back. Your student is the one who will live at this school, practice with this team, and build relationships with these coaches for four years. Overriding their judgment — especially based on preferences like prestige or geography — can damage your relationship and may lead to a miserable experience for your student. Trust the process. Ask good questions. Then let them decide.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          When should my student start this process?
+          <span class="faq-chevron">&#9660;</span>
+        </div>
+        <div class="faq-a">It depends on the sport and division level. For most sports, meaningful outreach can begin in 10th grade, and the bulk of recruiting happens in 11th grade. For some D1 sports (football, basketball, swimming, gymnastics), elite prospects are identified as early as 8th or 9th grade. If your student is in 11th or 12th grade and has not started, they are not out of options — they need to move quickly and cast a wide net across multiple division levels.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Print / save -->
+  <div style="display:flex;justify-content:center;gap:10px;margin-top:2rem;">
+    <button class="print-btn" onclick="window.print()">Save as PDF / Print</button>
+    <a href="athlete-recruiting-planner.html" style="text-decoration:none;"><button class="print-btn" style="color:var(--blue-text);border-color:var(--blue-border);">Open student planner &rarr;</button></a>
+  </div>
+
+  <div class="footer">Parent's Guide to College Athletic Recruiting &mdash; a companion to the College Athletic Recruiting Planner &mdash; free to use and share</div>
+
+</div>
+
+<script>
+function toggleFaq(qEl) {
+  const answer = qEl.nextElementSibling;
+  const chevron = qEl.querySelector('.faq-chevron');
+  const isOpen = answer.classList.contains('open');
+  answer.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+</script>
+</body>
+</html>
