@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>College Athletic Recruiting Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #141410;
+  --ink-mid: #4a4a44;
+  --ink-soft: #8a8a80;
+  --ink-faint: #c8c8be;
+  --paper: #f7f6f1;
+  --paper-warm: #efede5;
+  --paper-card: #ffffff;
+  --accent: #1a5c3a;
+  --accent-light: #e8f2ec;
+  --accent-mid: #2d7a52;
+  --gold: #b8860b;
+  --gold-light: #f5f0dc;
+  --blue: #1a3a5c;
+  --blue-light: #e8eff8;
+  --rust: #8b3a1a;
+  --rust-light: #f8ede8;
+  --border: rgba(20,20,16,0.1);
+  --border-mid: rgba(20,20,16,0.18);
+  --radius: 4px;
+  --radius-lg: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #f0efe8;
+    --ink-mid: #b8b8ae;
+    --ink-soft: #787870;
+    --ink-faint: #404038;
+    --paper: #141410;
+    --paper-warm: #1a1a14;
+    --paper-card: #1e1e18;
+    --accent: #4aaa72;
+    --accent-light: #0d2318;
+    --accent-mid: #4aaa72;
+    --gold: #d4a020;
+    --gold-light: #1e1a08;
+    --blue: #6a9fd4;
+    --blue-light: #0a1828;
+    --rust: #d4724a;
+    --rust-light: #1e0e08;
+    --border: rgba(240,239,232,0.1);
+    --border-mid: rgba(240,239,232,0.18);
+  }
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── Masthead ── */
+.masthead {
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  background: var(--paper);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.masthead-logo {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 17px;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.masthead-logo span { color: var(--accent); font-style: italic; }
+.masthead-nav { display: flex; gap: 24px; align-items: center; }
+.masthead-nav a { font-size: 13px; color: var(--ink-mid); text-decoration: none; font-weight: 400; transition: color .15s; }
+.masthead-nav a:hover { color: var(--ink); }
+.nav-cta {
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--accent);
+  color: #fff !important;
+  padding: 6px 14px;
+  border-radius: 99px;
+  transition: background .15s !important;
+}
+.nav-cta:hover { background: var(--accent-mid) !important; color: #fff !important; }
+
+/* ── Hero ── */
+.hero {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 5rem 2rem 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+.hero-title {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 44px;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+.hero-body {
+  font-size: 15px;
+  color: var(--ink-mid);
+  line-height: 1.75;
+  margin-bottom: 28px;
+  font-weight: 300;
+}
+.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 99px;
+  padding: 11px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background .15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-primary:hover { background: var(--accent-mid); }
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--border-mid);
+  border-radius: 99px;
+  padding: 11px 24px;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all .15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-secondary:hover { border-color: var(--ink); }
+
+/* ── Hero stat panel ── */
+.hero-panel {
+  background: var(--paper-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  animation: fadeUp .5s ease both;
+  animation-delay: .15s;
+}
+.panel-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 1.25rem;
+}
+.stat-list { display: flex; flex-direction: column; gap: 14px; }
+.stat-row-item { display: flex; align-items: center; gap: 12px; }
+.stat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.stat-label { font-size: 13px; color: var(--ink-mid); flex: 1; font-weight: 300; }
+.stat-value { font-size: 13px; font-weight: 500; color: var(--ink); }
+.panel-divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+.panel-note { font-size: 12px; color: var(--ink-soft); font-style: italic; line-height: 1.6; }
+
+/* ── Tools section ── */
+.tools-section {
+  background: var(--paper-warm);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 4rem 2rem;
+}
+.tools-inner { max-width: 900px; margin: 0 auto; }
+.section-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.section-body {
+  font-size: 14px;
+  color: var(--ink-mid);
+  font-weight: 300;
+  margin-bottom: 2rem;
+  max-width: 520px;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.tool-card {
+  background: var(--paper-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: all .2s;
+  position: relative;
+  overflow: hidden;
+}
+.tool-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  opacity: 0;
+  transition: opacity .2s;
+}
+.tool-card:hover { transform: translateY(-2px); border-color: var(--border-mid); }
+.tool-card:hover::after { opacity: 1; }
+.tool-card.green::after { background: var(--accent); }
+.tool-card.gold::after { background: var(--gold); }
+.tool-card.blue::after { background: var(--blue); }
+.tool-card.rust::after { background: var(--rust); }
+
+.tool-status {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 99px;
+  margin-bottom: 1rem;
+  display: inline-block;
+  align-self: flex-start;
+}
+.status-live { background: var(--accent-light); color: var(--accent); }
+.status-coming { background: var(--paper-warm); color: var(--ink-soft); border: 1px solid var(--border); }
+
+.tool-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  flex-shrink: 0;
+}
+.tool-icon svg { width: 18px; height: 18px; }
+.icon-green { background: var(--accent-light); }
+.icon-gold { background: var(--gold-light); }
+.icon-blue { background: var(--blue-light); }
+.icon-rust { background: var(--rust-light); }
+
+.tool-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.tool-desc {
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.6;
+  flex: 1;
+  font-weight: 300;
+}
+.tool-arrow {
+  font-size: 13px;
+  color: var(--ink-faint);
+  margin-top: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color .2s, gap .2s;
+}
+.tool-card:hover .tool-arrow { color: var(--ink-mid); gap: 8px; }
+.tool-card.disabled { opacity: .65; pointer-events: none; cursor: default; }
+
+/* ── How it works ── */
+.how-section { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2rem; }
+.step { position: relative; }
+.step-num {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 48px;
+  color: var(--ink-faint);
+  line-height: 1;
+  margin-bottom: 12px;
+  letter-spacing: -0.04em;
+}
+.step-title { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+.step-body { font-size: 13px; color: var(--ink-mid); line-height: 1.65; font-weight: 300; }
+
+/* ── Who it's for ── */
+.who-section {
+  background: var(--ink);
+  padding: 4rem 2rem;
+}
+.who-inner { max-width: 900px; margin: 0 auto; }
+.who-title {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  margin-bottom: 2rem;
+}
+.who-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.1); border-radius: var(--radius-lg); overflow: hidden; }
+.who-card { background: rgba(255,255,255,0.04); padding: 1.5rem; }
+.who-card-title { font-size: 14px; font-weight: 500; color: var(--paper); margin-bottom: 8px; }
+.who-card-body { font-size: 13px; color: rgba(240,239,232,0.55); line-height: 1.65; font-weight: 300; }
+.who-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 99px;
+  margin-bottom: 10px;
+}
+.tag-student { background: var(--accent-light); color: var(--accent); }
+.tag-parent { background: var(--gold-light); color: var(--gold); }
+.tag-coach { background: var(--blue-light); color: var(--blue); }
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: var(--paper);
+}
+.footer-logo {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 15px;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.footer-logo span { color: var(--accent); font-style: italic; }
+.footer-note { font-size: 12px; color: var(--ink-soft); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-size: 12px; color: var(--ink-soft); text-decoration: none; transition: color .15s; }
+.footer-links a:hover { color: var(--ink); }
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp .5s ease both; }
+.delay-1 { animation-delay: .1s; }
+.delay-2 { animation-delay: .2s; }
+.delay-3 { animation-delay: .3s; }
+.delay-4 { animation-delay: .4s; }
+
+/* ── Mobile ── */
+@media (max-width: 700px) {
+  .hero { grid-template-columns: 1fr; padding: 3rem 1.25rem 2.5rem; gap: 2rem; }
+  .hero-title { font-size: 32px; }
+  .hero-panel { display: none; }
+  .tools-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .who-grid { grid-template-columns: 1fr; }
+  .masthead-nav .hide-mobile { display: none; }
+  .tools-section, .how-section, .who-section { padding: 3rem 1.25rem; }
+  .site-footer { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Masthead -->
+<header class="masthead">
+  <a class="masthead-logo" href="index.html">Recruiting<span>Hub</span></a>
+  <nav class="masthead-nav">
+    <a href="student-planner.html" class="hide-mobile">Student planner</a>
+    <a href="parent-guide.html" class="hide-mobile">Parent guide</a>
+    <a href="student-planner.html" class="nav-cta">Get started</a>
+  </nav>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow fade-up">Free tools for student athletes</div>
+    <h1 class="hero-title fade-up delay-1">Your college recruiting <em>game plan</em></h1>
+    <p class="hero-body fade-up delay-2">A free, open-source toolkit for student athletes, parents, and coaches navigating the college athletic recruiting process — from 9th grade to signing day.</p>
+    <div class="hero-actions fade-up delay-3">
+      <a href="student-planner.html" class="btn-primary">Student planner &rarr;</a>
+      <a href="parent-guide.html" class="btn-secondary">Parent guide</a>
+    </div>
+  </div>
+
+  <div class="hero-panel">
+    <div class="panel-label">What's inside</div>
+    <div class="stat-list">
+      <div class="stat-row-item">
+        <div class="stat-dot" style="background:var(--accent);"></div>
+        <span class="stat-label">Sports covered</span>
+        <span class="stat-value">16</span>
+      </div>
+      <div class="stat-row-item">
+        <div class="stat-dot" style="background:var(--gold);"></div>
+        <span class="stat-label">Starting tracks</span>
+        <span class="stat-value">3 grades</span>
+      </div>
+      <div class="stat-row-item">
+        <div class="stat-dot" style="background:var(--blue);"></div>
+        <span class="stat-label">Division levels</span>
+        <span class="stat-value">D1, D2, D3, NAIA, JUCO</span>
+      </div>
+      <div class="stat-row-item">
+        <div class="stat-dot" style="background:var(--rust);"></div>
+        <span class="stat-label">Glossary terms</span>
+        <span class="stat-value">20 key terms</span>
+      </div>
+      <div class="stat-row-item">
+        <div class="stat-dot" style="background:var(--ink-faint);"></div>
+        <span class="stat-label">Progress saving</span>
+        <span class="stat-value">Automatic</span>
+      </div>
+    </div>
+    <div class="panel-divider"></div>
+    <div class="panel-note">No account required. Works offline. Free to use, adapt, and share.</div>
+  </div>
+</section>
+
+<!-- Tools -->
+<section class="tools-section">
+  <div class="tools-inner">
+    <div class="section-eyebrow">The toolkit</div>
+    <h2 class="section-title">Four tools, one recruiting journey</h2>
+    <p class="section-body">Each tool is designed for a specific audience — built to work together, and free to share independently.</p>
+
+    <div class="tools-grid">
+
+      <a href="student-planner.html" class="tool-card green">
+        <div class="tool-status status-live">Live</div>
+        <div class="tool-icon icon-green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+          </svg>
+        </div>
+        <div class="tool-name">Student athlete planner</div>
+        <div class="tool-desc">A personalized, interactive recruiting roadmap. Choose your sport, grade, and division target — then track your progress through every phase.</div>
+        <div class="tool-arrow">Open planner <span>&rarr;</span></div>
+      </a>
+
+      <a href="parent-guide.html" class="tool-card gold">
+        <div class="tool-status status-live">Live</div>
+        <div class="tool-icon icon-gold">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+        </div>
+        <div class="tool-name">Parent companion guide</div>
+        <div class="tool-desc">How the recruiting process works, what your role is year by year, what to do and what not to do — and a plain-English breakdown of scholarships and money.</div>
+        <div class="tool-arrow">Open guide <span>&rarr;</span></div>
+      </a>
+
+      <a href="coach-portal.html" class="tool-card blue disabled">
+        <div class="tool-status status-coming">Coming soon</div>
+        <div class="tool-icon icon-blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+          </svg>
+        </div>
+        <div class="tool-name">Coach recruiting portal</div>
+        <div class="tool-desc">A custom link coaches can share with recruits — pre-loaded with program-specific tasks, timelines, and contact information.</div>
+        <div class="tool-arrow">Coming soon</div>
+      </a>
+
+      <a href="calendar.html" class="tool-card rust disabled">
+        <div class="tool-status status-coming">Coming soon</div>
+        <div class="tool-icon icon-rust">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </div>
+        <div class="tool-name">Recruiting calendar</div>
+        <div class="tool-desc">Tasks mapped to actual calendar months — signing periods, contact windows, and NCAA dead periods visualized by sport and division.</div>
+        <div class="tool-arrow">Coming soon</div>
+      </a>
+
+      <a href="glossary.html" class="tool-card green disabled" style="border-style:dashed;">
+        <div class="tool-status status-coming">Coming soon</div>
+        <div class="tool-icon icon-green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+          </svg>
+        </div>
+        <div class="tool-name">Sport-specific glossary</div>
+        <div class="tool-desc">Recruiting terms organized by sport — because the transfer portal works differently for football than for swimming.</div>
+        <div class="tool-arrow">Coming soon</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="how-section">
+  <div class="section-eyebrow">How it works</div>
+  <h2 class="section-title">Built to be simple</h2>
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Choose your starting point</div>
+      <div class="step-body">Pick your sport, your current grade (9th, 10th, or 11th), and the division level you're targeting. The plan adjusts to your situation.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">Follow the roadmap</div>
+      <div class="step-body">Work through phase-by-phase checklists covering academics, athletic development, coach outreach, visits, and signing — with NCAA compliance built in.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Your progress saves automatically</div>
+      <div class="step-body">Every checkbox is saved to your browser. Come back anytime and pick up exactly where you left off — no account, no login, no setup.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Who it's for -->
+<section class="who-section">
+  <div class="who-inner">
+    <h2 class="who-title">Built for everyone in the process</h2>
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="who-tag tag-student">Student athlete</div>
+        <div class="who-card-title">You're in charge of your recruiting</div>
+        <div class="who-card-body">The student planner puts you in the driver's seat — with a clear checklist, division-specific tasks, a full glossary, and progress tracking that keeps you accountable across all four years of high school.</div>
+      </div>
+      <div class="who-card">
+        <div class="who-tag tag-parent">Parent or guardian</div>
+        <div class="who-card-title">Support without overstepping</div>
+        <div class="who-card-body">The parent guide explains the process, your role year by year, the financial realities of scholarships, and exactly where well-meaning parents accidentally make things harder for their student.</div>
+      </div>
+      <div class="who-card">
+        <div class="who-tag tag-coach">Coach or counselor</div>
+        <div class="who-card-title">Share it with your athletes</div>
+        <div class="who-card-body">All tools are free, open source, and work offline. Share the URL, drop the HTML file into your LMS, or link it from your school's athletics page. No accounts, no friction for students.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-logo">Recruiting<span>Hub</span></div>
+  <div class="footer-links">
+    <a href="student-planner.html">Student planner</a>
+    <a href="parent-guide.html">Parent guide</a>
+    <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <div class="footer-note">Free to use, adapt, and share &mdash; built for student athletes</div>
+</footer>
+
+</body>
+</html>
