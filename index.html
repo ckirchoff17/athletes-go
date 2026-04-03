@@ -5,150 +5,222 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>College Athletic Recruiting Planner</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg-primary: #ffffff; --bg-secondary: #f5f5f3; --bg-tertiary: #eeede8;
+  --text-primary: #1a1a18; --text-secondary: #5f5e5a; --text-tertiary: #888780;
+  --border-light: rgba(0,0,0,0.1); --border-mid: rgba(0,0,0,0.18); --border-strong: rgba(0,0,0,0.28);
+  --blue-bg: #E6F1FB; --blue-border: #378ADD; --blue-text: #0C447C;
+  --green-bg: #EAF3DE; --green-border: #639922; --green-text: #27500A;
+  --amber-bg: #FAEEDA; --amber-border: #BA7517; --amber-text: #633806;
+  --pink-bg: #FBEAF0; --pink-border: #D4537E; --pink-text: #72243E;
+  --gray-bg: #F1EFE8; --gray-border: #888780; --gray-text: #444441;
+  --teal-bg: #E1F5EE; --teal-border: #1D9E75; --teal-text: #085041;
+  --success: #1D9E75; --danger: #E24B4A;
+  --radius-sm: 8px; --radius-md: 12px;
+}
+@media (prefers-color-scheme: dark) {
   :root {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f5f5f3;
-    --bg-tertiary: #eeede8;
-    --text-primary: #1a1a18;
-    --text-secondary: #5f5e5a;
-    --text-tertiary: #888780;
-    --border-light: rgba(0,0,0,0.1);
-    --border-mid: rgba(0,0,0,0.18);
-    --border-strong: rgba(0,0,0,0.28);
-    --blue-bg: #E6F1FB; --blue-border: #378ADD; --blue-text: #0C447C;
-    --green-bg: #EAF3DE; --green-border: #639922; --green-text: #27500A;
-    --amber-bg: #FAEEDA; --amber-border: #BA7517; --amber-text: #633806;
-    --pink-bg: #FBEAF0; --pink-border: #D4537E; --pink-text: #72243E;
-    --gray-bg: #F1EFE8; --gray-border: #888780; --gray-text: #444441;
-    --success: #1D9E75;
-    --danger: #E24B4A;
-    --radius-sm: 8px;
-    --radius-md: 12px;
+    --bg-primary: #1e1e1c; --bg-secondary: #2a2a28; --bg-tertiary: #242422;
+    --text-primary: #f0efe8; --text-secondary: #b4b2a9; --text-tertiary: #888780;
+    --border-light: rgba(255,255,255,0.1); --border-mid: rgba(255,255,255,0.18); --border-strong: rgba(255,255,255,0.28);
+    --blue-bg: #0c2d4a; --blue-border: #378ADD; --blue-text: #85B7EB;
+    --green-bg: #1a2e0a; --green-border: #639922; --green-text: #C0DD97;
+    --amber-bg: #2e1f00; --amber-border: #BA7517; --amber-text: #FAC775;
+    --pink-bg: #2e0f1e; --pink-border: #D4537E; --pink-text: #F4C0D1;
+    --gray-bg: #2c2c2a; --gray-border: #5F5E5A; --gray-text: #D3D1C7;
+    --teal-bg: #042e20; --teal-border: #1D9E75; --teal-text: #9FE1CB;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg-primary: #1e1e1c;
-      --bg-secondary: #2a2a28;
-      --bg-tertiary: #242422;
-      --text-primary: #f0efe8;
-      --text-secondary: #b4b2a9;
-      --text-tertiary: #888780;
-      --border-light: rgba(255,255,255,0.1);
-      --border-mid: rgba(255,255,255,0.18);
-      --border-strong: rgba(255,255,255,0.28);
-      --blue-bg: #0c2d4a; --blue-border: #378ADD; --blue-text: #85B7EB;
-      --green-bg: #1a2e0a; --green-border: #639922; --green-text: #C0DD97;
-      --amber-bg: #2e1f00; --amber-border: #BA7517; --amber-text: #FAC775;
-      --pink-bg: #2e0f1e; --pink-border: #D4537E; --pink-text: #F4C0D1;
-      --gray-bg: #2c2c2a; --gray-border: #5F5E5A; --gray-text: #D3D1C7;
-    }
+}
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg-tertiary); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+
+/* ── Header ── */
+.page-header { background: var(--bg-primary); border-bottom: 0.5px solid var(--border-light); padding: 0.875rem 1.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.page-header-title { font-size: 15px; font-weight: 500; }
+.page-header-sub { font-size: 12px; color: var(--text-tertiary); margin-top: 1px; }
+.save-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--success); margin-right: 5px; }
+.save-indicator { font-size: 12px; color: var(--text-tertiary); display: none; align-items: center; }
+.save-indicator.visible { display: flex; }
+
+/* ── Layout ── */
+.container { max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
+.card { background: var(--bg-primary); border: 0.5px solid var(--border-light); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1rem; }
+.section-label { font-size: 11px; font-weight: 500; letter-spacing: .07em; color: var(--text-tertiary); text-transform: uppercase; margin: 1.5rem 0 10px; }
+.screen { display: none; }
+.screen.active { display: block; }
+.footer { text-align: center; font-size: 12px; color: var(--text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--border-light); }
+
+/* ── Setup ── */
+.sport-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; margin: 10px 0; }
+.sport-btn { background: var(--bg-secondary); border: 0.5px solid var(--border-light); border-radius: var(--radius-sm); padding: 10px 8px; cursor: pointer; text-align: center; font-size: 13px; color: var(--text-secondary); transition: all .15s; }
+.sport-btn:hover { border-color: var(--border-strong); color: var(--text-primary); }
+.sport-btn.selected { background: var(--blue-bg); border-color: var(--blue-border); color: var(--blue-text); font-weight: 500; }
+.track-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+.track-card { border: 0.5px solid var(--border-light); border-radius: var(--radius-md); padding: 1.125rem; cursor: pointer; transition: all .15s; background: var(--bg-primary); position: relative; }
+.track-card:hover { border-color: var(--border-strong); }
+.track-card.selected { border: 2px solid var(--blue-border); background: var(--blue-bg); }
+.track-urgency { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 99px; font-weight: 500; margin-bottom: 8px; }
+.urgency-green { background: var(--green-bg); color: var(--green-text); }
+.urgency-amber { background: var(--amber-bg); color: var(--amber-text); }
+.urgency-red { background: var(--pink-bg); color: var(--pink-text); }
+.badge { display: inline-block; font-size: 11px; padding: 3px 9px; border-radius: var(--radius-sm); font-weight: 500; margin-bottom: 8px; }
+.badge-blue { background: var(--blue-bg); color: var(--blue-text); }
+.badge-amber { background: var(--amber-bg); color: var(--amber-text); }
+.badge-teal { background: var(--teal-bg); color: var(--teal-text); }
+
+/* ── Division pills ── */
+.filter-bar { display: flex; gap: 6px; flex-wrap: wrap; }
+.div-pill { font-size: 12px; padding: 5px 12px; border-radius: 99px; border: 0.5px solid var(--border-mid); background: var(--bg-primary); cursor: pointer; color: var(--text-secondary); transition: all .15s; white-space: nowrap; }
+.div-pill:hover { border-color: var(--border-strong); color: var(--text-primary); }
+.div-pill.active-all, .div-pill.active-d1 { background: var(--blue-bg); border-color: var(--blue-border); color: var(--blue-text); font-weight: 500; }
+.div-pill.active-d2 { background: var(--green-bg); border-color: var(--green-border); color: var(--green-text); font-weight: 500; }
+.div-pill.active-d3 { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber-text); font-weight: 500; }
+.div-pill.active-naia { background: var(--pink-bg); border-color: var(--pink-border); color: var(--pink-text); font-weight: 500; }
+.div-pill.active-juco { background: var(--gray-bg); border-color: var(--gray-border); color: var(--gray-text); font-weight: 500; }
+
+/* ── Buttons ── */
+.btn-cta { background: var(--blue-border); color: #fff; border: none; border-radius: var(--radius-sm); padding: 11px 28px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background .15s; }
+.btn-cta:hover { background: var(--blue-text); }
+.btn-ghost { background: none; border: 0.5px solid var(--border-mid); border-radius: var(--radius-sm); padding: 8px 16px; font-size: 13px; color: var(--text-secondary); cursor: pointer; transition: all .15s; }
+.btn-ghost:hover { background: var(--bg-secondary); color: var(--text-primary); }
+.btn-danger-ghost { background: none; border: 0.5px solid var(--border-mid); border-radius: var(--radius-sm); padding: 8px 16px; font-size: 13px; color: var(--text-tertiary); cursor: pointer; transition: all .15s; }
+.btn-danger-ghost:hover { border-color: var(--danger); color: var(--danger); background: #fff0f0; }
+.back-btn { background: none; border: none; cursor: pointer; font-size: 13px; color: var(--text-secondary); padding: 0; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 4px; }
+.back-btn:hover { color: var(--text-primary); }
+.ask-btn { background: none; border: 0.5px solid var(--border-mid); border-radius: var(--radius-sm); padding: 9px 14px; font-size: 13px; color: var(--text-secondary); cursor: pointer; text-align: left; display: flex; align-items: center; gap: 6px; transition: all .15s; width: 100%; }
+.ask-btn:hover { background: var(--bg-secondary); color: var(--text-primary); }
+
+/* ── Tabs ── */
+.tab-bar { display: flex; border-bottom: 0.5px solid var(--border-light); margin-bottom: 1.5rem; }
+.tab { font-size: 13px; padding: 9px 18px; cursor: pointer; color: var(--text-secondary); border: none; border-bottom: 2px solid transparent; background: none; transition: all .15s; }
+.tab:hover { color: var(--text-primary); }
+.tab.active { color: var(--blue-border); border-bottom-color: var(--blue-border); font-weight: 500; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ── Stats ── */
+.stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 1rem; }
+.stat-card { background: var(--bg-secondary); border-radius: var(--radius-sm); padding: 12px; }
+.stat-num { font-size: 22px; font-weight: 500; }
+.stat-lbl { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.progress-bar-wrap { background: var(--bg-secondary); border-radius: 99px; height: 6px; overflow: hidden; }
+.progress-bar-fill { height: 100%; border-radius: 99px; background: var(--success); transition: width .35s; }
+
+/* ── Phases ── */
+.phase-block { background: var(--bg-primary); border: 0.5px solid var(--border-light); border-radius: var(--radius-md); padding: 1rem 1.25rem; margin-bottom: 10px; }
+.phase-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; }
+.phase-label { font-size: 13px; font-weight: 500; }
+.phase-sub { font-size: 12px; color: var(--text-secondary); }
+.phase-tasks { margin-top: 12px; border-top: 0.5px solid var(--border-light); padding-top: 12px; display: none; }
+.phase-tasks.open { display: block; }
+.task-row { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 0.5px solid var(--border-light); }
+.task-row:last-child { border-bottom: none; }
+.task-row.hidden { display: none; }
+.task-check { width: 18px; height: 18px; min-width: 18px; border-radius: 4px; border: 0.5px solid var(--border-strong); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; margin-top: 2px; transition: all .15s; }
+.task-check.done { background: var(--success); border-color: var(--success); }
+.task-check.done::after { content: ''; display: block; width: 10px; height: 6px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translate(1px,-1px); }
+.task-text { font-size: 13px; color: var(--text-primary); line-height: 1.5; flex: 1; }
+.task-text.done-text { color: var(--text-tertiary); text-decoration: line-through; }
+.task-tag { font-size: 11px; padding: 2px 7px; border-radius: 99px; white-space: nowrap; margin-top: 3px; display: inline-block; }
+.tag-academic { background: var(--blue-bg); color: var(--blue-text); }
+.tag-athletic { background: var(--green-bg); color: var(--green-text); }
+.tag-recruiting { background: var(--amber-bg); color: var(--amber-text); }
+.tag-ncaa { background: var(--pink-bg); color: var(--pink-text); }
+.chevron { font-size: 11px; color: var(--text-tertiary); transition: transform .2s; display: inline-block; }
+.chevron.open { transform: rotate(180deg); }
+
+/* ── Track switcher ── */
+.track-switcher { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+.track-pill { font-size: 12px; padding: 5px 14px; border-radius: 99px; border: 0.5px solid var(--border-mid); background: var(--bg-primary); cursor: pointer; color: var(--text-secondary); transition: all .15s; }
+.track-pill:hover { border-color: var(--border-strong); color: var(--text-primary); }
+.track-pill.active { background: var(--blue-bg); border-color: var(--blue-border); color: var(--blue-text); font-weight: 500; }
+
+/* ── Glossary ── */
+.term { border-bottom: 1px dashed var(--border-strong); cursor: pointer; }
+.term:hover { color: var(--blue-border); }
+.glossary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem; }
+.gloss-card { background: var(--bg-secondary); border-radius: var(--radius-sm); padding: 10px 12px; cursor: pointer; border: 0.5px solid transparent; transition: all .15s; }
+.gloss-card:hover { border-color: var(--border-mid); }
+.gloss-card.active-gloss { border-color: var(--blue-border); background: var(--blue-bg); }
+.gloss-term { font-size: 13px; font-weight: 500; }
+.gloss-preview { font-size: 12px; color: var(--text-secondary); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gloss-detail { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 1.25rem; margin-top: 4px; display: none; }
+.gloss-detail.open { display: block; }
+
+/* ── Export ── */
+.share-textarea { width: 100%; font-size: 12px; font-family: ui-monospace, monospace; color: var(--text-primary); background: var(--bg-primary); border: 0.5px solid var(--border-light); border-radius: var(--radius-sm); padding: 10px; resize: none; min-height: 180px; line-height: 1.7; }
+.copy-btn { background: var(--blue-border); color: #fff; border: none; border-radius: var(--radius-sm); padding: 9px 18px; font-size: 13px; font-weight: 500; cursor: pointer; transition: background .15s; }
+.copy-btn:hover { background: var(--blue-text); }
+.copy-btn.copied { background: var(--success); }
+
+/* ── Restore banner ── */
+.restore-banner { background: var(--blue-bg); border: 0.5px solid var(--blue-border); border-radius: var(--radius-md); padding: 1rem 1.25rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.restore-banner p { font-size: 13px; color: var(--blue-text); }
+
+/* ── Reset confirm ── */
+.reset-box { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 1.25rem; margin-top: 1rem; }
+
+/* ── Mobile ── */
+@media (max-width: 580px) {
+  .track-grid { grid-template-columns: 1fr; }
+  .glossary-grid { grid-template-columns: 1fr; }
+  .container { padding: 1.25rem 1rem 4rem; }
+  .tab { padding: 9px 12px; font-size: 12px; }
+}
+
+/* ─────────────────────────────────────────────
+   PRINT / SAVE AS PDF
+───────────────────────────────────────────── */
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  :root {
+    --bg-primary: #fff !important; --bg-secondary: #f5f5f3 !important; --bg-tertiary: #fff !important;
+    --text-primary: #1a1a18 !important; --text-secondary: #5f5e5a !important; --text-tertiary: #888780 !important;
+    --border-light: rgba(0,0,0,0.12) !important; --border-mid: rgba(0,0,0,0.2) !important;
+    --blue-bg: #E6F1FB !important; --blue-border: #378ADD !important; --blue-text: #0C447C !important;
+    --green-bg: #EAF3DE !important; --green-text: #27500A !important;
+    --amber-bg: #FAEEDA !important; --amber-text: #633806 !important;
+    --pink-bg: #FBEAF0 !important; --pink-text: #72243E !important;
+    --gray-bg: #F1EFE8 !important; --gray-text: #444441 !important;
+    --teal-bg: #E1F5EE !important; --teal-text: #085041 !important;
+    --success: #1D9E75 !important;
   }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: var(--bg-tertiary);
-    color: var(--text-primary);
-    line-height: 1.6;
-    min-height: 100vh;
-  }
-  .page-header {
-    background: var(--bg-primary);
-    border-bottom: 0.5px solid var(--border-light);
-    padding: 1rem 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .page-header-title { font-size: 15px; font-weight: 500; color: var(--text-primary); }
-  .page-header-sub { font-size: 12px; color: var(--text-tertiary); margin-top: 1px; }
-  .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
-  .card { background: var(--bg-primary); border: 0.5px solid var(--border-light); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1rem; }
-  .section-label { font-size: 11px; font-weight: 500; letter-spacing: .07em; color: var(--text-tertiary); text-transform: uppercase; margin: 1.5rem 0 10px; }
-  .sport-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; margin: 10px 0; }
-  .sport-btn { background: var(--bg-secondary); border: 0.5px solid var(--border-light); border-radius: var(--radius-sm); padding: 10px 8px; cursor: pointer; text-align: center; font-size: 13px; color: var(--text-secondary); transition: all .15s; }
-  .sport-btn:hover { border-color: var(--border-strong); color: var(--text-primary); }
-  .sport-btn.selected { background: var(--blue-bg); border-color: var(--blue-border); color: var(--blue-text); font-weight: 500; }
-  .track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.5rem; }
-  .track-card { border: 0.5px solid var(--border-light); border-radius: var(--radius-md); padding: 1.25rem; cursor: pointer; transition: all .15s; background: var(--bg-primary); }
-  .track-card:hover { border-color: var(--border-strong); }
-  .track-card.selected { border: 2px solid var(--blue-border); background: var(--blue-bg); }
-  .badge { display: inline-block; font-size: 11px; padding: 3px 9px; border-radius: var(--radius-sm); font-weight: 500; margin-bottom: 8px; }
-  .badge-blue { background: var(--blue-bg); color: var(--blue-text); }
-  .badge-amber { background: var(--amber-bg); color: var(--amber-text); }
-  .div-pill { font-size: 12px; padding: 5px 12px; border-radius: 99px; border: 0.5px solid var(--border-mid); background: var(--bg-primary); cursor: pointer; color: var(--text-secondary); transition: all .15s; }
-  .div-pill:hover { border-color: var(--border-strong); color: var(--text-primary); }
-  .div-pill.active-d1 { background: var(--blue-bg); border-color: var(--blue-border); color: var(--blue-text); font-weight: 500; }
-  .div-pill.active-d2 { background: var(--green-bg); border-color: var(--green-border); color: var(--green-text); font-weight: 500; }
-  .div-pill.active-d3 { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber-text); font-weight: 500; }
-  .div-pill.active-naia { background: var(--pink-bg); border-color: var(--pink-border); color: var(--pink-text); font-weight: 500; }
-  .div-pill.active-juco { background: var(--gray-bg); border-color: var(--gray-border); color: var(--gray-text); font-weight: 500; }
-  .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; }
-  .btn-cta { background: var(--blue-border); color: #fff; border: none; border-radius: var(--radius-sm); padding: 11px 28px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background .15s; }
-  .btn-cta:hover { background: var(--blue-text); }
-  .back-btn { background: none; border: none; cursor: pointer; font-size: 13px; color: var(--text-secondary); padding: 0; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 4px; }
-  .back-btn:hover { color: var(--text-primary); }
-  .tab-bar { display: flex; border-bottom: 0.5px solid var(--border-light); margin-bottom: 1.5rem; }
-  .tab { font-size: 13px; padding: 9px 18px; cursor: pointer; color: var(--text-secondary); border: none; border-bottom: 2px solid transparent; background: none; transition: all .15s; }
-  .tab:hover { color: var(--text-primary); }
-  .tab.active { color: var(--blue-border); border-bottom-color: var(--blue-border); font-weight: 500; }
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
-  .stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 1rem; }
-  .stat-card { background: var(--bg-secondary); border-radius: var(--radius-sm); padding: 12px; }
-  .stat-num { font-size: 22px; font-weight: 500; color: var(--text-primary); }
-  .stat-lbl { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-  .progress-bar-wrap { background: var(--bg-secondary); border-radius: 99px; height: 6px; overflow: hidden; }
-  .progress-bar-fill { height: 100%; border-radius: 99px; background: var(--success); transition: width .3s; }
-  .phase-block { background: var(--bg-primary); border: 0.5px solid var(--border-light); border-radius: var(--radius-md); padding: 1rem 1.25rem; margin-bottom: 10px; }
-  .phase-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
-  .phase-label { font-size: 13px; font-weight: 500; }
-  .phase-grade { font-size: 12px; color: var(--text-secondary); }
-  .phase-tasks { margin-top: 12px; border-top: 0.5px solid var(--border-light); padding-top: 12px; display: none; }
-  .phase-tasks.open { display: block; }
-  .task-row { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 0.5px solid var(--border-light); }
-  .task-row:last-child { border-bottom: none; }
-  .task-row.hidden { display: none; }
-  .task-check { width: 18px; height: 18px; min-width: 18px; border-radius: 4px; border: 0.5px solid var(--border-strong); background: var(--bg-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
-  .task-check.done { background: var(--success); border-color: var(--success); }
-  .task-check.done::after { content: ''; display: block; width: 10px; height: 6px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translate(1px,-1px); }
-  .task-text { font-size: 13px; color: var(--text-primary); line-height: 1.5; flex: 1; }
-  .task-text.done-text { color: var(--text-tertiary); text-decoration: line-through; }
-  .task-tag { font-size: 11px; padding: 2px 7px; border-radius: 99px; white-space: nowrap; margin-top: 2px; display: inline-block; }
-  .tag-academic { background: var(--blue-bg); color: var(--blue-text); }
-  .tag-athletic { background: var(--green-bg); color: var(--green-text); }
-  .tag-recruiting { background: var(--amber-bg); color: var(--amber-text); }
-  .tag-ncaa { background: var(--pink-bg); color: var(--pink-text); }
-  .chevron { font-size: 12px; color: var(--text-tertiary); transition: transform .2s; }
-  .chevron.open { transform: rotate(180deg); }
-  .term { border-bottom: 1px dashed var(--border-strong); cursor: pointer; color: var(--text-primary); }
-  .term:hover { color: var(--blue-border); }
-  .glossary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem; }
-  .gloss-card { background: var(--bg-secondary); border-radius: var(--radius-sm); padding: 10px 12px; cursor: pointer; border: 0.5px solid transparent; transition: all .15s; }
-  .gloss-card:hover { border-color: var(--border-mid); }
-  .gloss-card.active-gloss { border-color: var(--blue-border); background: var(--blue-bg); }
-  .gloss-term { font-size: 13px; font-weight: 500; color: var(--text-primary); }
-  .gloss-preview { font-size: 12px; color: var(--text-secondary); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .gloss-detail { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 1.25rem; margin-top: 4px; display: none; }
-  .gloss-detail.open { display: block; }
-  .share-box { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1rem; }
-  .share-textarea { width: 100%; font-size: 12px; font-family: ui-monospace, monospace; color: var(--text-primary); background: var(--bg-primary); border: 0.5px solid var(--border-light); border-radius: var(--radius-sm); padding: 10px; resize: none; min-height: 160px; line-height: 1.7; }
-  .copy-btn { background: var(--blue-border); color: #fff; border: none; border-radius: var(--radius-sm); padding: 9px 18px; font-size: 13px; font-weight: 500; cursor: pointer; margin-top: 8px; transition: background .15s; }
-  .copy-btn:hover { background: var(--blue-text); }
-  .copy-btn.copied { background: var(--success); }
-  .ask-btn { background: none; border: 0.5px solid var(--border-mid); border-radius: var(--radius-sm); padding: 9px 14px; font-size: 13px; color: var(--text-secondary); cursor: pointer; text-align: left; display: flex; align-items: center; gap: 6px; transition: all .15s; width: 100%; }
-  .ask-btn:hover { background: var(--bg-secondary); color: var(--text-primary); }
-  .screen { display: none; }
-  .screen.active { display: block; }
-  .footer { text-align: center; font-size: 12px; color: var(--text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--border-light); }
-  @media (max-width: 540px) {
-    .track-grid { grid-template-columns: 1fr; }
-    .glossary-grid { grid-template-columns: 1fr; }
-    .stat-row { grid-template-columns: repeat(3,1fr); }
-    .container { padding: 1.25rem 1rem 3rem; }
-  }
+  body { background: #fff !important; font-size: 11px; }
+  .page-header { position: static !important; border-bottom: 1px solid #ddd; padding: 0.6rem 1rem; }
+  .page-header-sub, .save-indicator { display: none !important; }
+  #header-sport { display: block !important; }
+
+  /* Hide everything except the roadmap tab */
+  .tab-bar, .track-switcher, .filter-bar, #ask-grid,
+  #tab-glossary, #tab-share, .footer, .back-btn,
+  .restore-banner, .reset-box { display: none !important; }
+
+  .screen#screen-setup { display: none !important; }
+  .screen#screen-plan { display: block !important; }
+  .tab-content#tab-roadmap { display: block !important; }
+
+  /* Show all phases open */
+  .phase-tasks { display: block !important; }
+  .task-row.hidden { display: none !important; }
+
+  .container { max-width: 100%; padding: 0.75rem 1rem; }
+  .stat-row { break-inside: avoid; margin-bottom: 0.75rem; }
+  .stat-card { padding: 8px 10px; }
+  .stat-num { font-size: 18px; }
+  .phase-block { break-inside: avoid; border: 0.5px solid #ccc !important; margin-bottom: 6px; padding: 0.75rem 1rem; }
+  .task-row { padding: 5px 0; }
+  .task-check { border: 1px solid #aaa !important; }
+  .task-check.done { background: #1D9E75 !important; border-color: #1D9E75 !important; }
+  .task-check.done::after { border-color: #fff !important; }
+  .progress-bar-fill { -webkit-print-color-adjust: exact !important; }
+  .progress-bar-wrap { margin-top: 4px; }
+
+  /* Print header block */
+  .pdf-header { display: block !important; background: var(--blue-bg) !important; border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 0.75rem; }
+
+  @page { margin: 0.65in; size: letter; }
+}
+.pdf-header { display: none; }
 </style>
 </head>
 <body>
@@ -156,18 +228,32 @@
 <div class="page-header">
   <div>
     <div class="page-header-title">College Athletic Recruiting Planner</div>
-    <div class="page-header-sub">A free tool for student athletes</div>
+    <div class="page-header-sub" id="header-sub">A free tool for student athletes</div>
   </div>
-  <div id="header-sport" style="font-size:13px;font-weight:500;color:var(--blue-text);display:none;"></div>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <div class="save-indicator" id="save-indicator">
+      <span class="save-dot"></span><span>Saved</span>
+    </div>
+    <span id="header-sport" style="font-size:13px;font-weight:500;color:var(--blue-text);display:none;"></span>
+  </div>
 </div>
 
 <div class="container">
 
-  <!-- SETUP SCREEN -->
+  <!-- ══════════════ SETUP SCREEN ══════════════ -->
   <div class="screen active" id="screen-setup">
+
+    <div id="restore-banner" class="restore-banner" style="display:none;">
+      <p id="restore-msg">You have a saved plan. Want to pick up where you left off?</p>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-cta" style="padding:8px 16px;font-size:13px;" onclick="restorePlan()">Resume my plan</button>
+        <button class="btn-ghost" onclick="dismissRestore()">Start fresh</button>
+      </div>
+    </div>
+
     <div style="margin-bottom:1.5rem;">
-      <p style="font-size:24px;font-weight:500;color:var(--text-primary);margin-bottom:6px;">Your recruiting game plan</p>
-      <p style="font-size:14px;color:var(--text-secondary);">Answer three quick questions to get a personalized roadmap for your college athletic journey.</p>
+      <p style="font-size:24px;font-weight:500;margin-bottom:6px;">Your recruiting game plan</p>
+      <p style="font-size:14px;color:var(--text-secondary);">Answer three questions to get a personalized roadmap for your college athletic journey.</p>
     </div>
 
     <div class="card">
@@ -179,7 +265,7 @@
         <div class="sport-btn" data-sport="Baseball">Baseball</div>
         <div class="sport-btn" data-sport="Softball">Softball</div>
         <div class="sport-btn" data-sport="Volleyball">Volleyball</div>
-        <div class="sport-btn" data-sport="Track & Field">Track & Field</div>
+        <div class="sport-btn" data-sport="Track & Field">Track &amp; Field</div>
         <div class="sport-btn" data-sport="Swimming">Swimming</div>
         <div class="sport-btn" data-sport="Tennis">Tennis</div>
         <div class="sport-btn" data-sport="Golf">Golf</div>
@@ -191,59 +277,81 @@
         <div class="sport-btn" data-sport="Gymnastics">Gymnastics</div>
       </div>
 
-      <div class="section-label">2. Starting point</div>
+      <div class="section-label">2. When are you starting?</div>
       <div class="track-grid" id="track-grid">
-        <div class="track-card" data-track="long">
-          <div class="badge badge-blue">4-year plan</div>
-          <div style="font-size:15px;font-weight:500;margin-bottom:4px;">Starting in 9th grade</div>
-          <div style="font-size:13px;color:var(--text-secondary);">Full roadmap — academics, exposure, and official visits from the very beginning.</div>
+        <div class="track-card" data-track="grade9">
+          <div class="track-urgency urgency-green">4-year runway</div>
+          <div style="font-size:14px;font-weight:500;margin-bottom:4px;">9th grade</div>
+          <div style="font-size:12px;color:var(--text-secondary);">Full foundation — build habits, get seen, and let recruiting unfold naturally.</div>
         </div>
-        <div class="track-card" data-track="short">
-          <div class="badge badge-amber">Accelerated</div>
-          <div style="font-size:15px;font-weight:500;margin-bottom:4px;">Starting in 11th grade</div>
-          <div style="font-size:13px;color:var(--text-secondary);">Fast-track for juniors and seniors already behind the typical recruiting curve.</div>
+        <div class="track-card" data-track="grade10">
+          <div class="track-urgency urgency-amber">Middle path</div>
+          <div style="font-size:14px;font-weight:500;margin-bottom:4px;">10th grade</div>
+          <div style="font-size:12px;color:var(--text-secondary);">More urgent than 9th, still time to build — key year to get on coaches' radar early.</div>
+        </div>
+        <div class="track-card" data-track="grade11">
+          <div class="track-urgency urgency-red">Accelerated</div>
+          <div style="font-size:14px;font-weight:500;margin-bottom:4px;">11th grade</div>
+          <div style="font-size:12px;color:var(--text-secondary);">Fast-track priorities — juniors and seniors need to move quickly and decisively.</div>
         </div>
       </div>
 
       <div class="section-label">3. Target division</div>
       <div class="filter-bar" id="div-setup-bar" style="margin-bottom:8px;">
-        <div class="div-pill active-d1" data-div="all">Not sure yet</div>
+        <div class="div-pill active-all" data-div="all">Not sure yet</div>
         <div class="div-pill" data-div="D1">NCAA D1</div>
         <div class="div-pill" data-div="D2">NCAA D2</div>
         <div class="div-pill" data-div="D3">NCAA D3</div>
         <div class="div-pill" data-div="NAIA">NAIA</div>
         <div class="div-pill" data-div="JUCO">JUCO</div>
       </div>
-      <p style="font-size:12px;color:var(--text-tertiary);margin-bottom:1.5rem;">You can change this anytime from the plan view.</p>
+      <p style="font-size:12px;color:var(--text-tertiary);margin-bottom:1.5rem;">You can filter by division anytime inside your plan.</p>
 
-      <div id="setup-error" style="display:none;font-size:13px;color:var(--danger);margin-bottom:12px;">Please select your sport and a starting point above.</div>
+      <div id="setup-error" style="display:none;font-size:13px;color:var(--danger);margin-bottom:12px;">Please select your sport and a starting grade above.</div>
       <button class="btn-cta" onclick="startPlan()">Build my plan &rarr;</button>
     </div>
 
-    <div class="footer">Built for student athletes &mdash; free to use and share</div>
+    <div class="footer">Free to use and share &mdash; built for student athletes</div>
   </div>
 
-  <!-- PLAN SCREEN -->
+  <!-- ══════════════ PLAN SCREEN ══════════════ -->
   <div class="screen" id="screen-plan">
-    <button class="back-btn" onclick="goBack()">&larr; Start over</button>
 
-    <div style="margin-bottom:1rem;">
-      <p style="font-size:22px;font-weight:500;color:var(--text-primary);" id="plan-title"></p>
-      <p style="font-size:13px;color:var(--text-secondary);" id="plan-subtitle"></p>
+    <!-- PDF-only header block -->
+    <div class="pdf-header" id="pdf-header">
+      <div style="font-size:16px;font-weight:600;color:var(--blue-text);" id="pdf-title"></div>
+      <div style="font-size:12px;color:var(--blue-text);margin-top:2px;" id="pdf-subtitle"></div>
+    </div>
+
+    <button class="back-btn" onclick="goBack()">&larr; Change sport or track</button>
+
+    <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px;flex-wrap:wrap;">
+      <p style="font-size:21px;font-weight:500;" id="plan-title"></p>
+    </div>
+    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:1rem;" id="plan-subtitle"></p>
+
+    <!-- Track switcher -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;flex-wrap:wrap;">
+      <span style="font-size:12px;color:var(--text-secondary);">Switch track:</span>
+      <div class="track-switcher" id="track-switcher">
+        <div class="track-pill" data-tpill="grade9">9th grade</div>
+        <div class="track-pill" data-tpill="grade10">10th grade</div>
+        <div class="track-pill" data-tpill="grade11">11th grade</div>
+      </div>
     </div>
 
     <div class="tab-bar">
       <button class="tab active" onclick="switchTab('roadmap',this)">Roadmap</button>
       <button class="tab" onclick="switchTab('glossary',this)">Glossary</button>
-      <button class="tab" onclick="switchTab('share',this)">Export</button>
+      <button class="tab" onclick="switchTab('export',this)">Export</button>
     </div>
 
-    <!-- ROADMAP TAB -->
+    <!-- ── ROADMAP TAB ── -->
     <div class="tab-content active" id="tab-roadmap">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-        <div style="font-size:12px;color:var(--text-secondary);">Filter by division:</div>
+        <span style="font-size:12px;color:var(--text-secondary);">Filter by division:</span>
         <div class="filter-bar" id="div-plan-bar">
-          <div class="div-pill active-d1" data-pdiv="all">All</div>
+          <div class="div-pill active-all" data-pdiv="all">All</div>
           <div class="div-pill" data-pdiv="D1">D1</div>
           <div class="div-pill" data-pdiv="D2">D2</div>
           <div class="div-pill" data-pdiv="D3">D3</div>
@@ -263,13 +371,13 @@
 
       <div id="phases-container"></div>
 
-      <div class="section-label" style="margin-top:1.5rem;">Learn more</div>
+      <div style="margin-top:1.5rem;font-size:11px;font-weight:500;letter-spacing:.07em;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:10px;">Resources</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem;" id="ask-grid"></div>
     </div>
 
-    <!-- GLOSSARY TAB -->
+    <!-- ── GLOSSARY TAB ── -->
     <div class="tab-content" id="tab-glossary">
-      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:1rem;">Tap any term to see its full definition. Underlined words in the roadmap link here too.</p>
+      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:1rem;">Tap any term for the full definition. Underlined words in the roadmap link here too.</p>
       <div class="glossary-grid" id="glossary-grid"></div>
       <div class="gloss-detail" id="gloss-detail">
         <div style="font-size:15px;font-weight:500;margin-bottom:6px;" id="gloss-detail-term"></div>
@@ -277,377 +385,685 @@
       </div>
     </div>
 
-    <!-- EXPORT TAB -->
-    <div class="tab-content" id="tab-share">
-      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:1rem;">Copy your plan as plain text to paste into Notes, email to a parent or coach, or save anywhere. Progress is included.</p>
-      <div class="share-box">
-        <div style="font-size:12px;font-weight:500;color:var(--text-secondary);margin-bottom:8px;">Your plan as plain text</div>
-        <textarea class="share-textarea" id="share-text" readonly></textarea>
-        <button class="copy-btn" id="copy-btn" onclick="copyPlan()">Copy to clipboard</button>
+    <!-- ── EXPORT TAB ── -->
+    <div class="tab-content" id="tab-export">
+      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:1rem;">Copy your plan as plain text, save it as a PDF, or share it with a parent or coach.</p>
+
+      <div class="card" style="margin-bottom:1rem;">
+        <div style="font-size:13px;font-weight:500;margin-bottom:4px;">Save as PDF</div>
+        <div style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">Opens your browser's print dialog. Choose "Save as PDF" as the destination. Your completed tasks and progress are included.</div>
+        <button class="btn-cta" onclick="savePDF()">Save as PDF &rarr;</button>
       </div>
 
-      <div class="section-label">Print your plan</div>
-      <button class="ask-btn" onclick="window.print()" style="width:auto;margin-bottom:1.5rem;">Print or save as PDF &rarr;</button>
+      <div class="card" style="margin-bottom:1rem;">
+        <div style="font-size:13px;font-weight:500;margin-bottom:4px;">Copy as plain text</div>
+        <div style="font-size:13px;color:var(--text-secondary);margin-bottom:10px;">Paste into Notes, email, or any document. Great for sharing with a parent or coach.</div>
+        <textarea class="share-textarea" id="share-text" readonly></textarea>
+        <button class="copy-btn" id="copy-btn" onclick="copyPlan()" style="margin-top:8px;">Copy to clipboard</button>
+      </div>
 
-      <div class="section-label">Resources</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        <a href="https://www.ncaa.org/sports/2014/10/6/eligibility-center.aspx" target="_blank" rel="noopener" style="text-decoration:none;">
-          <button class="ask-btn">NCAA Eligibility Center &rarr;</button>
-        </a>
-        <a href="https://www.naia.org/eligibility/index" target="_blank" rel="noopener" style="text-decoration:none;">
-          <button class="ask-btn">NAIA Eligibility &rarr;</button>
-        </a>
-        <a href="https://www.njcaa.org/eligibility/eligibilityOverview" target="_blank" rel="noopener" style="text-decoration:none;">
-          <button class="ask-btn">NJCAA (JUCO) Eligibility &rarr;</button>
-        </a>
-        <a href="https://web3.ncaa.org/hsportal/exec/hsAction" target="_blank" rel="noopener" style="text-decoration:none;">
-          <button class="ask-btn">NCAA core course lookup &rarr;</button>
-        </a>
+      <div class="card">
+        <div style="font-size:13px;font-weight:500;margin-bottom:10px;">Official resources</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <a href="https://www.ncaa.org/sports/2014/10/6/eligibility-center.aspx" target="_blank" rel="noopener" style="text-decoration:none;"><button class="ask-btn">NCAA Eligibility Center &rarr;</button></a>
+          <a href="https://www.naia.org/eligibility/index" target="_blank" rel="noopener" style="text-decoration:none;"><button class="ask-btn">NAIA Eligibility &rarr;</button></a>
+          <a href="https://www.njcaa.org/eligibility/eligibilityOverview" target="_blank" rel="noopener" style="text-decoration:none;"><button class="ask-btn">NJCAA (JUCO) &rarr;</button></a>
+          <a href="https://web3.ncaa.org/hsportal/exec/hsAction" target="_blank" rel="noopener" style="text-decoration:none;"><button class="ask-btn">NCAA core course lookup &rarr;</button></a>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1rem;">
+        <div style="font-size:13px;font-weight:500;margin-bottom:4px;">Reset progress</div>
+        <div style="font-size:13px;color:var(--text-secondary);margin-bottom:10px;">This will clear all your checked tasks and saved data. This cannot be undone.</div>
+        <button class="btn-danger-ghost" onclick="confirmReset()">Reset my plan</button>
+        <div id="reset-confirm" style="display:none;margin-top:10px;font-size:13px;color:var(--text-secondary);">
+          Are you sure? <button class="btn-danger-ghost" style="margin-left:8px;padding:5px 12px;" onclick="resetPlan()">Yes, reset everything</button>
+          <button class="btn-ghost" style="margin-left:6px;padding:5px 12px;" onclick="document.getElementById('reset-confirm').style.display='none'">Cancel</button>
+        </div>
       </div>
     </div>
 
     <div class="footer">College Athletic Recruiting Planner &mdash; free to use and share</div>
   </div>
 
-</div>
+</div><!-- /container -->
 
 <script>
-const GLOSSARY=[
-  {term:"NLI",full:"National Letter of Intent",def:"A binding agreement between a student-athlete and an NCAA Division I or II school. Signing it means you commit to attend that school for one year in exchange for athletic financial aid. D3 and NAIA schools do not use the NLI — get written confirmation from the coach instead."},
-  {term:"NCAA Eligibility Center",full:"NCAA Eligibility Center",def:"Every student planning to compete at an NCAA D1 or D2 school must register here. The Eligibility Center verifies your academic record and certifies you meet NCAA core course and GPA requirements. Register at ncaa.org — it costs a fee but waivers are available."},
-  {term:"Official visit",full:"Official Visit",def:"A campus visit paid for by the college — up to 5 allowed at D1 schools, unlimited at D2. The school covers travel, meals, lodging, and game tickets. You can only take official visits after the start of your senior year (or junior year for some sports)."},
-  {term:"Unofficial visit",full:"Unofficial Visit",def:"A campus visit you pay for yourself. There is no limit on unofficial visits. These are a great way to meet coaches early and get a feel for the campus — and coaches can meet with you during most recruiting periods."},
-  {term:"Dead period",full:"Dead Period",def:"A time when NCAA coaches cannot have any in-person contact with recruits or their families — on or off campus. Coaches can still call, text, and email during this time."},
-  {term:"Quiet period",full:"Quiet Period",def:"A time when coaches may have in-person contact with recruits only on the college's campus. Coaches cannot watch you compete or visit your school during this period."},
-  {term:"Contact period",full:"Contact Period",def:"A time when college coaches are allowed to have in-person contact with recruits both on and off campus, including watching you compete at games or tournaments."},
-  {term:"Evaluation period",full:"Evaluation Period",def:"A time when coaches can watch you compete or visit your school, but cannot have in-person contact with you or your parents off campus."},
-  {term:"Walk-on",full:"Walk-On",def:"A student who joins a college team without an athletic scholarship. Walk-ons may earn a scholarship later based on performance. Being a walk-on is a legitimate path to playing college sports — especially at D1 schools with deep rosters."},
-  {term:"Preferred walk-on",full:"Preferred Walk-On",def:"A student personally invited by a coach to join the team without scholarship money. Preferred walk-ons have a guaranteed roster spot and are typically treated like scholarship athletes during the recruiting process."},
-  {term:"Scholarship equivalency",full:"Scholarship Equivalency",def:"In most D1 and D2 sports, coaches can split one scholarship among multiple players. A coach might offer you a 25% or 50% scholarship rather than a full ride. Understanding this is key when comparing offers."},
-  {term:"Full ride",full:"Full Ride",def:"An athletic scholarship covering tuition, room and board, books, and fees in full. True full rides are rare outside of 'headcount' sports like D1 football and D1 men's and women's basketball."},
-  {term:"Headcount sport",full:"Headcount Sport",def:"Sports where each scholarship counts as one full scholarship — no splitting allowed. NCAA D1 headcount sports include football, men's basketball, women's basketball, tennis, volleyball, and gymnastics."},
-  {term:"Equivalency sport",full:"Equivalency Sport",def:"Sports where coaches can split scholarships among multiple players. Most sports are equivalency sports — soccer, baseball, swimming, lacrosse, cross country, and others. This means aid offers often come as partial scholarships."},
-  {term:"NAIA",full:"National Association of Intercollegiate Athletics",def:"An alternative governing body to the NCAA for smaller college athletics programs. NAIA schools offer athletic scholarships, and recruiting rules are often more flexible than the NCAA. NAIA is a great option if you're open to smaller schools."},
-  {term:"JUCO",full:"Junior College (NJCAA)",def:"Two-year colleges that compete in the NJCAA. JUCOs can be a valuable path if you need more time to develop academically or athletically before transferring to a 4-year school. Many JUCO athletes go on to compete at D1 programs."},
-  {term:"Core courses",full:"NCAA Core Courses",def:"The specific academic courses (English, math, science, social science, etc.) that the NCAA requires for eligibility. Not every high school course qualifies — your school's courses must be pre-approved by the NCAA Eligibility Center. Check early so you don't miss required classes."},
-  {term:"GPA sliding scale",full:"GPA / Test Score Sliding Scale",def:"The NCAA uses a sliding scale for D1 eligibility — a higher GPA means you need a lower SAT/ACT score, and vice versa. The minimum qualifying GPA is 2.3 for D1. D2 requires a 2.2 GPA with no minimum test score."},
+/* ═══════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════ */
+const GLOSSARY = [
+  {term:"NLI",full:"National Letter of Intent",def:"A binding agreement between a student-athlete and an NCAA D1 or D2 school. Signing commits you to attend that school for one year in exchange for athletic financial aid. D3 and NAIA schools do not use the NLI — get written confirmation from the coach instead."},
+  {term:"Eligibility Center",full:"NCAA Eligibility Center",def:"Every student planning to compete at NCAA D1 or D2 must register here. The Eligibility Center verifies your academic record and certifies you meet core course and GPA requirements. Register at ncaa.org — fee waivers are available for students who qualify."},
+  {term:"Official visit",full:"Official Visit",def:"A campus visit paid for by the college — up to 5 allowed at D1, unlimited at D2. The school covers travel, meals, lodging, and game tickets. Official visits are only allowed after the start of your senior year in most sports."},
+  {term:"Unofficial visit",full:"Unofficial Visit",def:"A campus visit you pay for yourself. No limit on these. They're a great way to meet coaches early and evaluate campuses — coaches can meet with you during most recruiting periods."},
+  {term:"Dead period",full:"Dead Period",def:"A time when NCAA coaches cannot have any in-person contact with recruits or families — on or off campus. Coaches can still call, text, and email during dead periods."},
+  {term:"Quiet period",full:"Quiet Period",def:"Coaches may meet with recruits only on the college campus during this time. They cannot watch you compete or visit your school."},
+  {term:"Contact period",full:"Contact Period",def:"Coaches are allowed in-person contact with recruits on and off campus, including watching you compete at games or tournaments."},
+  {term:"Evaluation period",full:"Evaluation Period",def:"Coaches can watch you compete or visit your school, but cannot have in-person contact with you or your parents off campus."},
+  {term:"Walk-on",full:"Walk-On",def:"A student who joins a college team without an athletic scholarship. Walk-ons may earn scholarship money later based on performance. It's a legitimate path — especially at D1 programs with deep rosters."},
+  {term:"Preferred walk-on",full:"Preferred Walk-On",def:"A student personally invited by a coach to join the team without scholarship money. Preferred walk-ons have a guaranteed roster spot and are treated like scholarship athletes during recruiting."},
+  {term:"Equivalency sport",full:"Equivalency Sport",def:"Sports where coaches can split scholarships among multiple players. Most sports are equivalency sports — soccer, baseball, swimming, lacrosse, cross country. Aid offers often come as partial scholarships (e.g. 50% or 25%)."},
+  {term:"Headcount sport",full:"Headcount Sport",def:"Sports where each scholarship counts as one full scholarship — no splitting. D1 headcount sports: football, men's basketball, women's basketball, tennis, volleyball, and gymnastics."},
+  {term:"Full ride",full:"Full Ride",def:"A scholarship covering tuition, room and board, books, and fees in full. True full rides are rare outside of headcount sports like D1 football and D1 basketball."},
+  {term:"Sliding scale",full:"GPA / Test Score Sliding Scale",def:"The NCAA uses a sliding scale for D1 eligibility — a higher GPA means you need a lower SAT/ACT score, and vice versa. Minimum qualifying GPA is 2.3 for D1 and 2.2 for D2 (no test score minimum for D2)."},
+  {term:"Core courses",full:"NCAA Core Courses",def:"Specific academic courses (English, math, science, social science, etc.) required for NCAA eligibility. Not every high school course qualifies — your school's courses must be pre-approved by the Eligibility Center. Check early so you don't miss required classes."},
+  {term:"Verbal commitment",full:"Verbal Commitment",def:"An informal, non-binding agreement between a recruit and a college. Unlike signing an NLI, either side can back out. Verbal commitments can happen at any age and are considered serious decisions — but they are not legally binding."},
   {term:"Transfer portal",full:"Transfer Portal",def:"The NCAA's online database where student-athletes notify they intend to transfer. Once in the portal, coaches at other schools can contact you. Athletes can now transfer once without sitting out a year under the one-time transfer exception."},
-  {term:"Verbal commitment",full:"Verbal Commitment",def:"An informal, non-binding agreement between a recruit and a college program. Unlike signing an NLI, a verbal commitment can be backed out of by either side — though it is considered a serious decision. Verbal commitments can happen at any age."}
+  {term:"NAIA",full:"National Association of Intercollegiate Athletics",def:"An alternative governing body to the NCAA, typically for smaller colleges. NAIA schools offer athletic scholarships with more flexible recruiting rules than the NCAA. A strong option if you're open to smaller schools."},
+  {term:"JUCO",full:"Junior College (NJCAA)",def:"Two-year colleges competing in the NJCAA. JUCOs are a valuable path if you need more time academically or athletically before transferring to a 4-year school. Many JUCO athletes go on to compete at D1 programs."},
+  {term:"Signing period",full:"National Signing Day / Signing Period",def:"The window during which student-athletes can sign a National Letter of Intent. There are early signing periods (December) and regular signing periods (February for most sports, April for football). Check your sport's specific dates at ncaa.org."}
 ];
 
-const PLANS={
-  long:[
-    {grade:"9th Grade",label:"Build the foundation",color:"#B5D4F4",tasks:[
-      {text:"Meet with your school counselor to map a <span class='term' onclick='showTip(\"core courses\")'>core course</span> track",tag:"academic",divs:["all"]},
-      {text:"Aim for a 3.5+ GPA — NCAA eligibility tracking starts in 9th grade",tag:"academic",divs:["D1","D2","all"]},
-      {text:"Commit to your primary sport and find a club or travel team",tag:"athletic",divs:["all"]},
-      {text:"Create a short highlight or skills video — even a basic one counts",tag:"recruiting",divs:["all"]},
-      {text:"Research NCAA D1, D2, D3, NAIA, and JUCO to understand all your options",tag:"ncaa",divs:["all"]},
-      {text:"Start a recruiting journal — log stats, awards, and milestones each season",tag:"recruiting",divs:["all"]},
-    ]},
-    {grade:"10th Grade",label:"Grow your presence",color:"#9FE1CB",tasks:[
-      {text:"Take the PSAT to identify academic gaps early",tag:"academic",divs:["D1","D2","NAIA","all"]},
-      {text:"Build a list of 15–25 schools that fit academically and athletically",tag:"recruiting",divs:["all"]},
-      {text:"Attend college camps at programs you're interested in",tag:"athletic",divs:["all"]},
-      {text:"Create a profile on NCSA, Hudl, or a sport-specific recruiting platform",tag:"recruiting",divs:["all"]},
-      {text:"Register on the NCAA Eligibility Center website (ncaa.org)",tag:"ncaa",divs:["D1","D2","all"]},
-      {text:"Email coaches a brief introduction with your highlight video link",tag:"recruiting",divs:["all"]},
-      {text:"Research NAIA scholarship opportunities — often more flexible than NCAA",tag:"ncaa",divs:["NAIA","all"]},
-    ]},
-    {grade:"11th Grade",label:"Get on coaches' radar",color:"#FAC775",tasks:[
-      {text:"Take the SAT or ACT — understand the <span class='term' onclick='showTip(\"GPA sliding scale\")'>GPA sliding scale</span> for eligibility",tag:"academic",divs:["D1","D2","NAIA","all"]},
-      {text:"Narrow your school list to 8–12 programs that are a strong fit",tag:"recruiting",divs:["all"]},
-      {text:"Send updated highlight video and stats to coaches on your target list",tag:"recruiting",divs:["all"]},
-      {text:"Take <span class='term' onclick='showTip(\"unofficial visit\")'>unofficial visits</span> to campuses you're serious about",tag:"recruiting",divs:["all"]},
-      {text:"Apply to the NCAA Eligibility Center before July 1 of junior year",tag:"ncaa",divs:["D1","D2","all"]},
-      {text:"Compete at showcases with significant college coaching attendance",tag:"athletic",divs:["all"]},
-      {text:"Understand the D3 model — no athletic scholarships, but academic merit aid and fit still matter",tag:"ncaa",divs:["D3","all"]},
-      {text:"Research JUCO programs if you'd benefit from 2 more years of development before a 4-year school",tag:"ncaa",divs:["JUCO","all"]},
-    ]},
-    {grade:"12th Grade",label:"Sign and commit",color:"#F5C4B3",tasks:[
-      {text:"Take <span class='term' onclick='showTip(\"official visit\")'>official visits</span> — up to 5 at D1 programs, unlimited at D2",tag:"recruiting",divs:["D1","D2","all"]},
-      {text:"Compare scholarship offers carefully — understand <span class='term' onclick='showTip(\"scholarship equivalency\")'>equivalency</span> vs <span class='term' onclick='showTip(\"full ride\")'>full-ride</span> offers",tag:"recruiting",divs:["D1","D2","NAIA","all"]},
-      {text:"Sign your <span class='term' onclick='showTip(\"NLI\")'>National Letter of Intent</span> during the signing period",tag:"recruiting",divs:["D1","D2","all"]},
-      {text:"Finalize enrollment at your D3 school — no NLI, so get written confirmation from your coach",tag:"recruiting",divs:["D3","all"]},
-      {text:"Notify coaches at schools you're declining — it's the right thing to do",tag:"recruiting",divs:["all"]},
-      {text:"Verify your NCAA Eligibility Center clearance is finalized",tag:"ncaa",divs:["D1","D2","all"]},
-      {text:"Keep your grades up through graduation — offers can be pulled for academic reasons",tag:"academic",divs:["all"]},
-    ]}
+const T = {
+  academic:'academic', athletic:'athletic', recruiting:'recruiting', ncaa:'ncaa'
+};
+const TAG_LABELS = {academic:'Academic',athletic:'Athletic',recruiting:'Recruiting',ncaa:'NCAA / Compliance'};
+const TAG_CLASSES = {academic:'tag-academic',athletic:'tag-athletic',recruiting:'tag-recruiting',ncaa:'tag-ncaa'};
+
+/* helper to make a term tooltip span */
+function t(display, key) {
+  return `<span class="term" onclick="showTip('${key}')">${display}</span>`;
+}
+
+const PLANS = {
+
+  /* ── 9TH GRADE ── */
+  grade9: [
+    {
+      grade:'9th Grade', label:'Build the foundation', color:'#9FE1CB',
+      tasks:[
+        {text:`Meet with your school counselor to map out your ${t('core course','core courses')} requirements`,tag:T.academic,divs:['all']},
+        {text:'Aim for a 3.5+ GPA from day one — NCAA eligibility tracking starts in 9th grade',tag:T.academic,divs:['D1','D2','all']},
+        {text:'Identify your primary sport and commit to off-season training year-round',tag:T.athletic,divs:['all']},
+        {text:'Find and join a club or travel team to compete at a higher level',tag:T.athletic,divs:['all']},
+        {text:'Create a simple highlight or skills video — even a basic one builds the habit',tag:T.recruiting,divs:['all']},
+        {text:'Research the differences between NCAA D1, D2, D3, NAIA, and JUCO',tag:T.ncaa,divs:['all']},
+        {text:'Start a recruiting journal — log stats, awards, and achievements each season',tag:T.recruiting,divs:['all']},
+      ]
+    },
+    {
+      grade:'10th Grade', label:'Build your profile', color:'#B5D4F4',
+      tasks:[
+        {text:'Take the PSAT to identify academic gaps early',tag:T.academic,divs:['D1','D2','NAIA','all']},
+        {text:'Build a list of 20–30 schools that fit you academically and athletically',tag:T.recruiting,divs:['all']},
+        {text:'Attend college camps at programs you are interested in',tag:T.athletic,divs:['all']},
+        {text:`Create a profile on NCSA, Hudl, or a sport-specific recruiting platform`,tag:T.recruiting,divs:['all']},
+        {text:`Register on the NCAA ${t('Eligibility Center','eligibility center')} website (ncaa.org)`,tag:T.ncaa,divs:['D1','D2','all']},
+        {text:'Email college coaches a brief, genuine introduction with your highlight video',tag:T.recruiting,divs:['all']},
+        {text:'Research NAIA scholarship opportunities — often more accessible than NCAA',tag:T.ncaa,divs:['NAIA','all']},
+        {text:'Update your highlight video with current season footage',tag:T.recruiting,divs:['all']},
+      ]
+    },
+    {
+      grade:'11th Grade', label:'Get on coaches\' radar', color:'#FAC775',
+      tasks:[
+        {text:`Take the SAT or ACT — understand the ${t('sliding scale','sliding scale')} for D1 eligibility`,tag:T.academic,divs:['D1','D2','NAIA','all']},
+        {text:'Narrow your school list to 10–15 programs that are a strong fit',tag:T.recruiting,divs:['all']},
+        {text:'Send updated highlight video and stats to coaches on your target list',tag:T.recruiting,divs:['all']},
+        {text:`Take ${t('unofficial visits','unofficial visit')} to campuses you are serious about`,tag:T.recruiting,divs:['all']},
+        {text:'Apply to the NCAA Eligibility Center before July 1 of junior year',tag:T.ncaa,divs:['D1','D2','all']},
+        {text:'Compete at showcases and tournaments with significant college coaching attendance',tag:T.athletic,divs:['all']},
+        {text:'Ask coaches directly: "Where do I stand in your recruiting class?"',tag:T.recruiting,divs:['all']},
+        {text:'Understand D3 — no athletic scholarships, but merit aid and fit still matter greatly',tag:T.ncaa,divs:['D3','all']},
+        {text:'Research JUCO programs if you would benefit from two more years of development',tag:T.ncaa,divs:['JUCO','all']},
+      ]
+    },
+    {
+      grade:'12th Grade', label:'Sign and commit', color:'#F5C4B3',
+      tasks:[
+        {text:`Take up to 5 ${t('official visits','official visit')} at D1 programs — plan them efficiently in the fall`,tag:T.recruiting,divs:['D1','D2','all']},
+        {text:'Compare scholarship offers carefully — understand equivalency vs full-ride terms',tag:T.recruiting,divs:['D1','D2','NAIA','all']},
+        {text:`Sign your ${t('NLI','nli')} during the appropriate signing period for your sport`,tag:T.recruiting,divs:['D1','D2','all']},
+        {text:'Get written confirmation of your roster spot and any aid at D3 or NAIA schools',tag:T.recruiting,divs:['D3','NAIA','all']},
+        {text:'Notify coaches at programs you are declining — be professional and prompt',tag:T.recruiting,divs:['all']},
+        {text:'Verify your NCAA Eligibility Center clearance is finalized before enrollment',tag:T.ncaa,divs:['D1','D2','all']},
+        {text:'Keep your grades up through graduation — offers can be pulled for academic reasons',tag:T.academic,divs:['all']},
+        {text:'Stay in regular contact with your committed program\'s coaching staff',tag:T.recruiting,divs:['all']},
+      ]
+    }
   ],
-  short:[
-    {grade:"11th Grade — Right now",label:"Get organized fast",color:"#FAC775",tasks:[
-      {text:"Register on the NCAA Eligibility Center right now — don't wait",tag:"ncaa",divs:["D1","D2","all"]},
-      {text:"Pull your transcript and verify <span class='term' onclick='showTip(\"core courses\")'>core course</span> requirements are on track",tag:"academic",divs:["all"]},
-      {text:"Schedule the SAT or ACT this semester if you haven't already",tag:"academic",divs:["D1","D2","NAIA","all"]},
-      {text:"Create a recruiting profile on NCSA, Hudl, or a sport-specific platform today",tag:"recruiting",divs:["all"]},
-      {text:"Record a highlight video — 3–5 minutes, best clips first, clear jersey number",tag:"recruiting",divs:["all"]},
-      {text:"Research JUCO programs as a legitimate stepping stone to 4-year programs",tag:"ncaa",divs:["JUCO","all"]},
-    ]},
-    {grade:"11th Grade — Outreach",label:"Contact coaches now",color:"#F5C4B3",tasks:[
-      {text:"Build a target list of 15–20 programs across multiple division levels",tag:"recruiting",divs:["all"]},
-      {text:"Email each coach personally — include your highlight video, stats, and why you like their program",tag:"recruiting",divs:["all"]},
-      {text:"Follow up with coaches who respond — building relationships is the whole game",tag:"recruiting",divs:["all"]},
-      {text:"Ask your high school or club coach to contact college coaches on your behalf",tag:"recruiting",divs:["all"]},
-      {text:"Register for college camps at your top programs this summer",tag:"athletic",divs:["all"]},
-    ]},
-    {grade:"12th Grade — Fall",label:"Visits and decisions",color:"#F0997B",tasks:[
-      {text:"Retake SAT/ACT early fall — understand the <span class='term' onclick='showTip(\"GPA sliding scale\")'>sliding scale</span> and where you stand",tag:"academic",divs:["D1","D2","NAIA","all"]},
-      {text:"Take <span class='term' onclick='showTip(\"unofficial visit\")'>unofficial visits</span> immediately — fall is your prime recruiting window",tag:"recruiting",divs:["all"]},
-      {text:"Schedule <span class='term' onclick='showTip(\"official visit\")'>official visits</span> — up to 5 at D1 programs; plan them efficiently",tag:"recruiting",divs:["D1","D2","all"]},
-      {text:"Ask coaches directly: 'Where do I stand in your recruiting class this year?'",tag:"recruiting",divs:["all"]},
-      {text:"Compete in fall showcases and tournaments where college coaches will attend",tag:"athletic",divs:["all"]},
-      {text:"Understand the <span class='term' onclick='showTip(\"transfer portal\")'>transfer portal</span> — it's a legitimate option if your first choice doesn't work out",tag:"ncaa",divs:["D1","D2","all"]},
-    ]},
-    {grade:"12th Grade — Commit",label:"Sign and close",color:"#F7C1C1",tasks:[
-      {text:"Compare scholarship and financial aid packages before making a final decision",tag:"recruiting",divs:["D1","D2","NAIA","all"]},
-      {text:"Sign your <span class='term' onclick='showTip(\"NLI\")'>NLI</span> during the appropriate signing period for your sport",tag:"recruiting",divs:["D1","D2","all"]},
-      {text:"Get written confirmation of your roster spot and any aid at D3 or NAIA schools",tag:"recruiting",divs:["D3","NAIA","all"]},
-      {text:"Notify coaches at programs you're declining — be professional and prompt",tag:"recruiting",divs:["all"]},
-      {text:"Confirm your NCAA Eligibility Center clearance is finalized before enrollment",tag:"ncaa",divs:["D1","D2","all"]},
-      {text:"Keep your grades up through graduation — coaches can pull offers for academic reasons",tag:"academic",divs:["all"]},
-    ]}
+
+  /* ── 10TH GRADE ── */
+  grade10: [
+    {
+      grade:'10th Grade — Now', label:'Accelerate your foundation', color:'#B5D4F4',
+      tasks:[
+        {text:`Meet with your counselor immediately to verify you are on track with ${t('core course','core courses')} requirements`,tag:T.academic,divs:['all']},
+        {text:'Audit your GPA — you need 2.3+ for D1, 2.2+ for D2, starting now',tag:T.academic,divs:['D1','D2','all']},
+        {text:'Join a club or travel team if you have not already — exposure at this level matters',tag:T.athletic,divs:['all']},
+        {text:`Register on the NCAA ${t('Eligibility Center','eligibility center')} now — earlier is better`,tag:T.ncaa,divs:['D1','D2','all']},
+        {text:'Record a highlight video this season — make it your priority',tag:T.recruiting,divs:['all']},
+        {text:`Create a recruiting profile on NCSA, Hudl, or a sport-specific platform today`,tag:T.recruiting,divs:['all']},
+        {text:'Take the PSAT this fall and identify any academic gaps to address in 11th grade',tag:T.academic,divs:['D1','D2','NAIA','all']},
+        {text:'Research NAIA schools — strong athletic scholarships with more flexible recruiting timelines',tag:T.ncaa,divs:['NAIA','all']},
+      ]
+    },
+    {
+      grade:'10th Grade — Outreach', label:'Start contacting coaches', color:'#9FE1CB',
+      tasks:[
+        {text:'Build a target list of 15–20 schools across multiple division levels',tag:T.recruiting,divs:['all']},
+        {text:'Email college coaches a brief, genuine introduction with your highlight video link',tag:T.recruiting,divs:['all']},
+        {text:'Attend college camps at programs on your list — coaches notice who shows up',tag:T.athletic,divs:['all']},
+        {text:'Ask your high school or club coach to contact college coaches on your behalf',tag:T.recruiting,divs:['all']},
+        {text:'Compete at showcases where college coaches have significant attendance',tag:T.athletic,divs:['all']},
+        {text:'Research D3 — no athletic scholarships, but strong academics and merit aid available',tag:T.ncaa,divs:['D3','all']},
+      ]
+    },
+    {
+      grade:'11th Grade', label:'Build momentum fast', color:'#FAC775',
+      tasks:[
+        {text:`Take the SAT or ACT early in junior year — understand the ${t('sliding scale','sliding scale')}`,tag:T.academic,divs:['D1','D2','NAIA','all']},
+        {text:'Narrow your school list to 8–12 programs where you can realistically compete',tag:T.recruiting,divs:['all']},
+        {text:'Send updated highlight videos and stats to your target coaches',tag:T.recruiting,divs:['all']},
+        {text:`Take ${t('unofficial visits','unofficial visit')} to your top schools this year`,tag:T.recruiting,divs:['all']},
+        {text:'Apply to the NCAA Eligibility Center before July 1 of junior year',tag:T.ncaa,divs:['D1','D2','all']},
+        {text:'Ask coaches directly: "Where do I stand in your recruiting class?"',tag:T.recruiting,divs:['all']},
+        {text:'Retake SAT/ACT if needed — aim to exceed eligibility minimums, not just meet them',tag:T.academic,divs:['D1','D2','NAIA','all']},
+        {text:'Compete in summer showcases after junior year — this is peak recruiting exposure time',tag:T.athletic,divs:['D1','D2','D3','NAIA','all']},
+        {text:'Research JUCO programs as a legitimate stepping stone to 4-year programs',tag:T.ncaa,divs:['JUCO','all']},
+      ]
+    },
+    {
+      grade:'12th Grade', label:'Sign and commit', color:'#F5C4B3',
+      tasks:[
+        {text:'Retake SAT/ACT early fall if your scores need improvement',tag:T.academic,divs:['D1','D2','NAIA','all']},
+        {text:`Schedule ${t('official visits','official visit')} in the fall — up to 5 at D1, unlimited at D2`,tag:T.recruiting,divs:['D1','D2','all']},
+        {text:'Compare scholarship and financial aid packages carefully before committing',tag:T.recruiting,divs:['D1','D2','NAIA','all']},
+        {text:`Sign your ${t('NLI','nli')} during the appropriate signing period`,tag:T.recruiting,divs:['D1','D2','all']},
+        {text:'Get written confirmation of roster spot and aid at D3 or NAIA schools — no NLI exists there',tag:T.recruiting,divs:['D3','NAIA','all']},
+        {text:'Notify coaches at programs you are declining — be professional and prompt',tag:T.recruiting,divs:['all']},
+        {text:'Verify your NCAA Eligibility Center clearance is finalized',tag:T.ncaa,divs:['D1','D2','all']},
+        {text:'Keep grades up through graduation — offers can be revoked for academic reasons',tag:T.academic,divs:['all']},
+      ]
+    }
+  ],
+
+  /* ── 11TH GRADE ── */
+  grade11: [
+    {
+      grade:'11th Grade — Immediately', label:'Get organized right now', color:'#FAC775',
+      tasks:[
+        {text:`Register on the NCAA ${t('Eligibility Center','eligibility center')} today — do not wait another week`,tag:T.ncaa,divs:['D1','D2','all']},
+        {text:`Pull your transcript and verify every ${t('core course','core courses')} is on track — fix gaps now`,tag:T.academic,divs:['D1','D2','all']},
+        {text:'Schedule the SAT or ACT this semester if you have not already',tag:T.academic,divs:['D1','D2','NAIA','all']},
+        {text:'Record a highlight video immediately — 3 to 5 minutes, best clips first, jersey number visible',tag:T.recruiting,divs:['all']},
+        {text:'Create a recruiting profile on NCSA, Hudl, or a sport-specific platform today',tag:T.recruiting,divs:['all']},
+        {text:'Compile all your stats, awards, and achievements into one document',tag:T.athletic,divs:['all']},
+        {text:'Research JUCO programs — a genuine and smart path to a 4-year program',tag:T.ncaa,divs:['JUCO','all']},
+        {text:'Understand D3 — no athletic scholarships but strong academic merit aid is available',tag:T.ncaa,divs:['D3','all']},
+      ]
+    },
+    {
+      grade:'11th Grade — Outreach', label:'Contact coaches this week', color:'#F5C4B3',
+      tasks:[
+        {text:'Build a target list of 15–20 programs across D1, D2, D3, NAIA, and JUCO',tag:T.recruiting,divs:['all']},
+        {text:'Email each coach personally with your highlight video, stats, and why you like their program',tag:T.recruiting,divs:['all']},
+        {text:'Follow up with every coach who responds — relationships are the whole game',tag:T.recruiting,divs:['all']},
+        {text:'Ask your high school or club coach to email college coaches on your behalf',tag:T.recruiting,divs:['all']},
+        {text:'Register for college camps at your top programs this summer — coaches watch closely',tag:T.athletic,divs:['all']},
+        {text:'Compete at showcases or tournaments with high college coaching attendance',tag:T.athletic,divs:['all']},
+      ]
+    },
+    {
+      grade:'12th Grade — Fall', label:'Visits and commitments', color:'#F0997B',
+      tasks:[
+        {text:`Understand the ${t('sliding scale','sliding scale')} — retake SAT/ACT early fall if needed`,tag:T.academic,divs:['D1','D2','NAIA','all']},
+        {text:`Take ${t('unofficial visits','unofficial visit')} immediately — fall of senior year is your prime window`,tag:T.recruiting,divs:['all']},
+        {text:`Schedule ${t('official visits','official visit')} at D1 programs — up to 5, plan them back to back`,tag:T.recruiting,divs:['D1','D2','all']},
+        {text:'Ask coaches directly and specifically: "Where do I stand in your recruiting class?"',tag:T.recruiting,divs:['all']},
+        {text:'Compete in fall showcases and tournaments where college coaches will attend',tag:T.athletic,divs:['all']},
+        {text:`Understand the ${t('transfer portal','transfer portal')} — a real option if your first commitment does not work out`,tag:T.ncaa,divs:['D1','D2','all']},
+        {text:'Apply to colleges early action or early decision where possible',tag:T.academic,divs:['all']},
+      ]
+    },
+    {
+      grade:'12th Grade — Commit', label:'Sign and close', color:'#F7C1C1',
+      tasks:[
+        {text:'Compare every scholarship and financial aid package carefully before signing',tag:T.recruiting,divs:['D1','D2','NAIA','all']},
+        {text:`Sign your ${t('NLI','nli')} during the correct signing period for your sport`,tag:T.recruiting,divs:['D1','D2','all']},
+        {text:'Get written confirmation of your roster spot and any aid at D3 or NAIA schools',tag:T.recruiting,divs:['D3','NAIA','all']},
+        {text:'Notify coaches at programs you are declining — be professional and timely',tag:T.recruiting,divs:['all']},
+        {text:'Verify your NCAA Eligibility Center clearance is finalized before enrollment',tag:T.ncaa,divs:['D1','D2','all']},
+        {text:'Keep your grades up through graduation — coaches can pull offers for academic reasons',tag:T.academic,divs:['all']},
+        {text:'Stay in contact with your committed coaching staff through the spring',tag:T.recruiting,divs:['all']},
+      ]
+    }
   ]
 };
 
-const TAG_LABELS={academic:"Academic",athletic:"Athletic",recruiting:"Recruiting",ncaa:"NCAA / Compliance"};
-const TAG_CLASSES={academic:"tag-academic",athletic:"tag-athletic",recruiting:"tag-recruiting",ncaa:"tag-ncaa"};
-const QUICK_LINKS={
+const QUICK_LINKS = {
   Football:[
-    {label:"NCAA football recruiting rules",url:"https://www.ncaa.org/sports/2015/5/27/recruiting-rules-overview.aspx"},
-    {label:"Early signing period info",url:"https://www.ncaa.org/sports/2014/10/6/national-letter-of-intent.aspx"},
+    {label:'NCAA football recruiting rules',url:'https://www.ncaa.org/sports/2015/5/27/recruiting-rules-overview.aspx'},
+    {label:'Early signing period info',url:'https://www.ncaa.org/sports/2014/10/6/national-letter-of-intent.aspx'},
   ],
   Basketball:[
-    {label:"NCAA basketball recruiting calendar",url:"https://www.ncaa.org/sports/2014/10/6/recruiting-calendar.aspx"},
-    {label:"Find basketball showcases",url:"https://www.ncsasports.org/basketball"},
+    {label:'NCAA basketball recruiting calendar',url:'https://www.ncaa.org/sports/2014/10/6/recruiting-calendar.aspx'},
+    {label:'Find basketball showcases',url:'https://www.ncsasports.org/basketball'},
+  ],
+  Soccer:[
+    {label:'NCAA soccer recruiting info',url:'https://www.ncsasports.org/soccer'},
+    {label:'US Soccer player development',url:'https://www.ussoccer.com/players'},
+  ],
+  Baseball:[
+    {label:'Perfect Game showcase finder',url:'https://www.perfectgame.org'},
+    {label:'NCAA baseball recruiting',url:'https://www.ncsasports.org/baseball'},
   ],
   default:[
-    {label:"NCAA Eligibility Center",url:"https://www.ncaa.org/sports/2014/10/6/eligibility-center.aspx"},
-    {label:"Recruiting rules by sport",url:"https://www.ncaa.org/sports/2014/10/6/recruiting.aspx"},
+    {label:'NCAA Eligibility Center',url:'https://www.ncaa.org/sports/2014/10/6/eligibility-center.aspx'},
+    {label:'Recruiting rules by sport',url:'https://www.ncaa.org/sports/2014/10/6/recruiting.aspx'},
   ]
 };
 
-let state={sport:null,track:null,division:"all",checks:{},activePlanDiv:"all"};
+const TRACK_LABELS = {grade9:'9th grade',grade10:'10th grade',grade11:'11th grade'};
 
-document.querySelectorAll('.sport-btn').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.sport-btn').forEach(x=>x.classList.remove('selected'));
-  b.classList.add('selected'); state.sport=b.dataset.sport;
-}));
-document.querySelectorAll('.track-card').forEach(c=>c.addEventListener('click',()=>{
-  document.querySelectorAll('.track-card').forEach(x=>x.classList.remove('selected'));
-  c.classList.add('selected'); state.track=c.dataset.track;
-}));
-document.querySelectorAll('#div-setup-bar .div-pill').forEach(p=>p.addEventListener('click',()=>{
-  document.querySelectorAll('#div-setup-bar .div-pill').forEach(x=>{
-    x.className='div-pill';
-  });
-  const d=p.dataset.div; state.division=d;
-  p.classList.add(d==='all'?'active-d1':d==='D1'?'active-d1':d==='D2'?'active-d2':d==='D3'?'active-d3':d==='NAIA'?'active-naia':'active-juco');
-}));
+/* ═══════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+const STORAGE_KEY = 'recruiting_planner_v1';
 
-function startPlan(){
-  if(!state.sport||!state.track){
-    document.getElementById('setup-error').style.display='block';
-    return;
+let state = {
+  sport: null,
+  track: null,
+  division: 'all',
+  activePlanDiv: 'all',
+  checks: {}
+};
+
+/* ═══════════════════════════════════════════
+   LOCALSTORAGE
+═══════════════════════════════════════════ */
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    const ind = document.getElementById('save-indicator');
+    ind.classList.add('visible');
+    clearTimeout(window._saveTimer);
+    window._saveTimer = setTimeout(() => ind.classList.remove('visible'), 2000);
+  } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) { return null; }
+}
+
+function clearState() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  buildGlossary();
+
+  // Wire up setup sport buttons
+  document.querySelectorAll('.sport-btn').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.sport-btn').forEach(x => x.classList.remove('selected'));
+    b.classList.add('selected');
+    state.sport = b.dataset.sport;
+  }));
+
+  // Wire up track cards
+  document.querySelectorAll('.track-card').forEach(c => c.addEventListener('click', () => {
+    document.querySelectorAll('.track-card').forEach(x => x.classList.remove('selected'));
+    c.classList.add('selected');
+    state.track = c.dataset.track;
+  }));
+
+  // Wire up setup division pills
+  document.querySelectorAll('#div-setup-bar .div-pill').forEach(p => p.addEventListener('click', () => {
+    document.querySelectorAll('#div-setup-bar .div-pill').forEach(x => x.className = 'div-pill');
+    const d = p.dataset.div; state.division = d;
+    p.classList.add(divClass(d));
+  }));
+
+  // Check for saved state and show restore banner
+  const saved = loadState();
+  if (saved && saved.sport && saved.track) {
+    const banner = document.getElementById('restore-banner');
+    document.getElementById('restore-msg').textContent =
+      `You have a saved plan for ${saved.sport} (${TRACK_LABELS[saved.track]} track). Pick up where you left off?`;
+    banner.style.display = 'flex';
   }
-  document.getElementById('setup-error').style.display='none';
-  state.activePlanDiv=state.division;
-  buildPlan(); buildGlossary();
+});
+
+function divClass(d) {
+  const map = {all:'active-all',D1:'active-d1',D2:'active-d2',D3:'active-d3',NAIA:'active-naia',JUCO:'active-juco'};
+  return map[d] || 'active-all';
+}
+
+/* ═══════════════════════════════════════════
+   RESTORE / RESET
+═══════════════════════════════════════════ */
+function restorePlan() {
+  const saved = loadState();
+  if (!saved) return;
+  state = saved;
+  buildPlan();
+  buildGlossary();
   document.getElementById('screen-setup').classList.remove('active');
   document.getElementById('screen-plan').classList.add('active');
-  document.getElementById('header-sport').textContent=state.sport;
-  document.getElementById('header-sport').style.display='block';
-  window.scrollTo(0,0);
+  document.getElementById('header-sport').textContent = state.sport;
+  document.getElementById('header-sport').style.display = 'block';
+  window.scrollTo(0, 0);
 }
 
-function goBack(){
+function dismissRestore() {
+  document.getElementById('restore-banner').style.display = 'none';
+  clearState();
+  state = { sport:null, track:null, division:'all', activePlanDiv:'all', checks:{} };
+}
+
+function confirmReset() {
+  document.getElementById('reset-confirm').style.display = 'block';
+}
+
+function resetPlan() {
+  clearState();
+  state = { sport:null, track:null, division:'all', activePlanDiv:'all', checks:{} };
   document.getElementById('screen-plan').classList.remove('active');
   document.getElementById('screen-setup').classList.add('active');
-  document.getElementById('header-sport').style.display='none';
-  window.scrollTo(0,0);
+  document.getElementById('header-sport').style.display = 'none';
+  document.querySelectorAll('.sport-btn').forEach(x => x.classList.remove('selected'));
+  document.querySelectorAll('.track-card').forEach(x => x.classList.remove('selected'));
+  document.getElementById('restore-banner').style.display = 'none';
+  document.getElementById('reset-confirm').style.display = 'none';
+  window.scrollTo(0, 0);
 }
 
-function switchTab(name,el){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('tab-'+name).classList.add('active');
-  if(name==='share')buildShareText();
+/* ═══════════════════════════════════════════
+   SETUP → PLAN
+═══════════════════════════════════════════ */
+function startPlan() {
+  if (!state.sport || !state.track) {
+    document.getElementById('setup-error').style.display = 'block';
+    return;
+  }
+  document.getElementById('setup-error').style.display = 'none';
+  state.activePlanDiv = state.division;
+  buildPlan();
+  buildGlossary();
+  document.getElementById('screen-setup').classList.remove('active');
+  document.getElementById('screen-plan').classList.add('active');
+  document.getElementById('header-sport').textContent = state.sport;
+  document.getElementById('header-sport').style.display = 'block';
+  saveState();
+  window.scrollTo(0, 0);
 }
 
-function buildPlan(){
-  const phases=PLANS[state.track];
-  document.getElementById('plan-title').textContent=state.sport+' recruiting roadmap';
-  document.getElementById('plan-subtitle').textContent=(state.track==='long'?'9th–12th grade · 4-year plan':'11th–12th grade · accelerated plan')+(state.division!=='all'?' · '+state.division+' focus':'');
-  const container=document.getElementById('phases-container');
-  container.innerHTML='';
-  phases.forEach((phase,pi)=>{
-    const phaseKey='phase-'+pi;
-    const block=document.createElement('div');
-    block.className='phase-block';
-    block.innerHTML=`
-      <div class="phase-header" onclick="togglePhase('${phaseKey}',this)">
-        <div>
+function goBack() {
+  document.getElementById('screen-plan').classList.remove('active');
+  document.getElementById('screen-setup').classList.add('active');
+  document.getElementById('header-sport').style.display = 'none';
+  // Pre-select current values on setup screen
+  if (state.sport) {
+    document.querySelectorAll('.sport-btn').forEach(b => {
+      b.classList.toggle('selected', b.dataset.sport === state.sport);
+    });
+  }
+  if (state.track) {
+    document.querySelectorAll('.track-card').forEach(c => {
+      c.classList.toggle('selected', c.dataset.track === state.track);
+    });
+  }
+  window.scrollTo(0, 0);
+}
+
+/* ═══════════════════════════════════════════
+   BUILD PLAN
+═══════════════════════════════════════════ */
+function buildPlan() {
+  const phases = PLANS[state.track];
+  const trackLabel = TRACK_LABELS[state.track];
+  document.getElementById('plan-title').textContent = state.sport + ' recruiting roadmap';
+  document.getElementById('plan-subtitle').textContent = trackLabel + ' track · tap a phase to expand it';
+  document.getElementById('pdf-title').textContent = state.sport + ' College Athletic Recruiting Plan';
+  document.getElementById('pdf-subtitle').textContent = trackLabel + ' track · generated with College Athletic Recruiting Planner';
+
+  // Track switcher pills
+  document.querySelectorAll('.track-pill').forEach(p => {
+    p.classList.toggle('active', p.dataset.tpill === state.track);
+    p.onclick = () => switchTrack(p.dataset.tpill);
+  });
+
+  // Plan division pills
+  document.querySelectorAll('#div-plan-bar .div-pill').forEach(p => {
+    p.className = 'div-pill';
+    p.classList.toggle(divClass(state.activePlanDiv), p.dataset.pdiv === state.activePlanDiv);
+    p.onclick = () => {
+      document.querySelectorAll('#div-plan-bar .div-pill').forEach(x => x.className = 'div-pill');
+      state.activePlanDiv = p.dataset.pdiv;
+      p.classList.add(divClass(p.dataset.pdiv));
+      applyDivFilter(state.activePlanDiv);
+      saveState();
+    };
+  });
+
+  // Build phases
+  const container = document.getElementById('phases-container');
+  container.innerHTML = '';
+  phases.forEach((phase, pi) => {
+    const phaseKey = 'phase-' + pi;
+    const block = document.createElement('div');
+    block.className = 'phase-block';
+    block.innerHTML = `
+      <div class="phase-header" onclick="togglePhase('${phaseKey}', this)">
+        <div style="flex:1;">
           <div style="display:flex;align-items:center;gap:8px;">
             <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${phase.color};flex-shrink:0;"></span>
             <span class="phase-label">${phase.grade}</span>
           </div>
-          <div class="phase-grade">${phase.label} &middot; <span id="${phaseKey}-count">0</span> of <span id="${phaseKey}-total">0</span> done</div>
-          <div class="progress-bar-wrap" style="width:120px;margin-top:6px;">
+          <div class="phase-sub">${phase.label} &middot; <span id="${phaseKey}-count">0</span> of <span id="${phaseKey}-total">0</span> done</div>
+          <div class="progress-bar-wrap" style="width:130px;margin-top:5px;">
             <div class="progress-bar-fill" id="${phaseKey}-bar" style="width:0%;background:${phase.color};"></div>
           </div>
         </div>
         <span class="chevron" id="${phaseKey}-chev">&#9660;</span>
       </div>
       <div class="phase-tasks" id="${phaseKey}-tasks">
-        ${phase.tasks.map((task,ti)=>{
-          const key=`${phaseKey}-${ti}`;
+        ${phase.tasks.map((task, ti) => {
+          const key = `${phaseKey}-${ti}`;
+          const done = state.checks[key] || false;
           return `<div class="task-row" id="row-${key}" data-divs="${task.divs.join(',')}">
-            <div class="task-check" id="check-${key}" onclick="toggleTask('${key}','${phaseKey}')"></div>
+            <div class="task-check${done?' done':''}" id="check-${key}" onclick="toggleTask('${key}','${phaseKey}')"></div>
             <div style="flex:1;">
-              <div class="task-text" id="text-${key}">${task.text}</div>
+              <div class="task-text${done?' done-text':''}" id="text-${key}">${task.text}</div>
               <span class="task-tag ${TAG_CLASSES[task.tag]}">${TAG_LABELS[task.tag]}</span>
             </div>
           </div>`;
         }).join('')}
       </div>`;
     container.appendChild(block);
-    if(pi===0)togglePhase(phaseKey,block.querySelector('.phase-header'));
+    if (pi === 0) togglePhase(phaseKey, block.querySelector('.phase-header'));
   });
 
-  document.querySelectorAll('#div-plan-bar .div-pill').forEach(p=>p.addEventListener('click',()=>{
-    document.querySelectorAll('#div-plan-bar .div-pill').forEach(x=>x.className='div-pill');
-    const d=p.dataset.pdiv; state.activePlanDiv=d;
-    p.classList.add(d==='all'?'active-d1':d==='D1'?'active-d1':d==='D2'?'active-d2':d==='D3'?'active-d3':d==='NAIA'?'active-naia':'active-juco');
-    applyDivFilter(d);
-  }));
-
-  const initDiv=state.division!=='all'?state.division:'all';
-  const initPill=document.querySelector(`#div-plan-bar [data-pdiv="${initDiv}"]`);
-  if(initPill){
-    document.querySelectorAll('#div-plan-bar .div-pill').forEach(x=>x.className='div-pill');
-    state.activePlanDiv=initDiv;
-    initPill.classList.add(initDiv==='all'?'active-d1':initDiv==='D1'?'active-d1':initDiv==='D2'?'active-d2':initDiv==='D3'?'active-d3':initDiv==='NAIA'?'active-naia':'active-juco');
-  }
   applyDivFilter(state.activePlanDiv);
 
-  const links=QUICK_LINKS[state.sport]||QUICK_LINKS.default;
-  document.getElementById('ask-grid').innerHTML=links.map(l=>
+  // Resource links
+  const links = QUICK_LINKS[state.sport] || QUICK_LINKS.default;
+  document.getElementById('ask-grid').innerHTML = links.map(l =>
     `<a href="${l.url}" target="_blank" rel="noopener" style="text-decoration:none;"><button class="ask-btn">${l.label} &rarr;</button></a>`
   ).join('');
+}
+
+/* ═══════════════════════════════════════════
+   TRACK SWITCHER
+═══════════════════════════════════════════ */
+function switchTrack(newTrack) {
+  if (newTrack === state.track) return;
+  // Keep checks that share the same key pattern where possible
+  // (they won't match cross-track, which is correct)
+  state.track = newTrack;
+  buildPlan();
+  saveState();
+  // Scroll to top of plan
+  document.getElementById('plan-title').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+/* ═══════════════════════════════════════════
+   TABS
+═══════════════════════════════════════════ */
+function switchTab(name, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'export') buildShareText();
+}
+
+/* ═══════════════════════════════════════════
+   DIVISION FILTER
+═══════════════════════════════════════════ */
+function applyDivFilter(div) {
+  document.querySelectorAll('.task-row').forEach(row => {
+    const divs = row.dataset.divs.split(',');
+    row.classList.toggle('hidden', div !== 'all' && !divs.includes(div) && !divs.includes('all'));
+  });
+  PLANS[state.track].forEach((_, pi) => updatePhaseProgress('phase-' + pi));
   updateStats();
 }
 
-function applyDivFilter(div){
-  document.querySelectorAll('.task-row').forEach(row=>{
-    const divs=row.dataset.divs.split(',');
-    row.classList.toggle('hidden',div!=='all'&&!divs.includes(div)&&!divs.includes('all'));
-  });
-  PLANS[state.track].forEach((_,pi)=>{
-    const phaseKey='phase-'+pi;
-    const vis=document.querySelectorAll(`#${phaseKey}-tasks .task-row:not(.hidden)`);
-    document.getElementById(`${phaseKey}-total`).textContent=vis.length;
-  });
-  updateStats();
+/* ═══════════════════════════════════════════
+   PHASES
+═══════════════════════════════════════════ */
+function togglePhase(key, headerEl) {
+  const tasks = document.getElementById(`${key}-tasks`);
+  const chev  = document.getElementById(`${key}-chev`);
+  const isOpen = tasks.classList.contains('open');
+  tasks.classList.toggle('open', !isOpen);
+  chev.classList.toggle('open', !isOpen);
 }
 
-function togglePhase(key,headerEl){
-  const tasks=document.getElementById(`${key}-tasks`);
-  const chev=document.getElementById(`${key}-chev`);
-  const isOpen=tasks.classList.contains('open');
-  tasks.classList.toggle('open',!isOpen);
-  chev.classList.toggle('open',!isOpen);
-}
-
-function toggleTask(key,phaseKey){
-  state.checks[key]=!state.checks[key];
-  const done=state.checks[key];
-  document.getElementById(`check-${key}`).classList.toggle('done',done);
-  document.getElementById(`text-${key}`).classList.toggle('done-text',done);
+/* ═══════════════════════════════════════════
+   TASKS
+═══════════════════════════════════════════ */
+function toggleTask(key, phaseKey) {
+  state.checks[key] = !state.checks[key];
+  const done = state.checks[key];
+  document.getElementById(`check-${key}`).classList.toggle('done', done);
+  document.getElementById(`text-${key}`).classList.toggle('done-text', done);
   updatePhaseProgress(phaseKey);
   updateStats();
+  saveState();
 }
 
-function updatePhaseProgress(phaseKey){
-  const rows=document.querySelectorAll(`#${phaseKey}-tasks .task-row:not(.hidden)`);
-  let done=0;
-  rows.forEach(r=>{if(state.checks[r.id.replace('row-','')])done++;});
-  const total=rows.length;
-  document.getElementById(`${phaseKey}-count`).textContent=done;
-  document.getElementById(`${phaseKey}-bar`).style.width=(total>0?Math.round(done/total*100):0)+'%';
+function updatePhaseProgress(phaseKey) {
+  const rows = document.querySelectorAll(`#${phaseKey}-tasks .task-row:not(.hidden)`);
+  let done = 0;
+  rows.forEach(r => { if (state.checks[r.id.replace('row-','')]) done++; });
+  const total = rows.length;
+  document.getElementById(`${phaseKey}-count`).textContent = done;
+  document.getElementById(`${phaseKey}-total`).textContent = total;
+  const pct = total > 0 ? Math.round(done / total * 100) : 0;
+  document.getElementById(`${phaseKey}-bar`).style.width = pct + '%';
 }
 
-function updateStats(){
-  const rows=document.querySelectorAll('.task-row:not(.hidden)');
-  let done=0;
-  rows.forEach(r=>{if(state.checks[r.id.replace('row-','')])done++;});
-  const total=rows.length;
-  const pct=total>0?Math.round(done/total*100):0;
-  document.getElementById('stat-done').textContent=done;
-  document.getElementById('stat-left').textContent=total-done;
-  document.getElementById('stat-pct').textContent=pct+'%';
-  document.getElementById('overall-bar').style.width=pct+'%';
-  PLANS[state.track].forEach((_,pi)=>updatePhaseProgress('phase-'+pi));
+function updateStats() {
+  const rows = document.querySelectorAll('.task-row:not(.hidden)');
+  let done = 0;
+  rows.forEach(r => { if (state.checks[r.id.replace('row-','')]) done++; });
+  const total = rows.length;
+  const pct = total > 0 ? Math.round(done / total * 100) : 0;
+  document.getElementById('stat-done').textContent = done;
+  document.getElementById('stat-left').textContent = total - done;
+  document.getElementById('stat-pct').textContent = pct + '%';
+  document.getElementById('overall-bar').style.width = pct + '%';
 }
 
-function showTip(termKey){
-  const entry=GLOSSARY.find(g=>g.term.toLowerCase()===termKey.toLowerCase()||g.full.toLowerCase().includes(termKey.toLowerCase()));
-  if(!entry)return;
-  switchTab('glossary',document.querySelectorAll('.tab')[1]);
-  showGlossDetail(entry);
-  document.getElementById('tab-glossary').scrollIntoView({behavior:'smooth'});
-}
-
-function buildGlossary(){
-  document.getElementById('glossary-grid').innerHTML=GLOSSARY.map((g,i)=>`
-    <div class="gloss-card" id="gloss-card-${i}" onclick="showGlossDetail(GLOSSARY[${i}],${i})">
+/* ═══════════════════════════════════════════
+   GLOSSARY
+═══════════════════════════════════════════ */
+function buildGlossary() {
+  document.getElementById('glossary-grid').innerHTML = GLOSSARY.map((g, i) =>
+    `<div class="gloss-card" id="gloss-card-${i}" onclick="showGlossDetail(GLOSSARY[${i}],${i})">
       <div class="gloss-term">${g.term}</div>
-      <div class="gloss-preview">${g.full!==g.term?g.full:g.def.substring(0,55)+'...'}</div>
-    </div>`).join('');
+      <div class="gloss-preview">${g.full !== g.term ? g.full : g.def.substring(0,55)+'...'}</div>
+    </div>`
+  ).join('');
 }
 
-function showGlossDetail(entry,idx){
-  document.querySelectorAll('.gloss-card').forEach(c=>c.classList.remove('active-gloss'));
-  if(idx!==undefined)document.getElementById('gloss-card-'+idx)?.classList.add('active-gloss');
-  const panel=document.getElementById('gloss-detail');
-  document.getElementById('gloss-detail-term').textContent=entry.term+(entry.full!==entry.term?' — '+entry.full:'');
-  document.getElementById('gloss-detail-def').textContent=entry.def;
+function showTip(termKey) {
+  const entry = GLOSSARY.find(g =>
+    g.term.toLowerCase() === termKey.toLowerCase() ||
+    g.full.toLowerCase().includes(termKey.toLowerCase())
+  );
+  if (!entry) return;
+  switchTab('glossary', document.querySelectorAll('.tab')[1]);
+  const idx = GLOSSARY.indexOf(entry);
+  showGlossDetail(entry, idx);
+  document.getElementById('gloss-detail').scrollIntoView({behavior:'smooth'});
+}
+
+function showGlossDetail(entry, idx) {
+  document.querySelectorAll('.gloss-card').forEach(c => c.classList.remove('active-gloss'));
+  if (idx !== undefined) document.getElementById('gloss-card-' + idx)?.classList.add('active-gloss');
+  const panel = document.getElementById('gloss-detail');
+  document.getElementById('gloss-detail-term').textContent =
+    entry.term + (entry.full !== entry.term ? ' — ' + entry.full : '');
+  document.getElementById('gloss-detail-def').textContent = entry.def;
   panel.classList.add('open');
 }
 
-function buildShareText(){
-  const phases=PLANS[state.track];
-  const div=state.activePlanDiv==='all'?'All divisions':state.activePlanDiv;
-  const lines=[];
+/* ═══════════════════════════════════════════
+   EXPORT
+═══════════════════════════════════════════ */
+function buildShareText() {
+  if (!state.track) return;
+  const phases = PLANS[state.track];
+  const div = state.activePlanDiv === 'all' ? 'All divisions' : state.activePlanDiv;
+  const lines = [];
   lines.push('COLLEGE ATHLETIC RECRUITING PLAN');
-  lines.push('Athlete sport: '+state.sport);
-  lines.push('Division target: '+div);
-  lines.push('Track: '+(state.track==='long'?'9th–12th grade (4-year plan)':'11th–12th grade (accelerated)'));
-  lines.push('Generated with the College Athletic Recruiting Planner');
+  lines.push('Athlete sport: ' + state.sport);
+  lines.push('Division target: ' + div);
+  lines.push('Starting track: ' + TRACK_LABELS[state.track]);
   lines.push('');
-  phases.forEach((phase,pi)=>{
-    lines.push('== '+phase.grade.toUpperCase()+' — '+phase.label.toUpperCase()+' ==');
-    const phaseKey='phase-'+pi;
-    phase.tasks.forEach((task,ti)=>{
-      if(state.activePlanDiv!=='all'&&!task.divs.includes(state.activePlanDiv)&&!task.divs.includes('all'))return;
-      const key=`${phaseKey}-${ti}`;
-      const clean=task.text.replace(/<[^>]+>/g,'');
-      lines.push((state.checks[key]?'[x] ':'[ ] ')+clean);
+  phases.forEach((phase, pi) => {
+    const phaseKey = 'phase-' + pi;
+    const visibleTasks = phase.tasks.filter((task, ti) => {
+      const row = document.getElementById(`row-${phaseKey}-${ti}`);
+      return row && !row.classList.contains('hidden');
+    });
+    if (visibleTasks.length === 0) return;
+    lines.push('== ' + phase.grade.toUpperCase() + ' — ' + phase.label.toUpperCase() + ' ==');
+    phase.tasks.forEach((task, ti) => {
+      const row = document.getElementById(`row-${phaseKey}-${ti}`);
+      if (!row || row.classList.contains('hidden')) return;
+      const key = `${phaseKey}-${ti}`;
+      const clean = task.text.replace(/<[^>]+>/g, '');
+      lines.push((state.checks[key] ? '[x] ' : '[ ] ') + clean);
     });
     lines.push('');
   });
-  const rows=document.querySelectorAll('.task-row:not(.hidden)');
-  let done=0; rows.forEach(r=>{if(state.checks[r.id.replace('row-','')])done++;});
-  lines.push('Progress: '+done+' of '+rows.length+' tasks completed');
-  document.getElementById('share-text').value=lines.join('\n');
+  const rows = document.querySelectorAll('.task-row:not(.hidden)');
+  let done = 0; rows.forEach(r => { if (state.checks[r.id.replace('row-','')]) done++; });
+  lines.push('Progress: ' + done + ' of ' + rows.length + ' tasks completed');
+  lines.push('');
+  lines.push('Generated with the College Athletic Recruiting Planner');
+  document.getElementById('share-text').value = lines.join('\n');
 }
 
-function copyPlan(){
-  const ta=document.getElementById('share-text');
+function copyPlan() {
+  const ta = document.getElementById('share-text');
   ta.select();
-  try{navigator.clipboard.writeText(ta.value);}catch(e){document.execCommand('copy');}
-  const btn=document.getElementById('copy-btn');
-  btn.textContent='Copied!'; btn.classList.add('copied');
-  setTimeout(()=>{btn.textContent='Copy to clipboard';btn.classList.remove('copied');},2000);
+  try { navigator.clipboard.writeText(ta.value); } catch(e) { document.execCommand('copy'); }
+  const btn = document.getElementById('copy-btn');
+  btn.textContent = 'Copied!'; btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Copy to clipboard'; btn.classList.remove('copied'); }, 2000);
+}
+
+function savePDF() {
+  // Open all phases before printing
+  PLANS[state.track].forEach((_, pi) => {
+    const tasks = document.getElementById(`phase-${pi}-tasks`);
+    const chev  = document.getElementById(`phase-${pi}-chev`);
+    if (tasks) tasks.classList.add('open');
+    if (chev)  chev.classList.add('open');
+  });
+  window.print();
 }
 </script>
 </body>
