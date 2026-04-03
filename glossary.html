@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recruiting Glossary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #141410; --ink-mid: #4a4a44; --ink-soft: #8a8a80; --ink-faint: #d0d0c4;
+  --paper: #f7f6f1; --paper-warm: #efede5; --paper-card: #ffffff;
+  --border: rgba(20,20,16,0.1); --border-mid: rgba(20,20,16,0.2);
+  --accent: #1a5c3a; --accent-light: #e8f2ec; --accent-mid: #2d7a52;
+  --gold: #b8860b; --gold-light: #f5f0dc;
+  --blue: #1a3a5c; --blue-light: #e8eff8;
+  --rust: #8b3a1a; --rust-light: #f8ede8;
+  --purple: #3d2a7a; --purple-light: #eeedfe;
+  --radius: 6px; --radius-lg: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #f0efe8; --ink-mid: #b0b0a8; --ink-soft: #686860; --ink-faint: #383830;
+    --paper: #141410; --paper-warm: #1a1a14; --paper-card: #1e1e18;
+    --border: rgba(240,239,232,0.1); --border-mid: rgba(240,239,232,0.2);
+    --accent: #4aaa72; --accent-light: #0d2318; --accent-mid: #4aaa72;
+    --gold: #d4a020; --gold-light: #1e1a08;
+    --blue: #6a9fd4; --blue-light: #0a1828;
+    --rust: #d4724a; --rust-light: #1e0e08;
+    --purple: #9f8de0; --purple-light: #1a1230;
+  }
+}
+body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; min-height: 100vh; }
+
+/* ── Masthead ── */
+.masthead { border-bottom: 1px solid var(--border); padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 54px; background: var(--paper); position: sticky; top: 0; z-index: 200; }
+.masthead-logo { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--ink); text-decoration: none; letter-spacing: -0.02em; }
+.masthead-logo span { color: var(--accent); font-style: italic; }
+.back-link { font-size: 13px; color: var(--ink-soft); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color .15s; }
+.back-link:hover { color: var(--ink); }
+
+/* ── Sport selector ── */
+.sport-selector { background: var(--paper-card); border-bottom: 1px solid var(--border); padding: 1.5rem; }
+.selector-inner { max-width: 860px; margin: 0 auto; }
+.selector-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+.selector-title { font-family: 'DM Serif Display', serif; font-size: 26px; letter-spacing: -0.02em; margin-bottom: 4px; }
+.selector-sub { font-size: 13px; color: var(--ink-soft); font-weight: 300; margin-bottom: 1.25rem; }
+.sport-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+.sport-btn { background: var(--paper-warm); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 12px 10px; cursor: pointer; text-align: center; transition: all .15s; text-decoration: none; display: block; }
+.sport-btn:hover { border-color: var(--border-mid); background: var(--paper-card); }
+.sport-btn.active { background: var(--accent-light); border-color: var(--accent); }
+.sport-btn-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+.sport-btn-count { font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
+.sport-btn.active .sport-btn-name { color: var(--accent); }
+.sport-btn.active .sport-btn-count { color: var(--accent-mid); }
+.sport-btn.coming { opacity: .5; cursor: default; pointer-events: none; }
+
+/* ── Glossary body ── */
+.gloss-body { max-width: 860px; margin: 0 auto; padding: 1.5rem; display: none; }
+.gloss-body.active { display: block; }
+
+/* Sport header */
+.sport-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+.sport-header-left { display: flex; align-items: baseline; gap: 12px; }
+.sport-title { font-family: 'DM Serif Display', serif; font-size: 22px; letter-spacing: -0.02em; }
+.sport-term-count { font-size: 13px; color: var(--ink-soft); }
+.search-wrap { position: relative; }
+.search-input { font-size: 13px; padding: 6px 12px 6px 32px; border-radius: 99px; border: 1px solid var(--border-mid); background: var(--paper-card); color: var(--ink); font-family: 'DM Sans', sans-serif; width: 200px; outline: none; }
+.search-input:focus { border-color: var(--accent); }
+.search-input::placeholder { color: var(--ink-soft); }
+.search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--ink-soft); font-size: 13px; pointer-events: none; }
+
+/* Category filter */
+.cat-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.cat-pill { font-size: 12px; padding: 4px 12px; border-radius: 99px; border: 1px solid var(--border-mid); background: var(--paper-card); cursor: pointer; color: var(--ink-mid); transition: all .15s; font-family: 'DM Sans', sans-serif; }
+.cat-pill:hover { border-color: var(--ink); color: var(--ink); }
+.cat-pill.active { background: var(--ink); border-color: var(--ink); color: var(--paper); font-weight: 500; }
+
+/* Section headers */
+.term-section { margin-bottom: 2rem; }
+.term-section-label { font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.section-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+/* Term rows */
+.term-row { border-bottom: 1px solid var(--border); }
+.term-row:last-child { border-bottom: none; }
+.term-summary { display: flex; align-items: flex-start; gap: 12px; padding: 12px 4px; cursor: pointer; transition: background .1s; border-radius: var(--radius); }
+.term-summary:hover { background: var(--paper-warm); }
+.term-summary.open { background: var(--paper-warm); }
+.term-left { flex: 1; min-width: 0; }
+.term-name { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 2px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.term-short { font-size: 13px; color: var(--ink-mid); font-weight: 300; line-height: 1.5; }
+.term-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 5px; }
+.term-tag { font-size: 10px; padding: 1px 7px; border-radius: 99px; font-weight: 500; white-space: nowrap; }
+.tag-universal { background: var(--paper-warm); color: var(--ink-soft); border: 1px solid var(--border); }
+.tag-sport { background: var(--accent-light); color: var(--accent); border: 1px solid rgba(26,92,58,0.2); }
+.tag-d1 { background: var(--blue-light); color: var(--blue); border: 1px solid rgba(26,58,92,0.15); }
+.tag-d2 { background: var(--gold-light); color: var(--gold); border: 1px solid rgba(184,134,11,0.15); }
+.tag-d3 { background: var(--rust-light); color: var(--rust); border: 1px solid rgba(139,58,26,0.15); }
+.tag-naia { background: var(--purple-light); color: var(--purple); border: 1px solid rgba(61,42,122,0.15); }
+.term-chevron { font-size: 11px; color: var(--ink-faint); transition: transform .2s; margin-top: 3px; flex-shrink: 0; }
+.term-chevron.open { transform: rotate(180deg); }
+
+/* Term detail */
+.term-detail { display: none; padding: 0 4px 14px 4px; }
+.term-detail.open { display: block; animation: fadeIn .2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.detail-card { background: var(--paper-warm); border-radius: var(--radius); padding: 14px 16px; }
+.detail-full { font-size: 13px; color: var(--ink-mid); line-height: 1.75; font-weight: 300; margin-bottom: 10px; }
+.detail-full p { margin-bottom: 8px; }
+.detail-full p:last-child { margin-bottom: 0; }
+.detail-example { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+.detail-example-label { font-size: 10px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 5px; }
+.detail-example-text { font-size: 12px; color: var(--ink-mid); line-height: 1.6; font-style: italic; }
+.detail-related { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.detail-related-label { font-size: 10px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+.related-link { font-size: 12px; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.related-link:hover { color: var(--accent-mid); }
+
+/* Empty state */
+.empty-state { text-align: center; padding: 3rem 1rem; color: var(--ink-soft); font-size: 13px; }
+
+/* Print */
+@media print {
+  .masthead, .sport-selector, .search-wrap, .cat-pills { display: none !important; }
+  .gloss-body { display: block !important; padding: 0; }
+  .term-detail { display: block !important; }
+  .term-chevron { display: none; }
+  @page { margin: 0.65in; }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .sport-grid { grid-template-columns: repeat(3, 1fr); }
+  .search-input { width: 160px; }
+  .sport-selector { padding: 1.25rem; }
+  .gloss-body { padding: 1.25rem; }
+}
+
+.footer { border-top: 1px solid var(--border); padding: 1.5rem; text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 2rem; }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a class="masthead-logo" href="index.html">Recruiting<span>Hub</span></a>
+  <a class="back-link" href="index.html">&larr; Back to hub</a>
+</header>
+
+<!-- Sport selector -->
+<div class="sport-selector">
+  <div class="selector-inner">
+    <div class="selector-eyebrow">Recruiting glossary</div>
+    <h1 class="selector-title">Terms explained, sport by sport</h1>
+    <p class="selector-sub">Universal recruiting terms plus the specific rules, positions, and jargon that matter for your sport.</p>
+    <div class="sport-grid" id="sport-grid">
+      <div class="sport-btn active" data-sport="Football" onclick="selectSport('Football', this)">
+        <div class="sport-btn-name">Football</div>
+        <div class="sport-btn-count" id="count-Football"></div>
+      </div>
+      <div class="sport-btn" data-sport="Basketball" onclick="selectSport('Basketball', this)">
+        <div class="sport-btn-name">Basketball</div>
+        <div class="sport-btn-count" id="count-Basketball"></div>
+      </div>
+      <div class="sport-btn" data-sport="Soccer" onclick="selectSport('Soccer', this)">
+        <div class="sport-btn-name">Soccer</div>
+        <div class="sport-btn-count" id="count-Soccer"></div>
+      </div>
+      <div class="sport-btn" data-sport="Baseball" onclick="selectSport('Baseball', this)">
+        <div class="sport-btn-name">Baseball</div>
+        <div class="sport-btn-count" id="count-Baseball"></div>
+      </div>
+      <div class="sport-btn" data-sport="Softball" onclick="selectSport('Softball', this)">
+        <div class="sport-btn-name">Softball</div>
+        <div class="sport-btn-count" id="count-Softball"></div>
+      </div>
+      <div class="sport-btn" data-sport="Volleyball" onclick="selectSport('Volleyball', this)">
+        <div class="sport-btn-name">Volleyball</div>
+        <div class="sport-btn-count" id="count-Volleyball"></div>
+      </div>
+      <div class="sport-btn coming"><div class="sport-btn-name">Swimming</div><div class="sport-btn-count">Coming soon</div></div>
+      <div class="sport-btn coming"><div class="sport-btn-name">Track &amp; Field</div><div class="sport-btn-count">Coming soon</div></div>
+      <div class="sport-btn coming"><div class="sport-btn-name">Lacrosse</div><div class="sport-btn-count">Coming soon</div></div>
+      <div class="sport-btn coming"><div class="sport-btn-name">Wrestling</div><div class="sport-btn-count">Coming soon</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Glossary content -->
+<div class="gloss-body active" id="gloss-body">
+  <div class="sport-header">
+    <div class="sport-header-left">
+      <div class="sport-title" id="sport-title">Football</div>
+      <div class="sport-term-count" id="sport-term-count"></div>
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">&#128269;</span>
+      <input type="text" class="search-input" id="search-input" placeholder="Search terms..." oninput="renderGloss()">
+    </div>
+  </div>
+  <div class="cat-pills" id="cat-pills"></div>
+  <div id="term-list"></div>
+</div>
+
+<div class="footer">Recruiting Glossary &mdash; part of the <a href="index.html" style="color:var(--accent);text-decoration:none;">College Athletic Recruiting Hub</a> &mdash; free to use and share</div>
+
+<script>
+/* ══════════════════════════════════════════
+   TERM DATA
+   category: 'universal' | 'process' | 'academic' | 'financial' | sport key
+   divs: optional array to badge specific divisions
+   sports: ['all'] for universal, or array of sport names
+══════════════════════════════════════════ */
+const TERMS = [
+
+  /* ─── UNIVERSAL PROCESS TERMS ─── */
+  {
+    id:'nli', term:'NLI', full:'National Letter of Intent',
+    short:'A binding one-year agreement to attend a specific D1 or D2 school in exchange for athletic aid.',
+    detail:`<p>The NLI is the only legally binding document in college athletic recruiting. Signing it commits you to attend that school for one academic year — and prevents other D1 and D2 programs from recruiting you.</p><p>Important caveats: D3 schools and NAIA schools do not use the NLI — you need written confirmation directly from the coaching staff. Signing an NLI does not guarantee playing time, a specific scholarship amount for future years, or your roster spot if a new coaching staff arrives.</p><p>There are early and regular signing periods — dates vary by sport. Sign only when you're certain. Once signed, getting released requires a formal waiver process.</p>`,
+    example:'You receive an offer from State University in October. You wait until the early signing period in December to sign your NLI, officially committing.',
+    related:['verbal','signing-period','scholarship'],
+    category:'process', sports:['all'], divs:['D1','D2']
+  },
+  {
+    id:'verbal', term:'Verbal commitment', full:'Verbal Commitment',
+    short:'An informal, non-binding agreement to attend a program. Either side can back out without legal consequence.',
+    detail:`<p>A verbal commitment happens when an athlete tells a coach they intend to sign with their program when the signing period opens. It's taken seriously by both sides — but it is not legally binding.</p><p>Coaches can back out of verbal commitments (this happens when roster needs change or a higher-ranked recruit becomes available), and athletes can too. The process of backing out is called decommitting. It should always be handled with a phone call, not an email or social media post.</p><p>Committing verbally too early — before you've visited campus and compared offers — is one of the most common regrettable decisions in recruiting. The excitement of an offer can feel overwhelming. Take the time you need.</p>`,
+    example:`A D1 soccer coach offers you a scholarship in March of your junior year. You visit campus in April, tell the coach verbally you're committing, and plan to sign the NLI in November.`,
+    related:['nli','decommit','official-visit'],
+    category:'process', sports:['all']
+  },
+  {
+    id:'decommit', term:'Decommit', full:'Decommitment',
+    short:'Backing out of a verbal commitment to reopen your recruiting to other programs.',
+    detail:`<p>Decommitting is more common than most families realize, and it's not inherently a bad thing — circumstances change. A coaching staff leaves. You visit another school and realize it's a better fit. Your family situation changes.</p><p>How you decommit matters. Always call the coach directly — never announce it on social media first or send an email. Be respectful, be honest, and be brief. You don't owe them a detailed explanation, but you do owe them the courtesy of a real conversation.</p><p>After decommitting, reach out quickly to programs you're still interested in and let them know you've reopened your recruitment. Time matters — other recruits are being evaluated constantly.</p>`,
+    example:`After committing verbally to a D2 program, the head coach takes a job elsewhere. You call the new staff, decide the fit isn't right, and decommit to explore other options.`,
+    related:['verbal','nli','transfer-portal'],
+    category:'process', sports:['all']
+  },
+  {
+    id:'official-visit', term:'Official visit', full:'Official Visit',
+    short:'A campus visit paid for by the college — travel, meals, and lodging covered. Up to 5 allowed at D1.',
+    detail:`<p>Official visits are one of the most powerful tools in the recruiting process. The school covers your round-trip travel, meals, lodging, and entertainment (within NCAA limits). You can take up to 5 official visits at D1 programs and unlimited at D2. Official visits are generally only permitted after the start of your senior year for most sports.</p><p>Treat every official visit as a two-way evaluation. You're evaluating them — team culture, facilities, academic support, coaching relationships. They're evaluating you — your maturity, curiosity, how you interact with current players.</p><p>Bring thoughtful questions. Send a thank-you email within 24 hours.</p>`,
+    related:['unofficial-visit','verbal'],
+    category:'process', sports:['all'], divs:['D1','D2']
+  },
+  {
+    id:'unofficial-visit', term:'Unofficial visit', full:'Unofficial Visit',
+    short:'A campus visit you fund yourself. No limit on these — a great way to evaluate fit early.',
+    detail:`<p>Unlike official visits, there's no limit on unofficial visits and they can happen at any time during the recruiting process — even in 9th or 10th grade. You pay for your own travel, meals, and lodging.</p><p>Unofficial visits are valuable for a few reasons: they happen earlier than official visits (which are largely restricted to senior year), they let you compare campuses before you're under pressure to decide, and they give you a chance to meet the coaching staff in a lower-stakes setting.</p><p>Always schedule unofficial visits in advance by emailing the coach. Show up prepared with questions. Don't show up unannounced.</p>`,
+    related:['official-visit','junior-day'],
+    category:'process', sports:['all']
+  },
+  {
+    id:'junior-day', term:'Junior day', full:'Junior Day / Prospect Day',
+    short:'A campus event where coaches invite groups of recruits for tours, presentations, and informal evaluations.',
+    detail:`<p>Junior days (also called prospect days or satellite camps) are campus events where a program invites a group of recruits to visit together. They typically include facility tours, meetings with coaches, presentations about the academic and athletic program, and sometimes informal workouts.</p><p>Junior days are usually self-funded (unofficial visits) and are most common in the spring of sophomore or junior year. They're a great way to get on a coaching staff's radar before the formal recruiting process intensifies.</p><p>Come prepared with thoughtful questions. The coaches are evaluating how recruits carry themselves, ask questions, and interact with current players.</p>`,
+    related:['unofficial-visit','official-visit'],
+    category:'process', sports:['all']
+  },
+  {
+    id:'contact-period', term:'Contact period', full:'Contact Period',
+    short:'A time window when college coaches can have in-person contact with recruits on or off campus.',
+    detail:`<p>NCAA recruiting is governed by a calendar of contact periods that dictate when and how coaches can interact with recruits. During a contact period, coaches can attend your games, visit your school, or meet with you and your family anywhere.</p><p>Contact period dates vary significantly by sport and division. Football, basketball, and baseball all have different windows. D2, D3, NAIA, and JUCO programs generally have more permissive contact rules than D1.</p><p>Outside of contact periods, coaches can still communicate by phone, text, and email — they just can't meet with you in person.</p>`,
+    related:['dead-period','quiet-period','eval-period'],
+    category:'process', sports:['all']
+  },
+  {
+    id:'dead-period', term:'Dead period', full:'Dead Period',
+    short:'A window when no in-person contact is permitted between coaches and recruits — on or off campus.',
+    detail:`<p>During a dead period, college coaches cannot have any in-person contact with prospective student-athletes or their families — not on campus, not at games, not anywhere. Coaches can still call, text, and email during dead periods.</p><p>Dead periods typically fall around final exams, national signing days, and other key calendar dates. The purpose is to give athletes and coaches space during high-pressure moments.</p><p>If a coach contacts you in person during a dead period, it's an NCAA violation. You're not in trouble — they are. You can still respond by phone or email.</p>`,
+    related:['contact-period','quiet-period'],
+    category:'process', sports:['all']
+  },
+  {
+    id:'quiet-period', term:'Quiet period', full:'Quiet Period',
+    short:'Coaches can meet recruits on campus only — no attending games, no school visits.',
+    detail:`<p>During a quiet period, college coaches are allowed to have in-person contact with recruits only on the college campus. They cannot visit your school, attend your games, or meet you off campus.</p><p>You can still visit the campus during a quiet period (as an unofficial visit). The restriction is on the coach's ability to come to you — not your ability to go to them.</p>`,
+    related:['contact-period','dead-period'],
+    category:'process', sports:['all']
+  },
+  {
+    id:'eval-period', term:'Evaluation period', full:'Evaluation Period',
+    short:'Coaches can attend your competitions to watch you play — but cannot have off-campus in-person contact.',
+    detail:`<p>During an evaluation period, college coaches can attend your games, tournaments, and practices to watch you compete. However, they cannot have in-person contact with you or your parents off campus — they can watch, but they can't approach you in the stands or at the field.</p><p>This is when showcases and tournaments are most valuable — coaches attend specifically to evaluate recruits during these windows. Knowing when evaluation periods are for your sport helps you plan your competition schedule.</p>`,
+    related:['contact-period','quiet-period'],
+    category:'process', sports:['all']
+  },
+  {
+    id:'signing-period', term:'Signing period', full:'National Signing Day / Signing Period',
+    short:'The official window when athletes can sign a National Letter of Intent. Dates vary by sport.',
+    detail:`<p>Each sport has a defined signing period during which athletes can sign the NLI. Most sports have two windows: an early signing period in November or December, and a regular signing period in the spring (usually February through April).</p><p>Football's early signing period is in December, with a regular period in February. Basketball has a May signing period. Baseball, soccer, and most other sports sign in November and again in the spring.</p><p>You cannot sign an NLI outside of the signing period — offers made before the period must be confirmed with a signed NLI when the window opens. Check ncaa.org for your sport's exact dates.</p>`,
+    related:['nli','verbal','early-enroll'],
+    category:'process', sports:['all']
+  },
+  {
+    id:'transfer-portal', term:'Transfer portal', full:'NCAA Transfer Portal',
+    short:'The NCAA database where athletes notify their intent to transfer, opening them to contact from other programs.',
+    detail:`<p>The transfer portal is an online system where student-athletes formally notify the NCAA that they intend to transfer. Once entered, athletes can be contacted by coaches at any other school.</p><p>Under current NCAA rules (the one-time transfer exception), athletes can transfer once without sitting out a year of competition. However, financial aid, eligibility years, and academic standing all vary based on timing and circumstances.</p><p>Entering the portal doesn't mean you're committed to leaving — athletes can withdraw from the portal. But once you enter, your current school is notified and coaches know you're available.</p><p>The portal has transformed college athletics. Many athletes use it as a strategic career tool rather than a last resort. Understanding how it works before you ever need it is smart preparation.</p>`,
+    related:['nli','verbal','decommit'],
+    category:'process', sports:['all'], divs:['D1','D2']
+  },
+
+  /* ─── FINANCIAL TERMS ─── */
+  {
+    id:'scholarship', term:'Athletic scholarship', full:'Athletic Scholarship',
+    short:'Financial aid awarded based on athletic ability. Can be a full ride or partial, depending on the sport and division.',
+    detail:`<p>Athletic scholarships cover some or all of the cost of attendance — tuition, room and board, books, and fees. Whether a scholarship is full or partial depends on the sport, the division, and the coach's roster strategy.</p><p>D1 headcount sports (football, men's and women's basketball, women's gymnastics, tennis, and volleyball) offer only full scholarships — each scholarship counts as one full award. D1 equivalency sports (soccer, baseball, swimming, lacrosse, etc.) allow coaches to split scholarships among multiple players.</p><p>D3 programs offer no athletic scholarships, but frequently offer strong academic merit aid. NAIA and D2 programs offer athletic scholarships with varying amounts.</p><p>Always ask for the total cost of attendance, not just the scholarship amount. A 60% scholarship at a $70,000/year school may cost more than a full ride at a $35,000/year school.</p>`,
+    related:['equivalency','headcount','cost-of-attendance'],
+    category:'financial', sports:['all']
+  },
+  {
+    id:'equivalency', term:'Equivalency sport', full:'Equivalency Sport',
+    short:'A sport where the total scholarship pool can be divided among multiple players — most athletes receive partial aid.',
+    detail:`<p>In equivalency sports, the NCAA gives each program a set number of "scholarship equivalencies" — a total dollar amount that can be distributed among as many players as the coach chooses. For example, D1 men's soccer has 9.9 equivalencies. A coach might give 20 players partial scholarships averaging 0.5 each.</p><p>This means when a coach offers you "a scholarship," you need to ask specifically what percentage they're offering. Common offers are 25%, 33%, 50%, 75%, or full. Partial scholarships can be combined with academic merit aid to build a comprehensive package.</p><p>Equivalency sports include: soccer, baseball, softball, swimming, lacrosse, cross country, wrestling, golf, tennis (at D2), and most others outside the D1 headcount list.</p>`,
+    related:['headcount','scholarship','cost-of-attendance'],
+    category:'financial', sports:['all']
+  },
+  {
+    id:'headcount', term:'Headcount sport', full:'Headcount Sport',
+    short:'Sports where each scholarship counts as exactly one full scholarship — no splitting allowed.',
+    detail:`<p>In headcount sports, every scholarship is a full scholarship. Coaches cannot offer 50% to one player and 50% to another — each scholarship must be awarded in full to one athlete.</p><p>D1 headcount sports are: football (85 scholarships), men's basketball (13), women's basketball (15), women's gymnastics (12), women's tennis (8), and women's volleyball (12).</p><p>Because scholarships can't be split, competition for full rides in headcount sports is intense. Being offered a scholarship in a headcount sport is a significant financial commitment from the program.</p>`,
+    related:['equivalency','scholarship'],
+    category:'financial', sports:['all']
+  },
+  {
+    id:'cost-of-attendance', term:'Cost of attendance', full:'Cost of Attendance (COA)',
+    short:'The full annual cost of attending a school — tuition, room, board, books, fees, and personal expenses.',
+    detail:`<p>Cost of attendance is the number you should always be comparing across schools — not just the sticker price of tuition. COA includes: tuition and fees, room and board, books and supplies, transportation, and personal expenses.</p><p>NCAA D1 programs can offer scholarships up to the full COA (previously capped at tuition + room + board). This means some athletes receive stipends for additional living expenses on top of standard scholarship amounts.</p><p>When comparing offers across schools, calculate the net cost (COA minus all aid — athletic + academic + need-based) for each school. A smaller scholarship at a lower-cost school may leave you with less debt than a larger scholarship at an expensive school.</p>`,
+    related:['scholarship','fafsa','merit-aid'],
+    category:'financial', sports:['all']
+  },
+  {
+    id:'fafsa', term:'FAFSA', full:'Free Application for Federal Student Aid',
+    short:'The federal form that determines financial aid eligibility. Opens October 1 of senior year — file it early.',
+    detail:`<p>The FAFSA determines your eligibility for federal grants, loans, and work-study programs. Many institutional scholarships (including some merit awards) also require it. File it as early as possible — October 1 of your senior year — because some aid is awarded on a first-come, first-served basis.</p><p>Many families skip the FAFSA assuming they earn too much to qualify for need-based aid. Even if you don't qualify for grants, the FAFSA unlocks access to federal loans at lower interest rates than private loans, and to work-study programs. It takes about an hour to complete.</p><p>Athletic scholarships do not replace the FAFSA — they work alongside it. A student on a partial athletic scholarship may still qualify for need-based grants that bring their total cost down further.</p>`,
+    related:['cost-of-attendance','merit-aid','scholarship'],
+    category:'financial', sports:['all']
+  },
+  {
+    id:'merit-aid', term:'Merit aid', full:'Academic Merit Aid',
+    short:'Scholarships awarded based on academic achievement — can be stacked with athletic aid at D1, D2, and NAIA.',
+    detail:`<p>Merit aid is academic scholarship money awarded by the institution based on GPA, test scores, or other academic achievements. It's separate from athletic scholarships and can often be combined with them.</p><p>D3 programs don't offer athletic scholarships, but many offer generous merit aid that can make an expensive D3 school surprisingly affordable. A student with strong academics at a D3 school might receive $25,000–$40,000 in merit aid annually.</p><p>At D1 and D2 programs, ask the coaching staff whether academic merit aid can be stacked on top of your athletic scholarship. Many programs allow this, and it can significantly reduce your out-of-pocket cost.</p>`,
+    related:['scholarship','fafsa','cost-of-attendance'],
+    category:'financial', sports:['all']
+  },
+
+  /* ─── ACADEMIC / ELIGIBILITY TERMS ─── */
+  {
+    id:'eligibility-center', term:'Eligibility Center', full:'NCAA Eligibility Center',
+    short:'The NCAA body that certifies academic eligibility for D1 and D2. Register at ncaa.org — don\'t wait.',
+    detail:`<p>The NCAA Eligibility Center (formerly the Clearinghouse) reviews your high school transcript and verifies that you meet the academic requirements to compete at D1 or D2. Every athlete planning to compete at these levels must register — there's a registration fee, but waivers are available for students who qualify.</p><p>The Eligibility Center checks two things: that you've taken the required number of approved core courses, and that your GPA in those courses meets the minimum threshold (2.3 for D1 on a sliding scale with SAT/ACT).</p><p>Register by July 1 of your junior year. Don't wait until senior year — if there are issues with your core courses, you need time to fix them.</p>`,
+    related:['core-courses','sliding-scale','amateurism'],
+    category:'academic', sports:['all'], divs:['D1','D2']
+  },
+  {
+    id:'core-courses', term:'Core courses', full:'NCAA Core Course Requirements',
+    short:'The specific high school courses the NCAA requires for eligibility — not every class qualifies.',
+    detail:`<p>The NCAA requires D1 and D2 prospects to complete a minimum number of approved academic courses in specific subjects: English (4 years), math (3 years, at Algebra 1 or higher), natural/physical science (2 years), social science (2 years), additional core courses from the above areas or foreign language/comparative religion/philosophy (1 year each), and additional academic courses (4 years).</p><p>Crucially, not every course at your school is NCAA-approved. Your school must submit courses for pre-approval by the Eligibility Center. Check your school's approved course list on ncaa.org early — if you've been taking non-approved courses, you may need to adjust your schedule.</p><p>NAIA and D3 have their own requirements — generally less strict than D1, but still require checking.</p>`,
+    related:['eligibility-center','sliding-scale'],
+    category:'academic', sports:['all'], divs:['D1','D2']
+  },
+  {
+    id:'sliding-scale', term:'Sliding scale', full:'GPA / Test Score Sliding Scale',
+    short:'The NCAA\'s D1 eligibility formula — higher GPA allows lower test score, and vice versa. Minimum GPA is 2.3.',
+    detail:`<p>For D1 eligibility, the NCAA uses a sliding scale that balances your core course GPA with your SAT or ACT score. A higher GPA means you need a lower test score to qualify, and a higher test score means you can qualify with a lower GPA.</p><p>The minimum GPA to be eligible at all (regardless of test scores) is 2.3 in core courses. The minimum SAT (combined reading and math) to qualify is 400 — but that requires a very high GPA. Most athletes aim for a GPA above 2.7 and an SAT above 900 to have a comfortable margin.</p><p>D2 requires a 2.2 GPA in core courses and has eliminated the test score requirement. D3 and NAIA set their own academic standards, which vary by school.</p>`,
+    related:['core-courses','eligibility-center'],
+    category:'academic', sports:['all'], divs:['D1','D2']
+  },
+  {
+    id:'amateurism', term:'Amateurism', full:'NCAA Amateurism Rules',
+    short:'Rules governing what athletes can accept before enrollment. NIL has significantly changed this landscape.',
+    detail:`<p>NCAA amateurism rules historically prevented college-bound athletes from receiving payment for their athletic ability. The NIL (Name, Image, and Likeness) era, which began in 2021, significantly changed this — athletes can now earn money from endorsements, social media, camps, and other commercial activities without losing eligibility.</p><p>What still matters for amateurism: you cannot sign a professional contract or accept payment to play before enrolling in college. Playing in a professional league — even briefly — can affect your eligibility. If you've ever been paid to play your sport, check with the NCAA Eligibility Center before assuming you're clear.</p>`,
+    related:['nil','eligibility-center'],
+    category:'academic', sports:['all']
+  },
+  {
+    id:'nil', term:'NIL', full:'Name, Image, and Likeness',
+    short:'The right of college athletes to earn money from endorsements, social media, and other commercial activities.',
+    detail:`<p>NIL rights, established in 2021, allow college athletes to profit from their name, image, and likeness without losing NCAA eligibility. This includes social media sponsorships, autograph signings, hosting camps or clinics, merchandise sales, and endorsement deals.</p><p>For high school recruits, NIL is increasingly a factor in where top athletes choose to go — programs at major schools often have stronger NIL ecosystems, alumni networks, and "collectives" (booster-funded groups that facilitate NIL deals for athletes).</p><p>NIL is still evolving rapidly. The rules differ by state and institution. Before accepting any NIL deal as a college athlete, consult your school's compliance office.</p>`,
+    related:['amateurism'],
+    category:'academic', sports:['all']
+  },
+  {
+    id:'early-enroll', term:'Early enrollment', full:'Early Enrollment',
+    short:'Enrolling in college for the spring semester before your senior year officially ends — common in football.',
+    detail:`<p>Early enrollment means starting college in January rather than August, allowing an athlete to participate in spring practices before their freshman year. It's most common in football but exists in other sports too.</p><p>Benefits: you arrive on campus already knowing the playbook, you build a head start on strength and conditioning, and you're often more competitive for playing time in fall camp. Drawback: you miss your final semester of high school — graduation, senior sports season, and senior activities.</p><p>To early enroll, you must graduate from high school a semester early. This requires careful academic planning starting in 9th or 10th grade.</p>`,
+    related:['signing-period','nli'],
+    category:'academic', sports:['Football','Basketball']
+  },
+
+  /* ─── FOOTBALL-SPECIFIC ─── */
+  {
+    id:'national-signing-day', term:'National Signing Day', full:'National Signing Day (Football)',
+    short:'The first Wednesday in February when most football players sign their NLI during the regular signing period.',
+    detail:`<p>National Signing Day in football is the first Wednesday of February — historically the biggest day in college football recruiting. However, since the introduction of the Early Signing Period in December 2017, most top recruits now sign in December, and National Signing Day in February is primarily for athletes who didn't sign early.</p><p>The early signing period for football runs for three days in mid-December. Once an athlete signs during the early period, they are fully committed and cannot be recruited by other schools. The February window serves athletes who remained uncommitted through December or who decommitted after the early period.</p>`,
+    related:['nli','signing-period','early-enroll'],
+    category:'Football', sports:['Football'], divs:['D1']
+  },
+  {
+    id:'oversigning', term:'Oversigning', full:'Oversigning',
+    short:'When a program extends more scholarship offers than available roster spots, expecting some athletes to not qualify or leave.',
+    detail:`<p>Oversigning occurs when a coaching staff extends more scholarship offers than they have available spots, banking on attrition — students who don't qualify academically, are injured, transfer, or are asked to "grayshirt." The SEC historically allowed more oversigning than other conferences.</p><p>The NCAA has tightened oversigning rules significantly, but it still occurs. As a recruit, it's worth asking how many scholarships a program is offering in your class and whether the numbers add up. If a coach is offering 30 scholarships in a class with 25 spots, someone won't make it.</p>`,
+    related:['grayshirt','scholarship','nli'],
+    category:'Football', sports:['Football']
+  },
+  {
+    id:'grayshirt', term:'Grayshirt', full:'Grayshirt',
+    short:'Delaying enrollment until the spring semester, preserving a year of eligibility and giving the program roster flexibility.',
+    detail:`<p>A grayshirt athlete delays their college enrollment until the spring semester — starting in January rather than August. Unlike early enrollment, a grayshirt delays the start of eligibility rather than accelerating it. The athlete doesn't count against the program's scholarship limit in the fall, which helps coaches manage roster numbers.</p><p>Grayshirting is different from a redshirt (see below). A grayshirt delays when you start college. A redshirt preserves a year of eligibility after you've already enrolled.</p><p>Be cautious about grayshirt offers — they can sometimes signal that a program isn't fully committed to you. Understand exactly what the offer means before agreeing.</p>`,
+    related:['redshirt','scholarship','nli'],
+    category:'Football', sports:['Football']
+  },
+  {
+    id:'redshirt', term:'Redshirt', full:'Redshirt Year',
+    short:'A year where an athlete practices and trains with the team but doesn\'t compete, preserving a year of eligibility.',
+    detail:`<p>A redshirt year allows an athlete to practice with the team, use team facilities, and receive their scholarship — but not compete in official games. The year doesn't count against their four years of eligibility, effectively giving them five years to play four seasons.</p><p>Redshirting is most common in football, where freshmen often need a year to physically develop. It's also used in other sports after injuries. The NCAA now allows a "redshirt rule" where athletes can play in up to four games in a season without burning their redshirt year.</p><p>Some athletes redshirt by choice (to develop); others are effectively redshirted by the coaching staff. Understand what the expectation is before you sign.</p>`,
+    related:['grayshirt','medical-hardship'],
+    category:'Football', sports:['Football','Baseball','Softball','Basketball','Soccer','Volleyball']
+  },
+  {
+    id:'star-rating', term:'Star rating', full:'Recruiting Star Rating (Football)',
+    short:'A 1–5 star ranking system used by recruiting services to rate high school football prospects.',
+    detail:`<p>Recruiting services like 247Sports, Rivals, and ESPN rate high school football recruits on a 1–5 star scale. Five-star recruits are considered elite national prospects; four-stars are high-level; three-stars are solid D1 prospects. Two-stars and below are typically D2, D3, or NAIA-level by these services' assessments.</p><p>Star ratings are influential in football — programs with higher-rated recruiting classes are generally expected to compete at higher levels. However, stars are not destiny. Many unrated recruits develop into NFL players, and many five-stars never live up to the hype.</p><p>Other sports don't use this system in the same formalized way — basketball has its own rankings, and most other sports use less formalized scouting and coach evaluation.</p>`,
+    related:['national-signing-day','nil'],
+    category:'Football', sports:['Football']
+  },
+
+  /* ─── BASKETBALL-SPECIFIC ─── */
+  {
+    id:'aau', term:'AAU', full:'Amateur Athletic Union (Basketball)',
+    short:'The primary club basketball circuit. AAU exposure is one of the most important factors in college basketball recruiting.',
+    detail:`<p>AAU (Amateur Athletic Union) basketball is the dominant club circuit for college basketball recruiting. Playing for a respected AAU program in front of college coaches at major tournaments is often more important for D1 basketball recruiting than your high school season.</p><p>Major AAU showcases like the Nike EYBL, Under Armour Association, and Adidas 3SSB attract college coaches from every level. Coaches often prioritize seeing recruits in AAU settings because the competition level is consistently high.</p><p>If D1 basketball is your goal, being on a strong AAU team is essential. Coaches use AAU affiliations to gauge the caliber of competition a recruit has faced.</p>`,
+    related:['contact-period','eval-period'],
+    category:'Basketball', sports:['Basketball']
+  },
+  {
+    id:'live-period', term:'Live period', full:'Live Evaluation Period (Basketball)',
+    short:'The specific windows when D1 basketball coaches can attend games and evaluate recruits in person.',
+    detail:`<p>In basketball, "live periods" are the specific dates when D1 coaches are permitted to attend games and evaluate recruits. These windows are typically a few weekends in the spring and summer, aligned with major AAU tournaments.</p><p>During live periods, coaches flood AAU events across the country. A single weekend at a major showcase can result in dozens of scholarship offers for top prospects. For recruits, live periods are the most high-stakes performance windows of the recruiting calendar.</p><p>Outside of live periods, coaches can still evaluate recruits at high school games — but D1 coaches in basketball specifically plan their evaluation travel around live periods.</p>`,
+    related:['aau','eval-period','contact-period'],
+    category:'Basketball', sports:['Basketball'], divs:['D1']
+  },
+  {
+    id:'one-and-done', term:'One-and-done', full:'One-and-Done Rule',
+    short:'The NBA age rule requiring most players to be at least 19 and one year removed from high school before entering the draft.',
+    detail:`<p>The NBA requires players to be at least 19 years old and one year removed from high school graduation before declaring for the draft. This means most NBA-bound players spend one year in college (or overseas) before turning professional.</p><p>This rule shapes D1 basketball recruiting significantly — elite programs recruit "one-and-done" players who may only stay for one season. For the vast majority of college basketball recruits, the one-and-done rule is irrelevant to their situation, but it affects roster construction, playing time expectations, and the culture at elite programs.</p><p>The rule is under ongoing discussion and may change. Some top prospects now choose to play in the NBA G League or overseas rather than college.</p>`,
+    related:['nil','transfer-portal'],
+    category:'Basketball', sports:['Basketball']
+  },
+
+  /* ─── SOCCER-SPECIFIC ─── */
+  {
+    id:'club-soccer', term:'Club soccer', full:'Club / Travel Soccer',
+    short:'Year-round competitive soccer outside of the high school season. Club exposure is the primary recruiting path for college soccer.',
+    detail:`<p>For college soccer recruiting — especially at D1 and high D2 levels — club soccer is more important than high school soccer. College coaches primarily attend club tournaments and showcases to evaluate recruits because the competition level is more consistent and the coach attendance at major events is very high.</p><p>The most prestigious club leagues are ECNL (Elite Clubs National League) for girls and MLS Next / GA (Girls Academy) / ECNL for boys. Playing in these leagues gives recruits direct exposure to college coaches at every level.</p><p>High school soccer matters for building leadership, playing experience, and maintaining fitness — but college coaches rarely build their evaluation schedules around high school games.</p>`,
+    related:['ecnl','showcase'],
+    category:'Soccer', sports:['Soccer']
+  },
+  {
+    id:'ecnl', term:'ECNL', full:'Elite Clubs National League',
+    short:'The most prestigious girls\' club soccer league in the US — high D1 coach attendance at showcase events.',
+    detail:`<p>The ECNL is considered the top club soccer league for girls in the United States. Playing for an ECNL club provides significant exposure to college coaches, particularly at ECNL showcase events where hundreds of coaches attend.</p><p>ECNL membership is competitive — clubs must meet facility, coaching, and program standards to participate. Not every player needs to be on an ECNL team to get recruited, but it is the primary pipeline for D1 women's soccer.</p><p>For boys, MLS Next is the equivalent high-profile development league, though the landscape is more fragmented than the girls' side.</p>`,
+    related:['club-soccer','showcase'],
+    category:'Soccer', sports:['Soccer']
+  },
+  {
+    id:'id2', term:'ID2 Program', full:'US Club Soccer ID2 Program',
+    short:'A US Club Soccer identification program that connects top club players with national team pathways and college coaches.',
+    detail:`<p>The ID2 Program is a talent identification and development initiative by US Club Soccer that identifies top players at the regional level and provides additional training, exposure, and connections to college coaching staffs and national team programs.</p><p>Being selected for an ID2 event is a strong signal of talent and can open doors to college coaches who specifically attend these events. It also puts players on the US Soccer radar for youth national team consideration.</p>`,
+    related:['ecnl','club-soccer'],
+    category:'Soccer', sports:['Soccer']
+  },
+
+  /* ─── BASEBALL-SPECIFIC ─── */
+  {
+    id:'exit-velo', term:'Exit velocity', full:'Exit Velocity',
+    short:'The speed of the ball off the bat — one of the primary measurables coaches track for hitters at showcases.',
+    detail:`<p>Exit velocity measures how fast the ball travels off the bat after contact, recorded in miles per hour using radar guns or TrackMan/Rapsodo technology. It's one of the most commonly cited measurables for college baseball recruiting.</p><p>At D1 showcases, a hitter with consistent exit velocity above 90 mph will attract attention. Elite D1 programs look for 95+ mph. D2 and NAIA programs recruit lower thresholds. Catchers and middle infielders are evaluated on pop time and arm strength in addition to exit velocity.</p><p>Exit velocity is a proxy for raw power and bat speed, but coaches also evaluate barrel consistency, approach, and the quality of contact — not just the top number.</p>`,
+    related:['perfect-game','showcase'],
+    category:'Baseball', sports:['Baseball']
+  },
+  {
+    id:'perfect-game', term:'Perfect Game', full:'Perfect Game (Showcase Organization)',
+    short:'The largest and most influential baseball scouting and showcase organization. A strong Perfect Game ranking significantly helps D1 recruiting.',
+    detail:`<p>Perfect Game is the leading scouting and showcase organization in high school baseball. Their events — particularly the Perfect Game All-American Classic, National Showcase, and WWBA World Championship — draw hundreds of college coaches and MLB scouts annually.</p><p>Perfect Game maintains player rankings and scouting reports that college coaches actively reference. A strong Perfect Game ranking at 16U or 17U can significantly accelerate the D1 recruiting process.</p><p>Beyond Perfect Game, Prep Baseball Report (PBR) is another major platform with regional showcases and player databases. Both are worth creating profiles on.</p>`,
+    related:['exit-velo','showcase','pitch-velo'],
+    category:'Baseball', sports:['Baseball']
+  },
+  {
+    id:'pitch-velo', term:'Pitch velocity', full:'Pitching Velocity',
+    short:'A primary measurable for pitching prospects. D1 starters typically sit 88–93 mph or higher.',
+    detail:`<p>Pitch velocity is the most basic measurable for pitching recruits. While command, movement, and secondary pitches matter greatly, velocity is the threshold metric coaches use to decide whether to evaluate further.</p><p>D1 starters typically sit 88–93+ mph by the time they arrive on campus. D2 and NAIA starters range from 82–90 mph. Relievers are generally expected to throw harder than starters at the same level.</p><p>Velocity naturally increases as athletes mature physically. A 16-year-old throwing 82 mph who projects to gain 5–8 mph by college is a legitimate D1 prospect. Coaches evaluate "projectability" — not just current velocity, but the body type and mechanics that suggest future development.</p>`,
+    related:['perfect-game','exit-velo'],
+    category:'Baseball', sports:['Baseball']
+  },
+  {
+    id:'travel-ball', term:'Travel ball', full:'Travel Baseball / Club Baseball',
+    short:'Year-round competitive baseball outside the high school season. The primary recruiting exposure path for college baseball.',
+    detail:`<p>Like soccer, college baseball recruiting happens primarily through club/travel baseball — not high school baseball. College coaches attend Perfect Game, WWBA, PBR, and other travel ball events because the competition level is higher and the concentration of recruits is greater.</p><p>Playing for a respected travel organization increases your visibility significantly. Programs like East Cobb Baseball, Texas Baseball Ranch, and various regional powerhouses are well known to college coaches.</p><p>High school baseball matters — it keeps you game-sharp and coaches sometimes attend — but it should not be your primary recruiting exposure vehicle.</p>`,
+    related:['perfect-game','exit-velo','showcase'],
+    category:'Baseball', sports:['Baseball']
+  },
+
+  /* ─── SOFTBALL-SPECIFIC ─── */
+  {
+    id:'travel-softball', term:'Travel softball', full:'Travel / Club Softball',
+    short:'Year-round competitive softball. Like baseball, the primary college recruiting exposure path happens through travel ball, not high school.',
+    detail:`<p>College softball recruiting — especially at the D1 level — is driven by travel softball. College coaches attend USSSA, PGF (Premier Girls Fastpitch), and other showcase tournaments to evaluate recruits in high-level competition.</p><p>PGF Nationals and USSSA Nationals are the most prestigious summer events, drawing D1 coaches from across the country. Playing well on a respected travel program at these events can accelerate the D1 recruiting process significantly.</p><p>High school softball is valued but secondary. Coaches who can't attend your travel tournaments will sometimes come to high school games — but the primary evaluation happens in the travel circuit.</p>`,
+    related:['pgf','pitch-speed-softball'],
+    category:'Softball', sports:['Softball']
+  },
+  {
+    id:'pgf', term:'PGF', full:'Premier Girls Fastpitch',
+    short:'One of the premier travel softball organizations. PGF Nationals is among the most attended events by D1 coaches.',
+    detail:`<p>Premier Girls Fastpitch (PGF) is one of the top travel softball organizations in the country. PGF Nationals — held in Southern California every summer — is one of the most heavily scouted softball events in the country, with hundreds of D1 coaches in attendance.</p><p>Being on a PGF Platinum or Elite team increases your visibility among top programs. PGF also runs showcase-style events throughout the year where individual players can be evaluated by coaches in controlled settings.</p><p>USSSA is another major travel organization with equally competitive circuits. Many top recruits play for programs affiliated with both.</p>`,
+    related:['travel-softball','pitch-speed-softball'],
+    category:'Softball', sports:['Softball']
+  },
+  {
+    id:'pitch-speed-softball', term:'Pitching speed (softball)', full:'Pitching Speed in Softball',
+    short:'Key measurable for pitching prospects. D1 programs look for 60–65+ mph. Rise balls, drop balls, and change-ups are evaluated separately.',
+    detail:`<p>In fastpitch softball, pitch speed is measured from the pitcher's hand to the plate. D1 top programs typically look for pitchers who can reach 60–65+ mph with good command and multiple off-speed pitches. D2 and NAIA programs recruit down from 55+ mph.</p><p>Unlike baseball, where velocity is often the primary measurable, softball pitching is evaluated heavily on pitch variety and deception. A pitcher throwing 58 mph with a dominant rise ball, drop ball, and changeup may be more attractive to D1 coaches than a 63 mph pitcher with only a fastball.</p><p>At showcases, coaches typically evaluate pitchers by watching live at-bats — not just a bullpen session. How you compete matters as much as raw speed.</p>`,
+    related:['pgf','travel-softball'],
+    category:'Softball', sports:['Softball']
+  },
+
+  /* ─── VOLLEYBALL-SPECIFIC ─── */
+  {
+    id:'club-volleyball', term:'Club volleyball', full:'Club / Travel Volleyball',
+    short:'Year-round competitive volleyball. Club season runs December–July, which is when college recruiting primarily happens.',
+    detail:`<p>Club volleyball is the primary recruiting stage for college volleyball. The club season runs roughly December through July, which is when most D1 coaches do their heaviest evaluation. High school volleyball (August–November) is valuable, but college coaches are largely in quiet or dead periods during the fall high school season.</p><p>The most prestigious club events are the AAU Volleyball Nationals, USAV Junior Nationals, and various qualifier tournaments throughout the spring. Playing on a respected club program that competes at these events is essential for D1 exposure.</p>`,
+    related:['serve-speed','libero'],
+    category:'Volleyball', sports:['Volleyball']
+  },
+  {
+    id:'libero', term:'Libero', full:'Libero',
+    short:'A defensive specialist in volleyball who wears a different-colored jersey and has unique substitution rules.',
+    detail:`<p>The libero is a specialized defensive player in volleyball who wears a contrasting jersey from the rest of the team. Liberos can substitute freely for any back-row player without it counting as a regular substitution, and they cannot serve or rotate to the front row in most formats.</p><p>The libero position is valued for its defensive skills — passing, digging, and floor coverage. In recruiting, liberos are evaluated specifically on their passing efficiency and court sense rather than attacking ability.</p><p>Being recruited as a libero is a specialized path. Some programs recruit liberos early because strong passers are hard to find; others develop them from defensive-minded outside hitters or DS players.</p>`,
+    related:['club-volleyball','ds'],
+    category:'Volleyball', sports:['Volleyball']
+  },
+  {
+    id:'ds', term:'DS', full:'Defensive Specialist',
+    short:'A back-row only player who specializes in passing and defense — similar role to libero but with standard substitution rules.',
+    detail:`<p>A defensive specialist (DS) is a back-row player who comes in for serving and defensive purposes. Unlike the libero, a DS uses standard substitution rules and can serve. DS players are evaluated on their passing, serve receive, and digging — similar criteria to the libero.</p><p>The DS position is often a stepping stone — many college programs convert strong high school liberos or defensive players into DS or libero roles at the college level. In recruiting, being recruited as a DS is legitimate at all levels, though it's a more competitive spot than outside hitter or middle blocker in terms of scholarship availability.</p>`,
+    related:['libero','club-volleyball'],
+    category:'Volleyball', sports:['Volleyball']
+  },
+  {
+    id:'serve-speed', term:'Serve speed', full:'Serving Speed and Type',
+    short:'Jump serves, float serves, and serve velocity are evaluated at showcases. D1 programs expect consistent pressure serves.',
+    detail:`<p>Serving is increasingly a major evaluation criterion in college volleyball recruiting. D1 programs expect their hitters and even setters to serve aggressively — with jump serves or heavy float serves that generate errors or easy passes.</p><p>At D1 showcases, coaches note whether recruits serve aggressively, what their go-to serve type is, and their consistency under pressure. A recruit who can serve at 50+ mph with a jump serve and also execute a tough float serve is significantly more valuable than one who only serves safe.</p><p>For liberos and DS players, serving quality is particularly important since they often serve in rotation for the players they replace.</p>`,
+    related:['club-volleyball','libero'],
+    category:'Volleyball', sports:['Volleyball']
+  },
+
+  /* ─── SHARED EXTRAS ─── */
+  {
+    id:'medical-hardship', term:'Medical hardship', full:'Medical Hardship Waiver',
+    short:'A waiver that can restore a year of eligibility lost due to a season-ending injury early in the season.',
+    detail:`<p>If an athlete suffers a season-ending injury before playing in more than 30% of their team's games, they may apply for a medical hardship waiver that restores that year of eligibility. This effectively gives the athlete an additional year to compete.</p><p>Hardship waivers are reviewed by the NCAA on a case-by-case basis and are not guaranteed. The injury must typically occur in the first half of the season. Documentation from team medical staff is required.</p><p>Understanding medical hardship eligibility matters when evaluating risk — a recruit who suffers a major injury in their first college season may have the ability to recover without losing a year of athletic eligibility.</p>`,
+    related:['redshirt','scholarship'],
+    category:'process', sports:['all']
+  },
+  {
+    id:'walk-on', term:'Walk-on', full:'Walk-On',
+    short:'A student who joins a college team without an athletic scholarship. Walk-ons can earn scholarship money later.',
+    detail:`<p>A walk-on is an athlete who joins a college team without receiving an athletic scholarship. There are two types: preferred walk-ons (invited by the coaching staff with a guaranteed roster spot) and non-preferred walk-ons (who try out and earn a spot on their own).</p><p>Walking on is a legitimate path to playing college sports, particularly at D1 programs where roster size allows for walk-on players. Many walk-ons earn scholarships in subsequent years based on their performance and development.</p><p>If a coach offers you a preferred walk-on opportunity at a program you love, it may be worth more than a partial scholarship at a program that fits less well.</p>`,
+    related:['scholarship','preferred-walk-on'],
+    category:'process', sports:['all']
+  },
+  {
+    id:'preferred-walk-on', term:'Preferred walk-on', full:'Preferred Walk-On',
+    short:'An athlete personally invited by a coaching staff to join the team without scholarship money — guaranteed roster spot.',
+    detail:`<p>A preferred walk-on is different from a standard walk-on in one key way: the coaching staff has personally invited them and guaranteed them a roster spot. They don't need to earn their place through open tryouts.</p><p>Preferred walk-ons receive no athletic scholarship, but they are treated as full members of the team. They receive access to facilities, coaching, and team activities. Many preferred walk-ons earn partial or full scholarships in later years.</p><p>Being offered a preferred walk-on at a top program is a meaningful signal of interest. It's worth weighing seriously against scholarship offers at lower-level programs.</p>`,
+    related:['walk-on','scholarship'],
+    category:'process', sports:['all']
+  },
+];
+
+/* ══════════════════════════════════════════
+   CATEGORIES
+══════════════════════════════════════════ */
+const CATEGORIES = [
+  { id:'all',       label:'All terms' },
+  { id:'process',   label:'Recruiting process' },
+  { id:'financial', label:'Scholarships & money' },
+  { id:'academic',  label:'Eligibility & academics' },
+];
+
+const CAT_COLORS = {
+  process:   { dot:'#378ADD', bg:'#E6F1FB', text:'#0C447C' },
+  financial: { dot:'#b8860b', bg:'#f5f0dc', text:'#7a5800' },
+  academic:  { dot:'#3d2a7a', bg:'#eeedfe', text:'#3d2a7a' },
+};
+
+/* ══════════════════════════════════════════
+   STATE
+══════════════════════════════════════════ */
+let activeSport = 'Football';
+let activeCategory = 'all';
+let openTermId = null;
+
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  // Set counts on sport buttons
+  ['Football','Basketball','Soccer','Baseball','Softball','Volleyball'].forEach(sport => {
+    const count = TERMS.filter(t => t.sports.includes('all') || t.sports.includes(sport)).length;
+    const el = document.getElementById('count-' + sport);
+    if (el) el.textContent = count + ' terms';
+  });
+  renderGloss();
+});
+
+/* ══════════════════════════════════════════
+   SPORT SELECT
+══════════════════════════════════════════ */
+function selectSport(sport, btn) {
+  activeSport = sport;
+  activeCategory = 'all';
+  openTermId = null;
+  document.querySelectorAll('.sport-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('sport-title').textContent = sport;
+  document.getElementById('search-input').value = '';
+  renderGloss();
+  document.getElementById('gloss-body').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ══════════════════════════════════════════
+   RENDER
+══════════════════════════════════════════ */
+function renderGloss() {
+  const query = document.getElementById('search-input').value.toLowerCase();
+
+  // Build sport-relevant terms
+  const sportTerms = TERMS.filter(t => t.sports.includes('all') || t.sports.includes(activeSport));
+
+  // Apply category filter
+  const catFiltered = sportTerms.filter(t => {
+    if (activeCategory === 'all') return true;
+    return t.category === activeCategory || t.category === activeSport;
+  });
+
+  // Apply search
+  const filtered = catFiltered.filter(t => {
+    if (!query) return true;
+    return t.term.toLowerCase().includes(query) ||
+      t.short.toLowerCase().includes(query) ||
+      (t.full && t.full.toLowerCase().includes(query));
+  });
+
+  document.getElementById('sport-term-count').textContent = filtered.length + ' term' + (filtered.length !== 1 ? 's' : '');
+
+  // Build category pills
+  const catPills = document.getElementById('cat-pills');
+  // Build dynamic category list based on what's in this sport
+  const availableCats = ['all','process','financial','academic'];
+  const sportSpecific = TERMS.filter(t => t.sports.includes(activeSport) && !t.sports.includes('all'));
+  if (sportSpecific.length > 0) availableCats.push('sport');
+
+  catPills.innerHTML = availableCats.map(cat => {
+    const isActive = activeCategory === cat;
+    let label = '';
+    if (cat === 'all') label = 'All terms';
+    else if (cat === 'sport') label = activeSport + '-specific';
+    else label = CATEGORIES.find(c => c.id === cat)?.label || cat;
+    const count = cat === 'all' ? sportTerms.length :
+      cat === 'sport' ? sportTerms.filter(t => t.category === activeSport).length :
+      sportTerms.filter(t => t.category === cat).length;
+    return `<div class="cat-pill ${isActive ? 'active' : ''}" onclick="setCategory('${cat}')">${label} (${count})</div>`;
+  }).join('');
+
+  // Group into sections
+  const sections = [];
+  const universal = filtered.filter(t => t.category === 'process' || t.category === 'financial' || t.category === 'academic');
+  const sportSpec  = filtered.filter(t => t.category === activeSport);
+  const mixed = filtered.filter(t => !['process','financial','academic'].includes(t.category) && t.category !== activeSport);
+
+  if (sportSpec.length > 0)   sections.push({ label: activeSport + '-specific terms', dot: '#1D9E75', terms: sportSpec });
+  if (universal.length > 0)   sections.push({ label: 'Universal recruiting terms', dot: '#888780', terms: universal });
+  if (mixed.length > 0)       sections.push({ label: 'Additional terms', dot: '#b8860b', terms: mixed });
+
+  const list = document.getElementById('term-list');
+
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="empty-state">No terms match your search. Try a different keyword.</div>';
+    return;
+  }
+
+  list.innerHTML = sections.map(section => `
+    <div class="term-section">
+      <div class="term-section-label">
+        <span class="section-dot" style="background:${section.dot};"></span>
+        ${section.label}
+      </div>
+      ${section.terms.map(term => renderTerm(term)).join('')}
+    </div>
+  `).join('');
+}
+
+function renderTerm(term) {
+  const isOpen = openTermId === term.id;
+  const isSportSpecific = term.sports.includes(activeSport) && !term.sports.includes('all');
+
+  const divTags = (term.divs || []).map(d =>
+    `<span class="term-tag tag-${d.toLowerCase()}">${d}</span>`
+  ).join('');
+
+  const sportTag = isSportSpecific ?
+    `<span class="term-tag tag-sport">${activeSport}</span>` : '';
+
+  const relatedLinks = (term.related || []).map(rid => {
+    const rel = TERMS.find(t => t.id === rid);
+    if (!rel) return '';
+    return `<span class="related-link" onclick="jumpToTerm('${rid}')">${rel.term}</span>`;
+  }).filter(Boolean).join('');
+
+  return `
+  <div class="term-row" id="termrow-${term.id}">
+    <div class="term-summary ${isOpen ? 'open' : ''}" onclick="toggleTerm('${term.id}')">
+      <div class="term-left">
+        <div class="term-name">
+          ${term.term}
+          ${term.full && term.full !== term.term ? `<span style="font-size:12px;font-weight:300;color:var(--ink-soft);">${term.full}</span>` : ''}
+        </div>
+        <div class="term-short">${term.short}</div>
+        <div class="term-tags">${sportTag}${divTags}</div>
+      </div>
+      <span class="term-chevron ${isOpen ? 'open' : ''}">&#9660;</span>
+    </div>
+    <div class="term-detail ${isOpen ? 'open' : ''}" id="detail-${term.id}">
+      <div class="detail-card">
+        <div class="detail-full">${term.detail}</div>
+        ${term.example ? `
+        <div class="detail-example">
+          <div class="detail-example-label">Example</div>
+          <div class="detail-example-text">${term.example}</div>
+        </div>` : ''}
+        ${relatedLinks ? `
+        <div class="detail-related">
+          <div class="detail-related-label">Related</div>
+          ${relatedLinks}
+        </div>` : ''}
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggleTerm(id) {
+  if (openTermId === id) {
+    openTermId = null;
+  } else {
+    openTermId = id;
+  }
+  renderGloss();
+  if (openTermId) {
+    requestAnimationFrame(() => {
+      const el = document.getElementById('termrow-' + id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  }
+}
+
+function jumpToTerm(id) {
+  const term = TERMS.find(t => t.id === id);
+  if (!term) return;
+  // If the term is for a different sport, switch sport first
+  if (!term.sports.includes('all') && !term.sports.includes(activeSport)) {
+    const btn = document.querySelector(`[data-sport="${term.sports[0]}"]`);
+    if (btn) selectSport(term.sports[0], btn);
+  }
+  openTermId = id;
+  renderGloss();
+  requestAnimationFrame(() => {
+    const el = document.getElementById('termrow-' + id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+}
+
+function setCategory(cat) {
+  activeCategory = cat;
+  openTermId = null;
+  renderGloss();
+}
+</script>
+</body>
+</html>
