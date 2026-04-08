@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach Recruiting Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #141410; --ink-mid: #4a4a44; --ink-soft: #8a8a80; --ink-faint: #d0d0c4;
+  --paper: #f7f6f1; --paper-warm: #efede5; --paper-card: #ffffff;
+  --border: rgba(20,20,16,0.1); --border-mid: rgba(20,20,16,0.2);
+  --accent: #1a5c3a; --accent-light: #e8f2ec; --accent-mid: #2d7a52;
+  --gold: #b8860b; --gold-light: #f5f0dc;
+  --blue: #1a3a5c; --blue-light: #e8eff8;
+  --rust: #8b3a1a; --rust-light: #f8ede8;
+  --purple: #3d2a7a; --purple-light: #eeedfe;
+  --radius: 6px; --radius-lg: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #f0efe8; --ink-mid: #b0b0a8; --ink-soft: #686860; --ink-faint: #383830;
+    --paper: #141410; --paper-warm: #1a1a14; --paper-card: #1e1e18;
+    --border: rgba(240,239,232,0.1); --border-mid: rgba(240,239,232,0.2);
+    --accent: #4aaa72; --accent-light: #0d2318; --accent-mid: #4aaa72;
+    --gold: #d4a020; --gold-light: #1e1a08;
+    --blue: #6a9fd4; --blue-light: #0a1828;
+    --rust: #d4724a; --rust-light: #1e0e08;
+    --purple: #9f8de0; --purple-light: #1a1230;
+  }
+}
+body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; min-height: 100vh; }
+
+/* ── Masthead ── */
+.masthead { border-bottom: 1px solid var(--border); padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 54px; background: var(--paper); position: sticky; top: 0; z-index: 200; }
+.masthead-logo { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--ink); text-decoration: none; letter-spacing: -0.02em; }
+.masthead-logo span { color: var(--accent); font-style: italic; }
+.masthead-right { display: flex; align-items: center; gap: 12px; }
+.mode-badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; }
+.mode-coach { background: var(--blue-light); color: var(--blue); }
+.mode-recruit { background: var(--accent-light); color: var(--accent); }
+.back-link { font-size: 13px; color: var(--ink-soft); text-decoration: none; }
+.back-link:hover { color: var(--ink); }
+
+/* ── Layout ── */
+.container { max-width: 820px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+
+/* ── Coach editor ── */
+.editor-hero { margin-bottom: 2rem; }
+.editor-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.editor-eyebrow::before { content: ''; display: inline-block; width: 18px; height: 1px; background: var(--blue); }
+.editor-title { font-family: 'DM Serif Display', serif; font-size: 28px; letter-spacing: -0.02em; margin-bottom: 6px; }
+.editor-sub { font-size: 14px; color: var(--ink-soft); font-weight: 300; }
+
+.editor-section { background: var(--paper-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 12px; }
+.editor-section-title { font-size: 14px; font-weight: 500; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+.editor-section-title::before { content: ''; width: 3px; height: 16px; background: var(--accent); border-radius: 2px; flex-shrink: 0; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.form-row { display: flex; flex-direction: column; gap: 4px; }
+.form-row.full { grid-column: 1 / -1; }
+.form-label { font-size: 11px; font-weight: 500; color: var(--ink-soft); letter-spacing: .04em; text-transform: uppercase; }
+.form-input { font-size: 13px; padding: 8px 11px; border-radius: var(--radius); border: 1px solid var(--border-mid); background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; outline: none; transition: border-color .15s; }
+.form-input:focus { border-color: var(--accent); }
+.form-input::placeholder { color: var(--ink-faint); }
+.form-textarea { font-size: 13px; padding: 8px 11px; border-radius: var(--radius); border: 1px solid var(--border-mid); background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; outline: none; resize: vertical; min-height: 80px; line-height: 1.6; transition: border-color .15s; }
+.form-textarea:focus { border-color: var(--accent); }
+.form-textarea::placeholder { color: var(--ink-faint); }
+.form-select { font-size: 13px; padding: 8px 11px; border-radius: var(--radius); border: 1px solid var(--border-mid); background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; outline: none; cursor: pointer; }
+
+/* ── Task / camp list editors ── */
+.list-items { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
+.list-item-row { display: flex; gap: 6px; align-items: center; }
+.list-item-input { flex: 1; font-size: 13px; padding: 7px 10px; border-radius: var(--radius); border: 1px solid var(--border-mid); background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; outline: none; }
+.list-item-input:focus { border-color: var(--accent); }
+.list-item-input::placeholder { color: var(--ink-faint); }
+.list-item-date { width: 130px; font-size: 13px; padding: 7px 10px; border-radius: var(--radius); border: 1px solid var(--border-mid); background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; outline: none; }
+.remove-btn { width: 28px; height: 28px; border: none; background: none; cursor: pointer; color: var(--ink-faint); font-size: 18px; line-height: 1; display: flex; align-items: center; justify-content: center; transition: color .15s; flex-shrink: 0; }
+.remove-btn:hover { color: #E24B4A; }
+.add-item-btn { font-size: 12px; color: var(--accent); background: none; border: 1px dashed rgba(26,92,58,0.3); border-radius: var(--radius); padding: 6px 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; width: 100%; }
+.add-item-btn:hover { background: var(--accent-light); border-color: var(--accent); }
+
+/* ── Roster needs tags ── */
+.pos-grid { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.pos-tag { font-size: 12px; padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border-mid); background: var(--paper-warm); cursor: pointer; color: var(--ink-mid); transition: all .15s; font-family: 'DM Sans', sans-serif; }
+.pos-tag:hover { border-color: var(--border-mid); color: var(--ink); }
+.pos-tag.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 500; }
+
+/* ── Share section ── */
+.share-section { background: var(--blue-light); border: 1px solid rgba(26,58,92,0.2); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 12px; }
+.share-title { font-size: 14px; font-weight: 500; color: var(--blue); margin-bottom: 6px; }
+.share-sub { font-size: 13px; color: var(--blue); font-weight: 300; margin-bottom: 1rem; opacity: .8; }
+.share-url-row { display: flex; gap: 8px; }
+.share-url-input { flex: 1; font-size: 12px; padding: 8px 11px; border-radius: var(--radius); border: 1px solid rgba(26,58,92,0.25); background: var(--paper-card); color: var(--ink-mid); font-family: ui-monospace, monospace; outline: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.copy-url-btn { font-size: 13px; font-weight: 500; padding: 8px 18px; border-radius: var(--radius); border: none; background: var(--blue); color: #fff; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; transition: background .15s; }
+.copy-url-btn:hover { background: #0f2840; }
+.copy-url-btn.copied { background: var(--accent); }
+.generate-btn { font-size: 13px; font-weight: 500; padding: 10px 24px; border-radius: var(--radius); border: none; background: var(--blue); color: #fff; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background .15s; }
+.generate-btn:hover { background: #0f2840; }
+
+.save-indicator { font-size: 12px; color: var(--ink-soft); display: flex; align-items: center; gap: 5px; opacity: 0; transition: opacity .3s; }
+.save-indicator.visible { opacity: 1; }
+.save-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+
+/* ── Preview mode toggle ── */
+.preview-bar { background: var(--paper-warm); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 16px; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.preview-bar-text { font-size: 13px; color: var(--ink-mid); }
+.preview-btn { font-size: 12px; font-weight: 500; padding: 6px 16px; border-radius: var(--radius); border: 1px solid var(--border-mid); background: var(--paper-card); cursor: pointer; font-family: 'DM Sans', sans-serif; color: var(--ink-mid); transition: all .15s; }
+.preview-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ════════════════════════════════
+   RECRUIT VIEW
+════════════════════════════════ */
+.recruit-view { display: none; }
+.recruit-view.active { display: block; }
+.editor-view { display: block; }
+.editor-view.hidden { display: none; }
+
+/* Program header */
+.program-header { background: var(--paper-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 14px; }
+.program-school { font-family: 'DM Serif Display', serif; font-size: 26px; letter-spacing: -0.02em; margin-bottom: 2px; }
+.program-sport { font-size: 15px; color: var(--ink-soft); font-weight: 300; margin-bottom: 1rem; }
+.program-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.program-meta-item { display: flex; flex-direction: column; gap: 2px; }
+.meta-label { font-size: 10px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-soft); }
+.meta-value { font-size: 14px; font-weight: 500; color: var(--ink); }
+.coach-contact { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.contact-btn { font-size: 13px; padding: 7px 16px; border-radius: var(--radius); border: 1px solid var(--border-mid); text-decoration: none; color: var(--ink-mid); transition: all .15s; display: inline-block; }
+.contact-btn:hover { border-color: var(--accent); color: var(--accent); }
+.contact-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.contact-btn.primary:hover { background: var(--accent-mid); }
+
+/* Recruit content sections */
+.recruit-section { background: var(--paper-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 12px; }
+.recruit-section-title { font-size: 14px; font-weight: 500; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+.recruit-section-title::before { content: ''; width: 3px; height: 16px; background: var(--accent); border-radius: 2px; flex-shrink: 0; }
+.recruit-body { font-size: 13px; color: var(--ink-mid); line-height: 1.75; font-weight: 300; }
+.recruit-body p { margin-bottom: 8px; }
+.recruit-body p:last-child { margin-bottom: 0; }
+
+/* Timeline items */
+.timeline-list { display: flex; flex-direction: column; gap: 0; }
+.timeline-item { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.timeline-item:last-child { border-bottom: none; }
+.timeline-dot { width: 8px; height: 8px; min-width: 8px; border-radius: 50%; background: var(--accent); margin-top: 5px; }
+.timeline-content { flex: 1; font-size: 13px; color: var(--ink-mid); line-height: 1.55; font-weight: 300; }
+.timeline-date { font-size: 11px; color: var(--ink-soft); margin-top: 2px; font-weight: 500; }
+
+/* Task checklist for recruits */
+.task-list { display: flex; flex-direction: column; gap: 0; }
+.task-item { display: flex; gap: 10px; align-items: flex-start; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.task-item:last-child { border-bottom: none; }
+.task-check-box { width: 17px; height: 17px; min-width: 17px; border-radius: 4px; border: 1px solid var(--border-mid); background: var(--paper); cursor: pointer; display: flex; align-items: center; justify-content: center; margin-top: 1px; transition: all .15s; }
+.task-check-box.done { background: var(--accent); border-color: var(--accent); }
+.task-check-box.done::after { content: ''; display: block; width: 9px; height: 5px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translate(1px,-1px); }
+.task-text-r { font-size: 13px; color: var(--ink-mid); line-height: 1.5; font-weight: 300; flex: 1; }
+
+/* Position tags in recruit view */
+.pos-display { display: flex; gap: 6px; flex-wrap: wrap; }
+.pos-display-tag { font-size: 12px; padding: 4px 12px; border-radius: 99px; background: var(--accent-light); color: var(--accent); border: 1px solid rgba(26,92,58,0.2); font-weight: 500; }
+
+/* Division badge */
+.div-badge { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 99px; background: var(--blue-light); color: var(--blue); border: 1px solid rgba(26,58,92,0.2); font-weight: 500; margin-left: 8px; }
+
+/* Recruit submission form */
+.submit-section { background: var(--paper-warm); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-top: 1rem; }
+.submit-title { font-family: 'DM Serif Display', serif; font-size: 18px; letter-spacing: -0.01em; margin-bottom: 6px; }
+.submit-sub { font-size: 13px; color: var(--ink-soft); font-weight: 300; margin-bottom: 1.25rem; }
+.submit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.submit-row { display: flex; flex-direction: column; gap: 4px; }
+.submit-row.full { grid-column: 1 / -1; }
+.submit-label { font-size: 11px; font-weight: 500; color: var(--ink-soft); letter-spacing: .04em; text-transform: uppercase; }
+.submit-input { font-size: 13px; padding: 8px 11px; border-radius: var(--radius); border: 1px solid var(--border-mid); background: var(--paper-card); color: var(--ink); font-family: 'DM Sans', sans-serif; outline: none; }
+.submit-input:focus { border-color: var(--accent); }
+.submit-textarea { font-size: 13px; padding: 8px 11px; border-radius: var(--radius); border: 1px solid var(--border-mid); background: var(--paper-card); color: var(--ink); font-family: 'DM Sans', sans-serif; outline: none; resize: vertical; min-height: 80px; line-height: 1.6; }
+.submit-textarea:focus { border-color: var(--accent); }
+.submit-btn { background: var(--accent); color: #fff; border: none; border-radius: var(--radius); padding: 10px 24px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background .15s; }
+.submit-btn:hover { background: var(--accent-mid); }
+.submit-note { font-size: 11px; color: var(--ink-soft); margin-top: 8px; font-weight: 300; }
+
+/* Empty state */
+.empty-field { color: var(--ink-faint); font-style: italic; }
+
+/* Mobile */
+@media (max-width: 580px) {
+  .form-grid, .submit-grid { grid-template-columns: 1fr; }
+  .container { padding: 1.5rem 1.25rem 4rem; }
+  .share-url-row { flex-direction: column; }
+  .program-meta { gap: 1rem; }
+}
+
+/* Print */
+@media print {
+  .masthead, .preview-bar, .submit-section, .task-check-box { display: none !important; }
+  .recruit-view { display: block !important; }
+  .editor-view { display: none !important; }
+  @page { margin: 0.65in; }
+}
+
+.footer { border-top: 1px solid var(--border); padding: 1.5rem; text-align: center; font-size: 12px; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a class="masthead-logo" href="index.html">Recruiting<span>Hub</span></a>
+  <div class="masthead-right">
+    <span class="mode-badge" id="mode-badge">Coach editor</span>
+    <span class="save-indicator" id="save-indicator"><span class="save-dot"></span> Saved</span>
+    <a class="back-link" href="index.html">&larr; Hub</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ══════════ COACH EDITOR VIEW ══════════ -->
+  <div class="editor-view" id="editor-view">
+
+    <div class="editor-hero">
+      <div class="editor-eyebrow">Coach portal</div>
+      <h1 class="editor-title">Build your recruit-facing portal</h1>
+      <p class="editor-sub">Fill in your program details below. When you're ready, generate a shareable link to send to prospective athletes.</p>
+    </div>
+
+    <!-- Program info -->
+    <div class="editor-section">
+      <div class="editor-section-title">Program information</div>
+      <div class="form-grid">
+        <div class="form-row"><div class="form-label">School name</div><input class="form-input" id="f-school" placeholder="e.g. State University" oninput="autosave()"></div>
+        <div class="form-row"><div class="form-label">Sport</div><input class="form-input" id="f-sport" placeholder="e.g. Women's Soccer" oninput="autosave()"></div>
+        <div class="form-row"><div class="form-label">Division</div>
+          <select class="form-select" id="f-division" onchange="autosave()">
+            <option value="">Select division</option>
+            <option>NCAA Division I</option>
+            <option>NCAA Division II</option>
+            <option>NCAA Division III</option>
+            <option>NAIA</option>
+            <option>NJCAA (JUCO)</option>
+          </select>
+        </div>
+        <div class="form-row"><div class="form-label">Conference</div><input class="form-input" id="f-conference" placeholder="e.g. Big Ten" oninput="autosave()"></div>
+        <div class="form-row"><div class="form-label">Head coach name</div><input class="form-input" id="f-coach-name" placeholder="e.g. Coach Sarah Martinez" oninput="autosave()"></div>
+        <div class="form-row"><div class="form-label">Coach email</div><input class="form-input" id="f-coach-email" placeholder="coach@university.edu" oninput="autosave()"></div>
+        <div class="form-row"><div class="form-label">Coach phone</div><input class="form-input" id="f-coach-phone" placeholder="e.g. (555) 123-4567" oninput="autosave()"></div>
+        <div class="form-row"><div class="form-label">Program website</div><input class="form-input" id="f-website" placeholder="https://..." oninput="autosave()"></div>
+        <div class="form-row full"><div class="form-label">Program overview (2–4 sentences)</div><textarea class="form-textarea" id="f-overview" placeholder="Tell recruits what makes your program special — your culture, recent success, player development philosophy..." oninput="autosave()"></textarea></div>
+      </div>
+    </div>
+
+    <!-- Roster needs -->
+    <div class="editor-section">
+      <div class="editor-section-title">Roster needs</div>
+      <div class="form-grid">
+        <div class="form-row"><div class="form-label">Recruiting class year</div><input class="form-input" id="f-class-year" placeholder="e.g. 2026, 2027" oninput="autosave()"></div>
+        <div class="form-row"><div class="form-label">Scholarships available</div><input class="form-input" id="f-scholarships" placeholder="e.g. 2 full, 3 partial" oninput="autosave()"></div>
+        <div class="form-row full"><div class="form-label">Positions / roles needed</div>
+          <div style="margin-top:6px;">
+            <div class="pos-grid" id="pos-grid"></div>
+            <div style="margin-top:8px;display:flex;gap:6px;">
+              <input class="form-input" id="custom-pos" placeholder="Add custom position..." style="flex:1;" onkeydown="if(event.key==='Enter'){addCustomPos();}">
+              <button onclick="addCustomPos()" style="font-size:12px;padding:6px 14px;border-radius:var(--radius);border:1px solid var(--border-mid);background:var(--paper-card);cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--ink-mid);">Add</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-row full"><div class="form-label">What you're looking for in recruits</div><textarea class="form-textarea" id="f-looking-for" placeholder="Describe the type of athlete, academic profile, and character traits you recruit..." oninput="autosave()"></textarea></div>
+      </div>
+    </div>
+
+    <!-- Recruiting timeline -->
+    <div class="editor-section">
+      <div class="editor-section-title">Recruiting timeline</div>
+      <div class="form-grid">
+        <div class="form-row full"><div class="form-label">When recruits should expect to hear from you</div><textarea class="form-textarea" id="f-timeline" placeholder="e.g. We typically begin making offers in October of a recruit's junior year. We review all inbound emails within 2 weeks..." rows="3" oninput="autosave()"></textarea></div>
+        <div class="form-row full"><div class="form-label">Important recruiting dates (one per line)</div>
+          <div class="list-items" id="dates-list"></div>
+          <button class="add-item-btn" onclick="addDate()">+ Add a date or deadline</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Camps & visits -->
+    <div class="editor-section">
+      <div class="editor-section-title">Camps &amp; visit opportunities</div>
+      <div class="list-items" id="camps-list"></div>
+      <button class="add-item-btn" onclick="addCamp()">+ Add a camp, clinic, or visit day</button>
+    </div>
+
+    <!-- Tasks for recruits -->
+    <div class="editor-section">
+      <div class="editor-section-title">What we ask recruits to do</div>
+      <p style="font-size:13px;color:var(--ink-soft);font-weight:300;margin-bottom:12px;">Add a checklist of steps you want recruits to complete — register with the Eligibility Center, send a highlight video, attend a camp, etc.</p>
+      <div class="list-items" id="tasks-list"></div>
+      <button class="add-item-btn" onclick="addTask()">+ Add a task for recruits</button>
+    </div>
+
+    <!-- Custom message -->
+    <div class="editor-section">
+      <div class="editor-section-title">Personal message to recruits</div>
+      <div class="form-grid">
+        <div class="form-row full"><textarea class="form-textarea" id="f-message" placeholder="A personal note from you to recruits viewing this portal — your recruiting philosophy, what you love about your program, what you're looking forward to this season..." rows="4" oninput="autosave()"></textarea></div>
+      </div>
+    </div>
+
+    <!-- Generate link -->
+    <div class="share-section" id="share-section">
+      <div class="share-title">Share your portal with recruits</div>
+      <div class="share-sub">Click the button to generate a shareable link. Send it by email, text, or add it to your recruiting emails. The link encodes your portal data — no account or server needed.</div>
+      <div id="share-url-area" style="display:none;">
+        <div class="share-url-row">
+          <input class="share-url-input" id="share-url" readonly>
+          <button class="copy-url-btn" id="copy-url-btn" onclick="copyUrl()">Copy link</button>
+        </div>
+        <p style="font-size:12px;color:var(--blue);margin-top:8px;opacity:.75;font-weight:300;">Regenerate the link any time after making changes. Each new link reflects your latest edits.</p>
+      </div>
+      <button class="generate-btn" id="generate-btn" onclick="generateLink()">Generate shareable link &rarr;</button>
+    </div>
+
+    <!-- Preview toggle -->
+    <div class="preview-bar" style="margin-top:12px;">
+      <span class="preview-bar-text">Want to see what recruits see? Preview the recruit view of your portal.</span>
+      <button class="preview-btn" onclick="showRecruit(true)">Preview recruit view &rarr;</button>
+    </div>
+
+  </div><!-- /editor-view -->
+
+  <!-- ══════════ RECRUIT VIEW ══════════ -->
+  <div class="recruit-view" id="recruit-view">
+
+    <div class="preview-bar" id="preview-back-bar" style="display:none;">
+      <span class="preview-bar-text">You're previewing the recruit view.</span>
+      <button class="preview-btn" onclick="showRecruit(false)">&larr; Back to editor</button>
+    </div>
+
+    <div class="program-header" id="rv-header">
+      <div class="program-school" id="rv-school"></div>
+      <div class="program-sport" id="rv-sport-div"></div>
+      <div class="program-meta" id="rv-meta"></div>
+      <div class="coach-contact" id="rv-contact"></div>
+    </div>
+
+    <div class="recruit-section" id="rv-overview-section" style="display:none;">
+      <div class="recruit-section-title">About our program</div>
+      <div class="recruit-body" id="rv-overview"></div>
+    </div>
+
+    <div class="recruit-section" id="rv-message-section" style="display:none;">
+      <div class="recruit-section-title">A note from Coach <span id="rv-coach-name-short"></span></div>
+      <div class="recruit-body" id="rv-message"></div>
+    </div>
+
+    <div class="recruit-section" id="rv-needs-section" style="display:none;">
+      <div class="recruit-section-title">What we're looking for</div>
+      <div id="rv-positions" style="margin-bottom:10px;"></div>
+      <div class="recruit-body" id="rv-looking-for"></div>
+    </div>
+
+    <div class="recruit-section" id="rv-timeline-section" style="display:none;">
+      <div class="recruit-section-title">Recruiting timeline</div>
+      <div class="recruit-body" id="rv-timeline"></div>
+      <div class="timeline-list" id="rv-dates" style="margin-top:12px;"></div>
+    </div>
+
+    <div class="recruit-section" id="rv-camps-section" style="display:none;">
+      <div class="recruit-section-title">Camps &amp; visit opportunities</div>
+      <div class="timeline-list" id="rv-camps"></div>
+    </div>
+
+    <div class="recruit-section" id="rv-tasks-section" style="display:none;">
+      <div class="recruit-section-title">Steps we ask recruits to complete</div>
+      <div class="task-list" id="rv-tasks"></div>
+    </div>
+
+    <div class="submit-section" id="rv-submit-section">
+      <div class="submit-title">Express interest</div>
+      <div class="submit-sub" id="rv-submit-sub">Fill in your information below and click Send — it will open your email client with everything pre-filled.</div>
+      <div class="submit-grid">
+        <div class="submit-row"><div class="submit-label">Full name</div><input class="submit-input" id="sub-name" placeholder="Your full name"></div>
+        <div class="submit-row"><div class="submit-label">Graduation year</div><input class="submit-input" id="sub-year" placeholder="e.g. 2026"></div>
+        <div class="submit-row"><div class="submit-label">Position</div><input class="submit-input" id="sub-position" placeholder="e.g. Midfielder"></div>
+        <div class="submit-row"><div class="submit-label">GPA</div><input class="submit-input" id="sub-gpa" placeholder="e.g. 3.8"></div>
+        <div class="submit-row full"><div class="submit-label">Highlight video link</div><input class="submit-input" id="sub-video" placeholder="https://hudl.com/..."></div>
+        <div class="submit-row"><div class="submit-label">Club / travel team</div><input class="submit-input" id="sub-club" placeholder="e.g. FC Dallas Academy"></div>
+        <div class="submit-row"><div class="submit-label">Phone number</div><input class="submit-input" id="sub-phone" placeholder="(555) 123-4567"></div>
+        <div class="submit-row full"><div class="submit-label">Why you're interested in this program</div><textarea class="submit-textarea" id="sub-message" placeholder="Tell the coach why you're reaching out..."></textarea></div>
+      </div>
+      <button class="submit-btn" onclick="submitInterest()">Send to coach &rarr;</button>
+      <p class="submit-note">This will open your email client with your information pre-filled. Review before sending.</p>
+    </div>
+
+  </div><!-- /recruit-view -->
+
+</div><!-- /container -->
+
+<div class="footer">Coach Recruiting Portal &mdash; part of the <a href="index.html" style="color:var(--accent);text-decoration:none;">College Athletic Recruiting Hub</a> &mdash; free to use and share</div>
+
+<script>
+/* ══════════════════════════════════════════
+   SPORT POSITIONS
+══════════════════════════════════════════ */
+const SPORT_POSITIONS = {
+  'football': ['QB','RB','WR','TE','OL','DL','LB','CB','S','K','P','LS'],
+  'basketball': ['PG','SG','SF','PF','C'],
+  'soccer': ['GK','CB','RB','LB','CDM','CM','CAM','RM','LM','RW','LW','ST'],
+  "women's soccer": ['GK','CB','RB','LB','CDM','CM','CAM','RM','LM','RW','LW','ST'],
+  'baseball': ['C','1B','2B','3B','SS','LF','CF','RF','SP','RP','UTIL'],
+  'softball': ['C','1B','2B','3B','SS','LF','CF','RF','SP','DP','UTIL'],
+  'volleyball': ['OH','MB','OPP','S','Libero','DS'],
+  "women's volleyball": ['OH','MB','OPP','S','Libero','DS'],
+  'swimming': ['Free','Back','Breast','Fly','IM','Diver'],
+  'lacrosse': ['A','M','LSM','D','G','FOGO'],
+  "women's lacrosse": ['A','M','D','G','Draw'],
+  'wrestling': ['125','133','141','149','157','165','174','184','197','HWT'],
+  'cross country': ['Runner'],
+  'track & field': ['Sprints','Distance','Mid-distance','Jumps','Throws','Hurdles','Pole vault','Multi'],
+  'tennis': ['Singles','Doubles','All-around'],
+  'golf': ['All positions'],
+};
+
+const DEFAULT_POSITIONS = ['All positions'];
+let customPositions = [];
+let selectedPositions = [];
+
+const STORAGE_KEY = 'coach_portal_v1';
+
+/* ══════════════════════════════════════════
+   STATE
+══════════════════════════════════════════ */
+let dates = [];  // [{text, date}]
+let camps = [];  // [{text, date}]
+let tasks = [];  // [{text}]
+let isRecruit = false;
+let coachEmail = '';
+
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  // Check if we're in recruit view (URL has ?portal= param)
+  const params = new URLSearchParams(window.location.search);
+  const encoded = params.get('portal');
+
+  if (encoded) {
+    // Recruit mode
+    try {
+      const data = JSON.parse(decodeURIComponent(atob(encoded)));
+      loadRecruit(data);
+      showRecruit(true, true);
+    } catch(e) {
+      document.getElementById('editor-view').innerHTML = '<div style="text-align:center;padding:3rem;color:var(--ink-soft);">This portal link appears to be invalid or expired. Ask the coach to generate a new link.</div>';
+    }
+  } else {
+    // Coach mode
+    loadSaved();
+    renderPositions();
+    renderListEditor('dates-list', dates, 'addDate', true);
+    renderListEditor('camps-list', camps, 'addCamp', true);
+    renderListEditor('tasks-list', tasks, 'addTask', false);
+    document.getElementById('mode-badge').className = 'mode-badge mode-coach';
+    document.getElementById('mode-badge').textContent = 'Coach editor';
+
+    // Auto-update positions when sport changes
+    document.getElementById('f-sport').addEventListener('input', () => {
+      selectedPositions = [];
+      renderPositions();
+      autosave();
+    });
+  }
+});
+
+/* ══════════════════════════════════════════
+   POSITIONS
+══════════════════════════════════════════ */
+function renderPositions() {
+  const sport = document.getElementById('f-sport').value.toLowerCase().trim();
+  const positions = SPORT_POSITIONS[sport] || DEFAULT_POSITIONS;
+  const allPositions = [...positions, ...customPositions];
+  const grid = document.getElementById('pos-grid');
+  grid.innerHTML = allPositions.map(p => `
+    <div class="pos-tag ${selectedPositions.includes(p) ? 'active' : ''}" onclick="togglePos('${p}')">${p}</div>
+  `).join('');
+}
+
+function togglePos(pos) {
+  if (selectedPositions.includes(pos)) {
+    selectedPositions = selectedPositions.filter(p => p !== pos);
+  } else {
+    selectedPositions.push(pos);
+  }
+  renderPositions();
+  autosave();
+}
+
+function addCustomPos() {
+  const input = document.getElementById('custom-pos');
+  const val = input.value.trim();
+  if (!val) return;
+  if (!customPositions.includes(val)) {
+    customPositions.push(val);
+    selectedPositions.push(val);
+  }
+  input.value = '';
+  renderPositions();
+  autosave();
+}
+
+/* ══════════════════════════════════════════
+   LIST EDITORS
+══════════════════════════════════════════ */
+function renderListEditor(containerId, items, addFn, hasDate) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = items.map((item, i) => `
+    <div class="list-item-row">
+      <input class="list-item-input" placeholder="${hasDate && containerId === 'camps-list' ? 'Camp or visit name...' : containerId === 'tasks-list' ? 'Task for recruits...' : 'Event or deadline...'}"
+        value="${escHtml(item.text || '')}"
+        oninput="updateItem('${containerId}', ${i}, 'text', this.value)">
+      ${hasDate ? `<input type="text" class="list-item-date" placeholder="Date (e.g. Jun 15)"
+        value="${escHtml(item.date || '')}"
+        oninput="updateItem('${containerId}', ${i}, 'date', this.value)">` : ''}
+      <button class="remove-btn" onclick="removeItem('${containerId}', ${i})">&times;</button>
+    </div>`).join('');
+}
+
+function getListFromId(id) {
+  if (id === 'dates-list') return dates;
+  if (id === 'camps-list') return camps;
+  if (id === 'tasks-list') return tasks;
+}
+
+function updateItem(containerId, i, field, val) {
+  const list = getListFromId(containerId);
+  list[i][field] = val;
+  autosave();
+}
+
+function removeItem(containerId, i) {
+  const list = getListFromId(containerId);
+  list.splice(i, 1);
+  const hasDate = containerId !== 'tasks-list';
+  renderListEditor(containerId, list, '', hasDate);
+  autosave();
+}
+
+function addDate() {
+  dates.push({text:'', date:''});
+  renderListEditor('dates-list', dates, 'addDate', true);
+}
+function addCamp() {
+  camps.push({text:'', date:''});
+  renderListEditor('camps-list', camps, 'addCamp', true);
+}
+function addTask() {
+  tasks.push({text:''});
+  renderListEditor('tasks-list', tasks, 'addTask', false);
+}
+
+/* ══════════════════════════════════════════
+   SAVE / LOAD
+══════════════════════════════════════════ */
+function getFormData() {
+  return {
+    school: v('f-school'), sport: v('f-sport'), division: v('f-division'),
+    conference: v('f-conference'), coachName: v('f-coach-name'),
+    coachEmail: v('f-coach-email'), coachPhone: v('f-coach-phone'),
+    website: v('f-website'), overview: v('f-overview'),
+    classYear: v('f-class-year'), scholarships: v('f-scholarships'),
+    positions: selectedPositions, customPositions,
+    lookingFor: v('f-looking-for'), timeline: v('f-timeline'),
+    message: v('f-message'), dates, camps, tasks
+  };
+}
+
+function v(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+function autosave() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(getFormData())); } catch(e) {}
+  flashSave();
+}
+
+function flashSave() {
+  const ind = document.getElementById('save-indicator');
+  ind.classList.add('visible');
+  clearTimeout(window._st);
+  window._st = setTimeout(() => ind.classList.remove('visible'), 1800);
+}
+
+function loadSaved() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    setV('f-school', d.school); setV('f-sport', d.sport); setV('f-division', d.division);
+    setV('f-conference', d.conference); setV('f-coach-name', d.coachName);
+    setV('f-coach-email', d.coachEmail); setV('f-coach-phone', d.coachPhone);
+    setV('f-website', d.website); setV('f-overview', d.overview);
+    setV('f-class-year', d.classYear); setV('f-scholarships', d.scholarships);
+    setV('f-looking-for', d.lookingFor); setV('f-timeline', d.timeline);
+    setV('f-message', d.message);
+    selectedPositions = d.positions || [];
+    customPositions = d.customPositions || [];
+    dates = d.dates || [];
+    camps = d.camps || [];
+    tasks = d.tasks || [];
+  } catch(e) {}
+}
+
+function setV(id, val) { const el = document.getElementById(id); if (el && val) el.value = val; }
+
+/* ══════════════════════════════════════════
+   GENERATE LINK
+══════════════════════════════════════════ */
+function generateLink() {
+  const data = getFormData();
+  const encoded = btoa(encodeURIComponent(JSON.stringify(data)));
+  const url = window.location.origin + window.location.pathname + '?portal=' + encoded;
+  document.getElementById('share-url').value = url;
+  document.getElementById('share-url-area').style.display = 'block';
+  document.getElementById('generate-btn').textContent = 'Regenerate link &rarr;';
+  document.getElementById('generate-btn').innerHTML = 'Regenerate link &rarr;';
+}
+
+function copyUrl() {
+  const url = document.getElementById('share-url').value;
+  try { navigator.clipboard.writeText(url); } catch(e) {
+    const ta = document.createElement('textarea'); ta.value = url;
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+  }
+  const btn = document.getElementById('copy-url-btn');
+  btn.textContent = 'Copied!'; btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Copy link'; btn.classList.remove('copied'); }, 2000);
+}
+
+/* ══════════════════════════════════════════
+   RECRUIT VIEW
+══════════════════════════════════════════ */
+function showRecruit(show, isActualRecruit) {
+  isRecruit = show;
+  document.getElementById('editor-view').classList.toggle('hidden', show);
+  const rv = document.getElementById('recruit-view');
+  rv.classList.toggle('active', show);
+  const badge = document.getElementById('mode-badge');
+
+  if (show) {
+    badge.className = 'mode-badge mode-recruit';
+    badge.textContent = isActualRecruit ? 'Recruit view' : 'Preview';
+    document.getElementById('preview-back-bar').style.display = isActualRecruit ? 'none' : 'flex';
+
+    if (!isActualRecruit) {
+      // Populate from current form values for preview
+      loadRecruit(getFormData());
+    }
+    document.getElementById('recruit-view').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    badge.className = 'mode-badge mode-coach';
+    badge.textContent = 'Coach editor';
+    document.getElementById('editor-view').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function loadRecruit(d) {
+  coachEmail = d.coachEmail || '';
+
+  // Header
+  set('rv-school', d.school || 'Program name');
+  const sportDivText = [d.sport, d.division].filter(Boolean).join(' &middot; ');
+  set('rv-sport-div', sportDivText || 'Sport &middot; Division');
+
+  // Meta
+  const metas = [];
+  if (d.conference) metas.push({label:'Conference', value: d.conference});
+  if (d.classYear) metas.push({label:'Recruiting class', value: d.classYear});
+  if (d.scholarships) metas.push({label:'Scholarships', value: d.scholarships});
+  document.getElementById('rv-meta').innerHTML = metas.map(m =>
+    `<div class="program-meta-item"><div class="meta-label">${m.label}</div><div class="meta-value">${escHtml(m.value)}</div></div>`
+  ).join('');
+
+  // Contact
+  const contacts = [];
+  if (d.coachEmail) contacts.push(`<a class="contact-btn primary" href="mailto:${escHtml(d.coachEmail)}">Email coach</a>`);
+  if (d.coachPhone) contacts.push(`<a class="contact-btn" href="tel:${escHtml(d.coachPhone)}">${escHtml(d.coachPhone)}</a>`);
+  if (d.website) contacts.push(`<a class="contact-btn" href="${escHtml(d.website)}" target="_blank" rel="noopener">Program website &rarr;</a>`);
+  if (d.coachName) contacts.unshift(`<span style="font-size:13px;font-weight:500;color:var(--ink-mid);padding:7px 0;display:inline-flex;align-items:center;">${escHtml(d.coachName)}</span>`);
+  document.getElementById('rv-contact').innerHTML = contacts.join('');
+
+  // Overview
+  if (d.overview) {
+    setHtml('rv-overview', '<p>' + escHtml(d.overview).replace(/\n/g,'</p><p>') + '</p>');
+    show('rv-overview-section');
+  }
+
+  // Message
+  if (d.message) {
+    setHtml('rv-message', '<p>' + escHtml(d.message).replace(/\n/g,'</p><p>') + '</p>');
+    set('rv-coach-name-short', d.coachName ? d.coachName.replace(/^Coach\s+/i,'') : '');
+    show('rv-message-section');
+  }
+
+  // Needs
+  if ((d.positions && d.positions.length > 0) || d.lookingFor) {
+    if (d.positions && d.positions.length > 0) {
+      document.getElementById('rv-positions').innerHTML =
+        '<div class="pos-display">' + d.positions.map(p => `<span class="pos-display-tag">${escHtml(p)}</span>`).join('') + '</div>';
+    }
+    if (d.lookingFor) {
+      setHtml('rv-looking-for', '<p>' + escHtml(d.lookingFor).replace(/\n/g,'</p><p>') + '</p>');
+    }
+    show('rv-needs-section');
+  }
+
+  // Timeline
+  if (d.timeline || (d.dates && d.dates.length > 0)) {
+    if (d.timeline) setHtml('rv-timeline', '<p>' + escHtml(d.timeline).replace(/\n/g,'</p><p>') + '</p>');
+    if (d.dates && d.dates.length > 0) {
+      document.getElementById('rv-dates').innerHTML = d.dates.filter(dt => dt.text).map(dt => `
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            ${escHtml(dt.text)}
+            ${dt.date ? `<div class="timeline-date">${escHtml(dt.date)}</div>` : ''}
+          </div>
+        </div>`).join('');
+    }
+    show('rv-timeline-section');
+  }
+
+  // Camps
+  if (d.camps && d.camps.length > 0) {
+    document.getElementById('rv-camps').innerHTML = d.camps.filter(c => c.text).map(c => `
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--gold);"></div>
+        <div class="timeline-content">
+          ${escHtml(c.text)}
+          ${c.date ? `<div class="timeline-date">${escHtml(c.date)}</div>` : ''}
+        </div>
+      </div>`).join('');
+    show('rv-camps-section');
+  }
+
+  // Tasks
+  if (d.tasks && d.tasks.length > 0) {
+    document.getElementById('rv-tasks').innerHTML = d.tasks.filter(t => t.text).map((t, i) => `
+      <div class="task-item">
+        <div class="task-check-box" id="rtask-${i}" onclick="toggleRTask(${i})"></div>
+        <div class="task-text-r">${escHtml(t.text)}</div>
+      </div>`).join('');
+    show('rv-tasks-section');
+  }
+
+  // Submit section
+  set('rv-submit-sub', `Fill in your information below and click Send — it will open your email client addressed to ${d.coachName || 'the coach'}.`);
+}
+
+function toggleRTask(i) {
+  const el = document.getElementById('rtask-' + i);
+  el.classList.toggle('done');
+}
+
+function submitInterest() {
+  const name     = document.getElementById('sub-name').value.trim();
+  const year     = document.getElementById('sub-year').value.trim();
+  const position = document.getElementById('sub-position').value.trim();
+  const gpa      = document.getElementById('sub-gpa').value.trim();
+  const video    = document.getElementById('sub-video').value.trim();
+  const club     = document.getElementById('sub-club').value.trim();
+  const phone    = document.getElementById('sub-phone').value.trim();
+  const message  = document.getElementById('sub-message').value.trim();
+
+  const school = document.getElementById('rv-school').textContent;
+
+  const subject = encodeURIComponent(`Recruiting inquiry — ${name || 'Prospective recruit'} | ${year ? 'Class of ' + year : ''} | ${position}`);
+  const body = encodeURIComponent([
+    `Coach,`,
+    ``,
+    `My name is ${name || '[Name]'} and I am reaching out to express my interest in ${school}'s program.`,
+    ``,
+    `About me:`,
+    `- Name: ${name || '—'}`,
+    `- Graduation year: ${year || '—'}`,
+    `- Position: ${position || '—'}`,
+    `- GPA: ${gpa || '—'}`,
+    `- Club / travel team: ${club || '—'}`,
+    `- Phone: ${phone || '—'}`,
+    `- Highlight video: ${video || '—'}`,
+    ``,
+    message ? message : 'I would love to learn more about your program and discuss how I might fit into your recruiting class.',
+    ``,
+    `Thank you for your time,`,
+    name || '[Your name]',
+  ].join('\n'));
+
+  const mailto = `mailto:${coachEmail}?subject=${subject}&body=${body}`;
+  window.location.href = mailto;
+}
+
+/* ══════════════════════════════════════════
+   HELPERS
+══════════════════════════════════════════ */
+function escHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function set(id, val) { const el = document.getElementById(id); if (el) el.textContent = val; }
+function setHtml(id, val) { const el = document.getElementById(id); if (el) el.innerHTML = val; }
+function show(id) { const el = document.getElementById(id); if (el) el.style.display = 'block'; }
+</script>
+</body>
+</html>
