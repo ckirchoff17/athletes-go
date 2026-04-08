@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Athlete Wellness Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #141410; --ink-mid: #4a4a44; --ink-soft: #8a8a80; --ink-faint: #d0d0c4;
+  --paper: #f7f6f1; --paper-warm: #efede5; --paper-card: #ffffff;
+  --border: rgba(20,20,16,0.1); --border-mid: rgba(20,20,16,0.2);
+  --accent: #1a5c3a; --accent-light: #e8f2ec; --accent-mid: #2d7a52;
+  --gold: #b8860b; --gold-light: #f5f0dc;
+  --blue: #1a3a5c; --blue-light: #e8eff8;
+  --rust: #8b3a1a; --rust-light: #f8ede8;
+  --purple: #3d2a7a; --purple-light: #eeedfe;
+  --teal: #0f6e56; --teal-light: #e1f5ee;
+  --rose: #8b1a3a; --rose-light: #f8e8ee;
+  --radius: 6px; --radius-lg: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #f0efe8; --ink-mid: #b0b0a8; --ink-soft: #686860; --ink-faint: #383830;
+    --paper: #141410; --paper-warm: #1a1a14; --paper-card: #1e1e18;
+    --border: rgba(240,239,232,0.1); --border-mid: rgba(240,239,232,0.2);
+    --accent: #4aaa72; --accent-light: #0d2318; --accent-mid: #4aaa72;
+    --gold: #d4a020; --gold-light: #1e1a08;
+    --blue: #6a9fd4; --blue-light: #0a1828;
+    --rust: #d4724a; --rust-light: #1e0e08;
+    --purple: #9f8de0; --purple-light: #1a1230;
+    --teal: #4aaa90; --teal-light: #04201a;
+    --rose: #d4506a; --rose-light: #200810;
+  }
+}
+body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; min-height: 100vh; }
+
+/* ── Masthead ── */
+.masthead { border-bottom: 1px solid var(--border); padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 54px; background: var(--paper); position: sticky; top: 0; z-index: 200; }
+.masthead-logo { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--ink); text-decoration: none; letter-spacing: -0.02em; }
+.masthead-logo span { color: var(--accent); font-style: italic; }
+.back-link { font-size: 13px; color: var(--ink-soft); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color .15s; }
+.back-link:hover { color: var(--ink); }
+
+/* ── Crisis banner — always visible at top ── */
+.crisis-bar { background: var(--blue-light); border-bottom: 1px solid rgba(26,58,92,0.2); padding: 10px 1.5rem; text-align: center; font-size: 13px; color: var(--blue); }
+.crisis-bar strong { font-weight: 500; }
+.crisis-bar a { color: var(--blue); font-weight: 500; }
+
+/* ── Hero ── */
+.hero { max-width: 820px; margin: 0 auto; padding: 3rem 1.5rem 2rem; }
+.hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.hero-eyebrow::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
+.hero-title { font-family: 'DM Serif Display', serif; font-size: 34px; line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 14px; }
+.hero-title em { font-style: italic; color: var(--accent); }
+.hero-body { font-size: 15px; color: var(--ink-mid); line-height: 1.8; font-weight: 300; max-width: 580px; margin-bottom: 2rem; }
+.audience-tabs { display: flex; gap: 8px; }
+.aud-btn { font-size: 13px; padding: 7px 18px; border-radius: 99px; border: 1px solid var(--border-mid); background: var(--paper-card); cursor: pointer; color: var(--ink-mid); transition: all .15s; font-family: 'DM Sans', sans-serif; }
+.aud-btn:hover { border-color: var(--ink); color: var(--ink); }
+.aud-btn.active { background: var(--ink); border-color: var(--ink); color: var(--paper); font-weight: 500; }
+
+/* ── Nav ── */
+.topic-nav { background: var(--paper-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: .75rem 1.5rem; position: sticky; top: 54px; z-index: 100; overflow-x: auto; }
+.topic-nav-inner { max-width: 820px; margin: 0 auto; display: flex; gap: 6px; white-space: nowrap; }
+.nav-pill { font-size: 12px; padding: 5px 14px; border-radius: 99px; border: 1px solid var(--border); background: transparent; cursor: pointer; color: var(--ink-soft); transition: all .15s; font-family: 'DM Sans', sans-serif; text-decoration: none; display: inline-block; }
+.nav-pill:hover { color: var(--ink); border-color: var(--border-mid); }
+
+/* ── Page layout ── */
+.page-body { max-width: 820px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+
+/* ── Sections ── */
+.wellness-section { margin-bottom: 3rem; scroll-margin-top: 110px; }
+.section-anchor { display: block; height: 0; }
+.section-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; margin-bottom: 12px; }
+.section-title { font-family: 'DM Serif Display', serif; font-size: 24px; letter-spacing: -0.02em; margin-bottom: 10px; line-height: 1.2; }
+.section-intro { font-size: 14px; color: var(--ink-mid); line-height: 1.8; font-weight: 300; margin-bottom: 1.25rem; }
+
+/* ── Cards ── */
+.card { background: var(--paper-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 10px; }
+.card-title { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+.card-body { font-size: 13px; color: var(--ink-mid); line-height: 1.75; font-weight: 300; }
+.card-body p { margin-bottom: 8px; }
+.card-body p:last-child { margin-bottom: 0; }
+
+/* ── Callouts ── */
+.callout { border-radius: var(--radius); padding: 1rem 1.25rem; margin: 12px 0; }
+.callout-green { background: var(--accent-light); border: 1px solid rgba(26,92,58,0.2); }
+.callout-blue { background: var(--blue-light); border: 1px solid rgba(26,58,92,0.2); }
+.callout-amber { background: var(--gold-light); border: 1px solid rgba(184,134,11,0.2); }
+.callout-purple { background: var(--purple-light); border: 1px solid rgba(61,42,122,0.15); }
+.callout-rose { background: var(--rose-light); border: 1px solid rgba(139,26,58,0.2); }
+.callout-title { font-size: 13px; font-weight: 500; margin-bottom: 5px; }
+.callout-green .callout-title { color: var(--accent); }
+.callout-blue .callout-title { color: var(--blue); }
+.callout-amber .callout-title { color: var(--gold); }
+.callout-purple .callout-title { color: var(--purple); }
+.callout-rose .callout-title { color: var(--rose); }
+.callout-body { font-size: 13px; line-height: 1.7; font-weight: 300; }
+.callout-green .callout-body { color: var(--accent); }
+.callout-blue .callout-body { color: var(--blue); }
+.callout-amber .callout-body { color: var(--gold); }
+.callout-purple .callout-body { color: var(--purple); }
+.callout-rose .callout-body { color: var(--rose); }
+
+/* ── Two-col grid ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+
+/* ── Checklist ── */
+.checklist { list-style: none; margin: 10px 0; }
+.checklist li { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; color: var(--ink-mid); padding: 6px 0; border-bottom: 1px solid var(--border); line-height: 1.55; font-weight: 300; }
+.checklist li:last-child { border-bottom: none; }
+.check-dot { width: 6px; height: 6px; min-width: 6px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+
+/* ── Check-in tool ── */
+.checkin-tool { background: var(--paper-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin: 12px 0; }
+.checkin-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.checkin-sub { font-size: 12px; color: var(--ink-soft); margin-bottom: 1.25rem; font-weight: 300; }
+.checkin-item { margin-bottom: 1.1rem; }
+.checkin-label { font-size: 13px; color: var(--ink-mid); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+.checkin-score { font-size: 12px; font-weight: 500; color: var(--ink-soft); min-width: 24px; text-align: right; }
+.slider { width: 100%; -webkit-appearance: none; appearance: none; height: 4px; border-radius: 99px; outline: none; cursor: pointer; }
+.checkin-result { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border); display: none; }
+.checkin-result.visible { display: block; }
+.result-score { font-size: 28px; font-weight: 500; margin-bottom: 4px; }
+.result-label { font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+.result-body { font-size: 13px; color: var(--ink-mid); line-height: 1.65; font-weight: 300; }
+.checkin-btn { margin-top: 1rem; background: var(--accent); color: #fff; border: none; border-radius: var(--radius); padding: 9px 20px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background .15s; }
+.checkin-btn:hover { background: var(--accent-mid); }
+
+/* ── Steps ── */
+.steps { display: flex; flex-direction: column; gap: 0; margin: 10px 0; }
+.step-item { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.step-item:last-child { border-bottom: none; }
+.step-num { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; margin-top: 1px; flex-shrink: 0; }
+.step-title { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+.step-body { font-size: 13px; color: var(--ink-mid); line-height: 1.6; font-weight: 300; }
+
+/* ── Divider ── */
+.section-divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+
+/* ── Resources ── */
+.resource-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+.resource-card { background: var(--paper-warm); border-radius: var(--radius); padding: 12px 14px; text-decoration: none; display: block; transition: all .15s; border: 1px solid transparent; }
+.resource-card:hover { border-color: var(--border-mid); background: var(--paper-card); }
+.resource-name { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+.resource-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.5; font-weight: 300; }
+.resource-link { font-size: 11px; color: var(--accent); margin-top: 5px; }
+
+/* ── Audience visibility ── */
+.for-student { }
+.for-parent { display: none; }
+.audience-parent .for-student { display: none; }
+.audience-parent .for-parent { display: block; }
+.audience-both .for-student, .audience-both .for-parent { display: block; }
+
+/* ── Quotes ── */
+.pull-quote { border-left: 3px solid var(--accent); padding: 10px 16px; margin: 14px 0; }
+.pull-quote p { font-size: 14px; color: var(--ink-mid); font-style: italic; line-height: 1.7; font-weight: 300; }
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .hero { padding: 2rem 1.25rem 1.5rem; }
+  .hero-title { font-size: 26px; }
+  .page-body { padding: 0 1.25rem 4rem; }
+  .two-col, .resource-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Print ── */
+@media print {
+  .masthead, .crisis-bar, .topic-nav, .audience-tabs, .checkin-tool { display: none !important; }
+  .for-student, .for-parent { display: block !important; }
+  body { font-size: 11px; }
+  @page { margin: 0.65in; }
+}
+
+.footer { border-top: 1px solid var(--border); padding: 1.5rem; text-align: center; font-size: 12px; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a class="masthead-logo" href="index.html">Recruiting<span>Hub</span></a>
+  <a class="back-link" href="index.html">&larr; Back to hub</a>
+</header>
+
+<div class="crisis-bar">
+  <strong>If you or someone you know is in crisis:</strong> Text or call <a href="tel:988">988</a> (Suicide &amp; Crisis Lifeline) &nbsp;&middot;&nbsp; Crisis Text Line: text HOME to <a href="sms:741741">741741</a> &nbsp;&middot;&nbsp; <a href="https://www.nami.org/help" target="_blank" rel="noopener">NAMI Helpline: 1-800-950-6264</a>
+</div>
+
+<div class="hero">
+  <div class="hero-eyebrow">Athlete wellness guide</div>
+  <h1 class="hero-title">Your performance starts with <em>how you feel</em></h1>
+  <p class="hero-body">The recruiting process is demanding. So is being a high-level athlete. This guide covers the physical and mental foundations that keep you healthy, competitive, and clear-headed — through the pressure of recruiting and beyond.</p>
+  <div class="audience-tabs">
+    <button class="aud-btn active" onclick="setAudience('student', this)">I'm a student athlete</button>
+    <button class="aud-btn" onclick="setAudience('parent', this)">I'm a parent</button>
+  </div>
+</div>
+
+<nav class="topic-nav">
+  <div class="topic-nav-inner">
+    <a class="nav-pill" href="#mental-health">Mental health</a>
+    <a class="nav-pill" href="#nutrition">Nutrition</a>
+    <a class="nav-pill" href="#sleep">Sleep &amp; recovery</a>
+    <a class="nav-pill" href="#burnout">Burnout</a>
+    <a class="nav-pill" href="#body-image">Body image</a>
+    <a class="nav-pill" href="#injury">Injury recovery</a>
+    <a class="nav-pill" href="#substance">Substance pressure</a>
+    <a class="nav-pill" href="#social-media">Social media</a>
+    <a class="nav-pill" href="#asking-help">Asking for help</a>
+    <a class="nav-pill" href="#resources">Resources</a>
+  </div>
+</nav>
+
+<div class="page-body" id="page-body">
+
+  <!-- ══ MENTAL HEALTH ══ -->
+  <span class="section-anchor" id="mental-health"></span>
+  <div class="wellness-section">
+    <span class="section-tag" style="background:var(--purple-light);color:var(--purple);">Mental health</span>
+    <h2 class="section-title">The mental side of being a recruited athlete</h2>
+    <p class="section-intro">Elite athletes experience anxiety, depression, and burnout at rates comparable to the general population — sometimes higher. The pressure to perform, maintain grades, manage recruiting communications, and meet everyone's expectations is real and cumulative. Acknowledging this isn't weakness. It's accurate.</p>
+
+    <div class="for-student">
+      <div class="card">
+        <div class="card-title">What recruiting pressure actually feels like</div>
+        <div class="card-body">
+          <p>The recruiting process can feel like a constant audition — every game, every email, every visit feels like it could make or break your future. That pressure is exhausting, and it's completely normal to feel it. What matters is noticing when it stops feeling manageable.</p>
+          <p>Common signs that pressure is becoming a problem: difficulty sleeping before games or after coach interactions, losing enjoyment in your sport, irritability or mood swings that feel out of proportion, withdrawing from friends or family, physical symptoms like headaches or stomach aches before competitions, or intrusive thoughts about failing or not being good enough.</p>
+          <p>These aren't character flaws. They're signals that your nervous system is under load and could use support.</p>
+        </div>
+      </div>
+
+      <div class="checkin-tool" id="checkin">
+        <div class="checkin-title">Weekly wellness check-in</div>
+        <div class="checkin-sub">Rate each area from 1 (struggling) to 10 (thriving). Takes about 60 seconds.</div>
+
+        <div class="checkin-item">
+          <div class="checkin-label">How are you feeling emotionally this week? <span class="checkin-score" id="s-emotional">5</span></div>
+          <input type="range" class="slider" min="1" max="10" value="5" id="emotional" oninput="updateSlider('emotional')" style="accent-color:#3d2a7a;">
+        </div>
+        <div class="checkin-item">
+          <div class="checkin-label">How is your energy and motivation to train? <span class="checkin-score" id="s-energy">5</span></div>
+          <input type="range" class="slider" min="1" max="10" value="5" id="energy" oninput="updateSlider('energy')" style="accent-color:#1a5c3a;">
+        </div>
+        <div class="checkin-item">
+          <div class="checkin-label">How well have you been sleeping? <span class="checkin-score" id="s-sleep">5</span></div>
+          <input type="range" class="slider" min="1" max="10" value="5" id="sleep-score" oninput="updateSlider('sleep-score')" style="accent-color:#1a3a5c;">
+        </div>
+        <div class="checkin-item">
+          <div class="checkin-label">How much are you enjoying your sport right now? <span class="checkin-score" id="s-enjoyment">5</span></div>
+          <input type="range" class="slider" min="1" max="10" value="5" id="enjoyment" oninput="updateSlider('enjoyment')" style="accent-color:#b8860b;">
+        </div>
+        <div class="checkin-item">
+          <div class="checkin-label">How connected do you feel to your support system? <span class="checkin-score" id="s-connection">5</span></div>
+          <input type="range" class="slider" min="1" max="10" value="5" id="connection" oninput="updateSlider('connection')" style="accent-color:#0f6e56;">
+        </div>
+
+        <button class="checkin-btn" onclick="scoreCheckin()">See my check-in summary</button>
+
+        <div class="checkin-result" id="checkin-result">
+          <div class="result-score" id="result-score"></div>
+          <div class="result-label" id="result-label"></div>
+          <div class="result-body" id="result-body"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Practical strategies that actually work</div>
+        <div class="card-body">
+          <p><strong>Name what you're feeling.</strong> Research consistently shows that labeling emotions — saying "I feel anxious about this visit" rather than just feeling anxious — reduces their intensity. You don't need a therapist to start. Just a habit of checking in with yourself honestly.</p>
+          <p><strong>Separate your identity from your performance.</strong> Your worth as a person is not determined by your scholarship offer, your star rating, or your stats. Athletes who build their entire identity around sport are more vulnerable to mental health struggles when things go wrong. Stay connected to other parts of yourself.</p>
+          <p><strong>Control what you can control.</strong> You cannot control which coaches call, which programs offer, or how other recruits perform. You can control your preparation, your communication, your attitude, and your effort. Focus ruthlessly on that list.</p>
+          <p><strong>Talk to someone.</strong> A teammate, a parent, a school counselor, a therapist. Keeping everything inside adds unnecessary weight. Most athletes find that saying the hard stuff out loud makes it more manageable — not less.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-purple">
+        <div class="callout-title">A note on performance anxiety specifically</div>
+        <div class="callout-body">Performance anxiety is extremely common among recruited athletes — the bigger the stage, the more intense it can be. The goal is not to eliminate anxiety (some anxiety improves performance). The goal is to keep it in a manageable range. Pre-competition routines, breathing techniques, and working with a sports psychologist are all evidence-based tools. If anxiety is significantly affecting your performance or daily life, that's worth talking to a professional about.</div>
+      </div>
+    </div>
+
+    <div class="for-parent">
+      <div class="card">
+        <div class="card-title">What parents should watch for</div>
+        <div class="card-body">
+          <p>Student athletes are often reluctant to admit they're struggling — especially to parents, because they don't want to disappoint or cause worry. Signs worth paying attention to: changes in sleep or appetite, withdrawal from friends or activities outside sport, loss of enthusiasm for a sport they previously loved, excessive self-criticism after performances, or talk that suggests all-or-nothing thinking ("If I don't get a D1 offer I'm a failure").</p>
+          <p>The most helpful thing you can do is create genuine low-stakes space for honest conversation. Not after a bad game. Not mixed with recruiting strategy. Just regular, unpressured check-ins where your athlete knows they can say "I'm not doing well" without consequences.</p>
+        </div>
+      </div>
+      <div class="callout callout-purple">
+        <div class="callout-title">If your athlete is struggling</div>
+        <div class="callout-body">Normalize help-seeking. Many families wait too long because mental health carries stigma, or because they're not sure how serious it is. If your athlete is showing signs of significant distress — not just normal stress — getting a professional assessment early is almost always the right call. School counselors, sports psychologists, and primary care physicians are all good starting points. See the resources section at the bottom of this page.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ NUTRITION ══ -->
+  <span class="section-anchor" id="nutrition"></span>
+  <div class="wellness-section">
+    <span class="section-tag" style="background:var(--accent-light);color:var(--accent);">Nutrition</span>
+    <h2 class="section-title">Fueling performance — not just training</h2>
+    <p class="section-intro">Nutrition for high school athletes is straightforward in principle and difficult in practice. Most athletes understand they should eat well. Few have a structure that actually makes it happen around school, practice, and a social life.</p>
+
+    <div class="for-student">
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">The fundamentals</div>
+          <div class="card-body">
+            <p>Eat enough. Most high school athletes — especially those in multiple sports or with heavy training loads — are under-fueling without realizing it. Chronic under-eating impairs performance, increases injury risk, and affects mood and cognition.</p>
+            <p>Prioritize protein at every meal. Carbohydrates before training (energy). Protein after training (recovery). Don't fear fat — it's essential for hormone production, brain function, and sustained energy.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">The recruiting lens</div>
+          <div class="card-body">
+            <p>College coaches evaluate athletes over extended periods — showcases, camps, visits. Poor nutrition shows up as fatigue in the second half of a long tournament, slower recovery between sessions, and inconsistent performance under pressure.</p>
+            <p>The athletes who stand out at multi-day events are often the ones who show up on day three looking like they looked on day one. That's largely a fueling and recovery story.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">A practical framework for busy athletes</div>
+        <div class="card-body">
+          <p><strong>Pre-training (1–2 hours before):</strong> A carbohydrate-focused meal or snack — oatmeal, a banana, toast with peanut butter, rice with lean protein. Avoid high-fat or high-fiber foods right before training as they slow digestion.</p>
+          <p><strong>During training (for sessions over 60 minutes):</strong> Water is sufficient for most workouts. For sessions over 90 minutes, a small carbohydrate source (banana, sports drink, gel) helps maintain output.</p>
+          <p><strong>Post-training (within 30–60 minutes):</strong> Protein + carbohydrates together. Chocolate milk is genuinely one of the most effective post-workout recovery drinks — it's not just marketing. Greek yogurt with fruit, eggs with rice, or a protein shake with a piece of fruit all work well.</p>
+          <p><strong>Across the day:</strong> Don't skip breakfast. Eat real food at lunch (not just a bag of chips). Keep snacks available — trail mix, fruit, cheese, or a protein bar for when you're between school and practice and need fuel.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-amber">
+        <div class="callout-title">On supplements</div>
+        <div class="callout-body">Most high school athletes don't need supplements — they need consistent, adequate real food. Creatine, pre-workouts, and other performance supplements are largely unnecessary at this stage and some carry risks. If a coach, trainer, or teammate is pushing you toward supplements, check with a registered dietitian or your doctor first. The NCAA tests college athletes for banned substances — developing good nutritional habits now protects your future eligibility.</div>
+      </div>
+    </div>
+
+    <div class="for-parent">
+      <div class="card">
+        <div class="card-title">How parents can support athlete nutrition</div>
+        <div class="card-body">
+          <p>The most impactful thing parents can do is make real food consistently available — not a specific diet plan, but a home environment where healthy choices are easy. Having protein-rich foods, fruit, whole grains, and easy snacks accessible removes a lot of friction.</p>
+          <p>Be cautious about commenting on your athlete's body composition, weight, or eating habits in evaluative ways. Athletes are already subject to enormous performance pressure. Comments about weight — even well-intentioned ones — can accelerate disordered eating patterns that are already common among competitive athletes. See the body image section below.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ SLEEP & RECOVERY ══ -->
+  <span class="section-anchor" id="sleep"></span>
+  <div class="wellness-section">
+    <span class="section-tag" style="background:var(--blue-light);color:var(--blue);">Sleep &amp; recovery</span>
+    <h2 class="section-title">Sleep is training</h2>
+    <p class="section-intro">Sleep is the single most powerful recovery tool available to athletes. It's also the one most consistently sacrificed by high school students. The research is clear: athletes who sleep 8–10 hours per night perform measurably better — faster reaction times, better decision-making, improved accuracy, lower injury rates — than those who sleep 6 or fewer.</p>
+
+    <div class="for-student">
+      <div class="card">
+        <div class="card-title">What happens when you sleep less than 8 hours</div>
+        <div class="card-body">
+          <p>Reaction time slows. Decision-making under pressure deteriorates. Muscle recovery is impaired. Injury risk increases significantly — studies show athletes sleeping under 8 hours are 1.7x more likely to get injured than those sleeping 8+. Mood regulation becomes harder. And performance consistency — the ability to show up at the same level every day — drops.</p>
+          <p>Most high school athletes are sleeping 6–7 hours on school nights. This isn't a moral failure — school start times, homework loads, and social pressures make 8 hours genuinely hard. But understanding the cost helps you make better tradeoffs.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Practical sleep strategies</div>
+        <div class="card-body">
+          <p><strong>Consistent bedtime matters more than total hours in isolation.</strong> Your circadian rhythm responds to regularity. Going to bed at the same time every night — even on weekends — significantly improves sleep quality.</p>
+          <p><strong>Screens and sleep don't mix well.</strong> The blue light from phones suppresses melatonin production. Keeping your phone outside your bedroom — or at minimum, on do-not-disturb mode — is one of the highest-impact changes most athletes can make.</p>
+          <p><strong>Cold, dark, and quiet.</strong> Your body temperature needs to drop slightly to initiate sleep. A cool room (65–68°F) with blackout curtains and minimal noise significantly improves sleep quality.</p>
+          <p><strong>Pre-competition sleep.</strong> Anxiety before big events affects sleep. A pre-sleep routine — 10 minutes of reading, calm breathing, or journaling — helps signal to your nervous system that it's time to wind down. Avoid reviewing film, reading recruiting messages, or anything stressful in the 30 minutes before sleep.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-blue">
+        <div class="callout-title">Naps are a legitimate performance tool</div>
+        <div class="callout-body">A 20-minute nap between school and an afternoon practice is one of the most research-supported performance interventions available. It reduces sleepiness, improves alertness, and enhances motor learning. If your schedule allows, build it in. Set an alarm — naps over 30 minutes can cause grogginess rather than helping.</div>
+      </div>
+    </div>
+
+    <div class="for-parent">
+      <div class="card">
+        <div class="card-title">Supporting your athlete's sleep</div>
+        <div class="card-body">
+          <p>Protecting an athlete's sleep is one of the highest-value things a parent can do. Late-night travel schedules, early morning practices, and screen time are the biggest obstacles. Where possible, advocate for reasonable travel and practice timing. Establishing phone-off or phone-outside-bedroom household norms has meaningful impact on sleep quality for the whole family — not just the athlete.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ BURNOUT ══ -->
+  <span class="section-anchor" id="burnout"></span>
+  <div class="wellness-section">
+    <span class="section-tag" style="background:var(--rust-light);color:var(--rust);">Burnout</span>
+    <h2 class="section-title">Burnout is real, common, and preventable</h2>
+    <p class="section-intro">Athlete burnout is the result of chronic stress without adequate recovery — physical, emotional, and motivational. It's not the same as being tired after a hard week. It's a deeper depletion that doesn't resolve with a few days off and, left unaddressed, can end careers and damage long-term relationships with sport.</p>
+
+    <div class="for-student">
+      <div class="card">
+        <div class="card-title">Signs you may be burning out</div>
+        <div class="card-body">
+          <p>Burnout typically shows up as three things in combination: exhaustion that doesn't resolve with rest, declining performance or effort despite trying, and a growing sense of detachment from or negativity toward your sport. You dread going to practice. Wins don't feel good anymore. Losses feel catastrophic rather than disappointing. You've stopped caring whether you perform well.</p>
+          <p>These feelings are different from a temporary slump or a hard week. If they persist for more than two or three weeks, they're worth taking seriously.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Burnout and recruiting</div>
+        <div class="card-body">
+          <p>The recruiting process adds a specific dimension to burnout risk: athletes feel they cannot afford to take breaks, play casually, or have bad days — because every performance might be watched by a coach. This creates a grinding, relentless pressure that accelerates burnout faster than a heavy training load alone.</p>
+          <p>Counterintuitively, taking genuine recovery — physical and mental — is one of the best recruiting decisions you can make. Athletes who are fresh and motivated perform better at showcases than athletes who are grinding through exhaustion. The coach watching you needs to see your best, not your depleted.</p>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step-item">
+          <div class="step-num" style="background:var(--rust-light);color:var(--rust);">1</div>
+          <div class="step-content">
+            <div class="step-title">Acknowledge it honestly</div>
+            <div class="step-body">Tell yourself — or someone else — the truth about how you're feeling. Athletes often push through warning signs because stopping feels like failing. It isn't. Catching burnout early is significantly easier than recovering from full burnout.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num" style="background:var(--rust-light);color:var(--rust);">2</div>
+          <div class="step-content">
+            <div class="step-title">Take a structured break</div>
+            <div class="step-body">A planned week off from your sport — with your coach's knowledge — is far less damaging than an unplanned breakdown. Communicate openly with your coaching staff. Good coaches understand recovery. If your coach does not allow any rest, that itself is a red flag worth noting.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num" style="background:var(--rust-light);color:var(--rust);">3</div>
+          <div class="step-content">
+            <div class="step-title">Reconnect with why you play</div>
+            <div class="step-body">Burnout often disconnects athletes from intrinsic motivation. Spend time doing low-stakes, play-for-fun versions of your sport — pickup games, shooting around alone, kicking a ball with friends. Reconnecting to the joy of the game without stakes can help restore motivation.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num" style="background:var(--rust-light);color:var(--rust);">4</div>
+          <div class="step-content">
+            <div class="step-title">Address the underlying load</div>
+            <div class="step-body">Burnout usually reflects a sustainability problem — too many demands, not enough recovery, insufficient support. Taking a week off without changing anything structural means burnout will return. Honestly evaluate what's driving the depletion and what can change.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="for-parent">
+      <div class="card">
+        <div class="card-title">The parent's role in preventing burnout</div>
+        <div class="card-body">
+          <p>Parents are often unintentional contributors to athlete burnout — not through cruelty, but through the accumulated pressure of high expectations, over-scheduling, and making athletic success feel like the primary measure of the family's investment in the child.</p>
+          <p>Concretely: let your athlete have genuinely unscheduled time. Don't treat every practice or game as a performance that needs to be debriefed. Make it clear — repeatedly and sincerely — that your love and approval are not conditional on recruiting outcomes. Ask how they're feeling about their sport, not just how they performed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ BODY IMAGE ══ -->
+  <span class="section-anchor" id="body-image"></span>
+  <div class="wellness-section">
+    <span class="section-tag" style="background:var(--rose-light);color:var(--rose);">Body image</span>
+    <h2 class="section-title">Body image in competitive athletics</h2>
+    <p class="section-intro">Athletes face body image pressure from multiple directions simultaneously — coaches, teammates, social media, sport-specific aesthetic standards, and comparison with peers. Disordered eating among competitive athletes is significantly more common than in the general population. This section is worth reading whether or not you think it applies to you.</p>
+
+    <div class="for-student">
+      <div class="callout callout-rose">
+        <div class="callout-title">This affects male athletes too</div>
+        <div class="callout-body">Disordered eating and body image struggles are often framed as female issues, but male athletes experience them at significant rates — particularly in sports with weight classes (wrestling, rowing), endurance sports (cross country, swimming), and sports where leanness is perceived as a performance advantage. The pressure to "bulk up" or "cut weight" is its own form of disordered relationship with food and body.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">The warning signs of disordered eating</div>
+        <div class="card-body">
+          <p>Restrictive eating that goes beyond "healthy eating." Obsessive calorie counting or food categorization. Using exercise to compensate for eating. Extreme anxiety around food or eating in social settings. Significant weight changes. Disappearing after meals. Fatigue, dizziness, or difficulty concentrating that seems related to food intake. Frequently talking about body weight, food, or needing to lose or gain weight in ways that feel compulsive.</p>
+          <p>None of these individually are definitive — but if several apply, or if they're intensifying, they're worth discussing with a healthcare professional.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Fueling performance vs. chasing a body ideal</div>
+        <div class="card-body">
+          <p>The performance goal is different from the aesthetic goal. A body optimized for performance in your sport is fueled, recovered, and strong — not as lean as possible or as heavy as possible. Underfueling to achieve a certain body shape consistently reduces performance, increases injury risk, and — in the case of female athletes specifically — can lead to the "female athlete triad" (low energy availability, bone density loss, and disrupted menstrual function).</p>
+          <p>If a coach, trainer, or teammate has made comments about your body that affected your relationship with food, that's worth talking about with someone outside the team environment.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="for-parent">
+      <div class="card">
+        <div class="card-title">What parents need to know</div>
+        <div class="card-body">
+          <p>Comments about an athlete's body — even positive ones ("you look so lean and fit!") or seemingly helpful ones ("you might want to watch what you eat before the season") — can have significant effects on a young person's relationship with food and body. Athletes hear these messages in the context of enormous performance pressure, and they land differently than intended.</p>
+          <p>If you're concerned about your athlete's eating or body image, approach the conversation with curiosity rather than concern or judgment. Lead with how they're feeling and functioning, not how they look. A pediatrician, registered dietitian, or therapist who specializes in athletes is a better resource than a parent-child conversation about food.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ INJURY ══ -->
+  <span class="section-anchor" id="injury"></span>
+  <div class="wellness-section">
+    <span class="section-tag" style="background:var(--gold-light);color:var(--gold);">Injury recovery</span>
+    <h2 class="section-title">Recovering from injury — physically and mentally</h2>
+    <p class="section-intro">Injury is part of nearly every athlete's story. The physical recovery gets medical attention. The mental and emotional recovery often doesn't — and it's frequently the harder part.</p>
+
+    <div class="for-student">
+      <div class="card">
+        <div class="card-title">The emotional reality of injury</div>
+        <div class="card-body">
+          <p>Losing access to your sport — even temporarily — removes a major source of identity, community, routine, and stress relief for most athletes. It's normal to feel grief, frustration, anxiety, and a loss of purpose. It's also common to feel guilty for not "handling it better." You don't need to handle it perfectly. You need to get through it honestly.</p>
+          <p>Injured athletes are at elevated risk for depression and anxiety — particularly when the injury threatens recruiting timelines. If you're feeling persistently low, hopeless, or disconnected from life during an injury, that's worth talking to a professional about. It's not weakness. It's a recognized pattern that responds well to support.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Injury and recruiting — what to do</div>
+        <div class="card-body">
+          <p><strong>Tell coaches you're interested in immediately.</strong> Don't go silent hoping the injury heals before they notice. Coaches respect honesty. Email them directly: "I wanted to let you know I'm recovering from [injury]. My expected return timeline is [date]. I remain very interested in your program and I'm committed to my recovery." This is far better than disappearing.</p>
+          <p><strong>Document your recovery.</strong> Share updates with interested coaches. If you can send short video of your rehabilitation progress — exercises, movement quality — it signals commitment and keeps you visible.</p>
+          <p><strong>Stay connected to your team.</strong> Athletes who withdraw from their teammates during injury tend to recover more slowly — both physically and emotionally. Show up. Be part of the culture even when you can't play.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-amber">
+        <div class="callout-title">On returning before you're ready</div>
+        <div class="callout-body">The pressure to return from injury before full recovery — to not miss recruiting exposure, to not let the team down — is one of the leading causes of re-injury and long-term damage. A re-injury during recruiting is far worse than a longer, complete initial recovery. Follow your medical team's timeline, not your anxiety's timeline.</div>
+      </div>
+    </div>
+
+    <div class="for-parent">
+      <div class="card">
+        <div class="card-title">Supporting an injured athlete</div>
+        <div class="card-body">
+          <p>The instinct to fix things — to find a new specialist, to rush the recovery, to reassure your athlete that the recruiting timeline won't be affected — can inadvertently add pressure. What most injured athletes need most is for someone to acknowledge how hard it is without immediately pivoting to solutions. Sit with them in the difficulty before moving to action mode.</p>
+          <p>Watch for signs of depression during extended injuries. Maintain academic expectations while being compassionate about the emotional load. Ensure they're seeing appropriate medical professionals and following their protocols — not pushing themselves back faster than is safe.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ SUBSTANCE PRESSURE ══ -->
+  <span class="section-anchor" id="substance"></span>
+  <div class="wellness-section">
+    <span class="section-tag" style="background:var(--teal-light);color:var(--teal);">Substance pressure</span>
+    <h2 class="section-title">Navigating substance pressure as a recruited athlete</h2>
+    <p class="section-intro">Substance use is common in adolescence and the social environments around high school athletics. For recruited athletes, the stakes are higher than for most — NCAA eligibility, scholarship offers, and program reputations can all be affected.</p>
+
+    <div class="for-student">
+      <div class="card">
+        <div class="card-title">The direct stakes</div>
+        <div class="card-body">
+          <p>NCAA and NAIA programs drug test athletes — both at the national level and increasingly at the institutional level. Positive tests can result in loss of eligibility, suspension, or scholarship revocation. Marijuana, which is legal in many states, remains on the NCAA banned substance list and is among the most common positive tests in college athletics.</p>
+          <p>Beyond testing: coaches and programs evaluate character and judgment as part of recruiting. Social media posts involving alcohol or drugs — even if they seem private — are a documented reason coaches pull offers. This isn't hypothetical. It happens regularly.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">On handling the social pressure honestly</div>
+        <div class="card-body">
+          <p>The most effective response to substance pressure isn't a rehearsed "no thanks" — it's having thought through your own values and priorities before the moment arrives, so you're responding from a clear place rather than an anxious one. Athletes who have a genuine, confident reason for their choices don't need to explain themselves defensively.</p>
+          <p>If substance use is already a part of your life and you're finding it difficult to change, that's worth talking to someone about — a counselor, a trusted adult, or a healthcare provider. The goal isn't judgment. It's making sure you have support in navigating something that has real consequences for the future you're working toward.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="for-parent">
+      <div class="card">
+        <div class="card-title">The conversation worth having before it's urgent</div>
+        <div class="card-body">
+          <p>Research consistently shows that teenagers whose parents have talked openly and honestly about substance use — not lectured, but actually talked — make better decisions than those who haven't had those conversations. The goal of the conversation isn't to extract a promise. It's to make sure your athlete knows the factual stakes (NCAA testing, scholarship implications), knows they can come to you without judgment if something goes wrong, and knows you're a resource rather than just a consequence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ SOCIAL MEDIA ══ -->
+  <span class="section-anchor" id="social-media"></span>
+  <div class="wellness-section">
+    <span class="section-tag" style="background:var(--blue-light);color:var(--blue);">Social media &amp; comparison</span>
+    <h2 class="section-title">Social media, comparison, and mental health</h2>
+    <p class="section-intro">For recruited athletes, social media is a unique pressure environment — you're simultaneously managing your public image for coaches, consuming content about competing recruits, and navigating the ordinary social pressures that social media creates for any teenager.</p>
+
+    <div class="for-student">
+      <div class="card">
+        <div class="card-title">The comparison trap in recruiting</div>
+        <div class="card-body">
+          <p>Recruiting social media — commitment announcements, D1 offers, signing day posts — creates a highly curated, highlight-reel version of the recruiting process. What you don't see: the hundreds of recruits who didn't get those offers, the athletes who committed to schools that weren't the right fit, the players who got offers early and watched them fade. The public recruiting narrative is profoundly skewed toward visible success.</p>
+          <p>Comparing your timeline, your offers, or your process to what you see posted online will make you feel worse and help you not at all. Your recruiting process is yours. The only benchmarks that matter are whether you're doing the work, communicating well, and staying on your own timeline.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Managing your own consumption</div>
+        <div class="card-body">
+          <p>If checking recruiting accounts, Twitter/X recruiting feeds, or following committed athletes is making you anxious, mute or unfollow those accounts. This is not avoidance — it's information hygiene. You can stay informed about recruiting without consuming a constant stream of other people's successes in a process that's inherently stressful for you.</p>
+          <p>The same applies to social comparison more broadly. Research on social media and mental health is consistent: passive consumption (scrolling, watching) is associated with worse outcomes than active participation (posting, connecting). Be intentional about which you're doing.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-blue">
+        <div class="callout-title">Your phone before bed affects your mental health</div>
+        <div class="callout-body">Late-night social media use — particularly content involving comparison, recruiting news, or emotionally activating material — significantly disrupts both sleep and mood. A hard stop on phone use 30 minutes before bed is one of the highest-impact mental health interventions available, and it costs nothing.</div>
+      </div>
+    </div>
+
+    <div class="for-parent">
+      <div class="card">
+        <div class="card-title">What parents should know about recruiting social media</div>
+        <div class="card-body">
+          <p>Parents who follow recruiting Twitter/X, commitment trackers, or recruiting services often create additional pressure — intentionally or not — by surfacing information about other recruits' timelines and comparing them to their child's. If you're doing this, be honest with yourself about whether it's helping you support your athlete or adding to a comparative anxiety that ultimately flows downstream to them.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ ASKING FOR HELP ══ -->
+  <span class="section-anchor" id="asking-help"></span>
+  <div class="wellness-section">
+    <span class="section-tag" style="background:var(--accent-light);color:var(--accent);">Asking for help</span>
+    <h2 class="section-title">Asking for help is a performance skill</h2>
+    <p class="section-intro">Competitive athletes are trained to push through discomfort. That's valuable. It's also the thing that makes asking for help feel like failure. These two ideas — toughness and help-seeking — are not opposites. The highest-performing athletes in the world work with sports psychologists, nutritionists, sleep coaches, and mental performance coaches. Seeking support is what serious competitors do.</p>
+
+    <div class="for-student">
+      <div class="card">
+        <div class="card-title">Who to talk to and when</div>
+        <div class="card-body">
+          <p><strong>School counselor:</strong> A good starting point for most concerns — stress, academic pressure, mood changes, or just needing to talk. They can also refer you to more specialized support.</p>
+          <p><strong>Sports psychologist / mental performance coach:</strong> Specifically trained to work with athletes on performance anxiety, confidence, focus, and mental health in the context of sport. Many work with high school athletes.</p>
+          <p><strong>Therapist or counselor:</strong> For mental health concerns that extend beyond performance — depression, anxiety, trauma, eating disorders, relationship issues. Your primary care doctor can provide referrals.</p>
+          <p><strong>Registered dietitian:</strong> For nutrition support, especially if you have specific performance goals, weight management concerns, or a complicated relationship with food.</p>
+          <p><strong>A trusted adult:</strong> A parent, an older player you respect, a coach you trust. Sometimes you don't need a professional — you need an experienced human being who's been through something similar and can listen.</p>
+        </div>
+      </div>
+
+      <div class="pull-quote">
+        <p>"I went to therapy during my junior year because the recruiting pressure was affecting my performance. It was one of the best decisions I made. I wish I'd done it sooner." — A college athlete reflecting on their recruiting process.</p>
+      </div>
+
+      <div class="callout callout-green">
+        <div class="callout-title">What to say when you reach out</div>
+        <div class="callout-body">You don't need the right words or a clear diagnosis to ask for help. "I've been struggling and I could use someone to talk to" is enough. If you're reaching out to a professional for the first time, you can literally say that. They'll take it from there.</div>
+      </div>
+    </div>
+
+    <div class="for-parent">
+      <div class="card">
+        <div class="card-title">How to make it easier for your athlete to ask</div>
+        <div class="card-body">
+          <p>The biggest barrier most athletes face in seeking help is fear of their parent's reaction — worry about being perceived as weak, dramatic, or ungrateful for the investment being made in their athletic development. You can remove this barrier directly by saying, out loud and more than once: "If you're struggling with anything — sport, school, life, mental health — I want to know, and I won't make it about recruiting. Your wellbeing comes first."</p>
+          <p>Normalize your own help-seeking. If you see a therapist, a counselor, or a coach, say so. Athletes take cues from the adults around them about whether asking for support is acceptable.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ RESOURCES ══ -->
+  <span class="section-anchor" id="resources"></span>
+  <div class="wellness-section">
+    <span class="section-tag" style="background:var(--paper-warm);color:var(--ink-soft);border:1px solid var(--border);">Resources</span>
+    <h2 class="section-title">Where to get support</h2>
+    <p class="section-intro">These are established, reputable resources. If you're in crisis, call or text 988 now.</p>
+
+    <div class="card" style="margin-bottom:12px;">
+      <div class="card-title" style="color:var(--blue);">Crisis support</div>
+      <div class="resource-grid">
+        <a class="resource-card" href="tel:988">
+          <div class="resource-name">988 Suicide &amp; Crisis Lifeline</div>
+          <div class="resource-desc">Call or text 988 anytime. Free, confidential support for people in distress.</div>
+          <div class="resource-link">Call or text 988</div>
+        </a>
+        <a class="resource-card" href="sms:741741">
+          <div class="resource-name">Crisis Text Line</div>
+          <div class="resource-desc">Text HOME to 741741 for free 24/7 crisis counseling via text message.</div>
+          <div class="resource-link">Text HOME to 741741</div>
+        </a>
+        <a class="resource-card" href="https://www.nami.org/help" target="_blank" rel="noopener">
+          <div class="resource-name">NAMI Helpline</div>
+          <div class="resource-desc">National Alliance on Mental Illness. Helpline, resources, and local support groups.</div>
+          <div class="resource-link">1-800-950-6264 &rarr;</div>
+        </a>
+        <a class="resource-card" href="https://www.thetrevorproject.org" target="_blank" rel="noopener">
+          <div class="resource-name">The Trevor Project</div>
+          <div class="resource-desc">Crisis intervention for LGBTQ+ young people. Call, text, or chat 24/7.</div>
+          <div class="resource-link">thetrevorproject.org &rarr;</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:12px;">
+      <div class="card-title" style="color:var(--purple);">Mental health &amp; athlete wellness</div>
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.ncaa.org/sports/2014/10/6/mental-health.aspx" target="_blank" rel="noopener">
+          <div class="resource-name">NCAA Mental Health Resources</div>
+          <div class="resource-desc">The NCAA's mental health portal for student-athletes, parents, and coaches.</div>
+          <div class="resource-link">ncaa.org &rarr;</div>
+        </a>
+        <a class="resource-card" href="https://www.headspace.com" target="_blank" rel="noopener">
+          <div class="resource-name">Headspace</div>
+          <div class="resource-desc">Guided meditation and mindfulness app. Strong sports performance content.</div>
+          <div class="resource-link">headspace.com &rarr;</div>
+        </a>
+        <a class="resource-card" href="https://www.apa.org/topics/anxiety" target="_blank" rel="noopener">
+          <div class="resource-name">APA Anxiety Resources</div>
+          <div class="resource-desc">American Psychological Association resources on performance and general anxiety.</div>
+          <div class="resource-link">apa.org &rarr;</div>
+        </a>
+        <a class="resource-card" href="https://findatherapist.psychologytoday.com" target="_blank" rel="noopener">
+          <div class="resource-name">Find a Therapist</div>
+          <div class="resource-desc">Psychology Today's therapist directory. Filter by specialty, insurance, and location.</div>
+          <div class="resource-link">psychologytoday.com &rarr;</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:var(--rose);">Eating disorders &amp; body image</div>
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.allianceforeatingdisorders.com" target="_blank" rel="noopener">
+          <div class="resource-name">Alliance for Eating Disorders</div>
+          <div class="resource-desc">Helpline, treatment locator, and resources for all eating disorders. Helpline: 1-866-662-1235.</div>
+          <div class="resource-link">allianceforeatingdisorders.com &rarr;</div>
+        </a>
+        <a class="resource-card" href="https://www.bodyimagehealthinc.org" target="_blank" rel="noopener">
+          <div class="resource-name">Body Image Health</div>
+          <div class="resource-desc">Programs and resources specifically focused on athlete body image and healthy sport culture.</div>
+          <div class="resource-link">bodyimagehealthinc.org &rarr;</div>
+        </a>
+        <a class="resource-card" href="https://www.nationaleatingdisorders.org" target="_blank" rel="noopener">
+          <div class="resource-name">NEDA</div>
+          <div class="resource-desc">National Eating Disorders Association. Resources, online chat, and treatment finders.</div>
+          <div class="resource-link">nationaleatingdisorders.org &rarr;</div>
+        </a>
+        <a class="resource-card" href="https://www.scan-us.org" target="_blank" rel="noopener">
+          <div class="resource-name">SCAN — Sports Dietitians</div>
+          <div class="resource-desc">Find a registered dietitian who specializes in sports nutrition and athlete health.</div>
+          <div class="resource-link">scan-us.org &rarr;</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-body -->
+
+<div class="footer">Athlete Wellness Guide &mdash; part of the <a href="index.html" style="color:var(--accent);text-decoration:none;">College Athletic Recruiting Hub</a> &mdash; free to use and share &mdash; <strong>Crisis support: call or text 988</strong></div>
+
+<script>
+/* ── Audience toggle ── */
+let currentAudience = 'student';
+function setAudience(aud, btn) {
+  currentAudience = aud;
+  document.querySelectorAll('.aud-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const body = document.getElementById('page-body');
+  body.className = '';
+  if (aud === 'parent') body.classList.add('audience-parent');
+  else if (aud === 'both') body.classList.add('audience-both');
+}
+
+/* ── Check-in sliders ── */
+function updateSlider(id) {
+  const val = document.getElementById(id).value;
+  document.getElementById('s-' + id).textContent = val;
+}
+
+function scoreCheckin() {
+  const ids = ['emotional','energy','sleep-score','enjoyment','connection'];
+  const scores = ids.map(id => parseInt(document.getElementById(id).value));
+  const total = scores.reduce((a,b) => a+b, 0);
+  const avg = Math.round(total / ids.length * 10) / 10;
+
+  const result = document.getElementById('checkin-result');
+  const scoreEl = document.getElementById('result-score');
+  const labelEl = document.getElementById('result-label');
+  const bodyEl = document.getElementById('result-body');
+
+  scoreEl.textContent = avg + ' / 10';
+
+  let color, label, body;
+  if (avg >= 7.5) {
+    color = '#1a5c3a'; label = 'You\'re in a strong place right now.';
+    body = 'Your scores suggest you\'re managing the physical and emotional demands well. Keep prioritizing what\'s working — sleep, connection, and enjoyment of your sport. Check back in next week, especially during high-pressure stretches like showcases or exam periods.';
+  } else if (avg >= 5) {
+    color = '#b8860b'; label = 'Some areas could use attention.';
+    body = 'Your scores suggest you\'re managing but carrying some load in a few areas. Look at which sliders are lowest and consider one concrete step for that area this week. Is it sleep? An honest conversation? A day off? Small adjustments in the right areas compound quickly.';
+  } else {
+    color = '#8b3a1a'; label = 'This is a week to reach out for support.';
+    body = 'Your scores suggest you\'re under real strain right now. That\'s worth taking seriously — not with self-criticism, but with action. Talk to someone you trust this week. A parent, a teammate, a counselor. If you\'re feeling persistently hopeless or disconnected, please reach out to a professional. You don\'t have to be in crisis to deserve support. See the resources section below.';
+  }
+
+  scoreEl.style.color = color;
+  labelEl.textContent = label;
+  labelEl.style.color = color;
+  bodyEl.textContent = body;
+  result.classList.add('visible');
+  result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+</script>
+</body>
+</html>
